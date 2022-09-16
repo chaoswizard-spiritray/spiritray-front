@@ -1,0 +1,46 @@
+<ion-content>
+  <ion-card *ngIf="accas!=null">
+    <ion-card>
+      <div class="paycate" *ngFor="let acca of accas">
+        <ion-segment *ngIf="acca.accaId==1" value="acca.accaId" (click)="querySellerAccount(acca.accaId)">
+          <ion-segment-button type="reset" value="acca.accaId">
+            <ion-icon name="logo-alipay"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment *ngIf="acca.accaId==2" value="acca.accaId" (click)="querySellerAccount(acca.accaId)">
+          <ion-segment-button type="reset" value="acca.accaId">
+            <ion-icon name="logo-wechat"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+    </ion-card>
+    <!-- 具体账户信息 -->
+    <ion-card>
+      <!-- 禁用桌布 -->
+      <ion-backdrop stopPropagation="ture" *ngIf="accas[nowAccountCategory].isOpen==0" (ionBackdropTap)="showTip()">
+      </ion-backdrop>
+      <!-- 添加图标 -->
+      <ion-item>
+        <ion-icon slot="end" name="create-outline" (click)="addAccount()"></ion-icon>
+      </ion-item>
+      <!-- 遍历账户信息 -->
+      <ion-card *ngFor="let account of accounts;index as i;">
+        <ion-item *ngIf="account.isCollections>0">
+          <label slot="end">默认收款账户</label>
+        </ion-item>
+        <ion-item>
+          <label slot="start">商户名:</label>
+          <label slot="end">{{account.accountName}}</label>
+        </ion-item>
+        <ion-item>
+          <label slot="start">商户号:</label>
+          <label slot="end">{{account.accountNo}}</label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="trash-outline" slot="start" (click)="deleteAccount(i)"></ion-icon>
+          <ion-icon name="receipt-outline" (click)="modifyAccount(i)" slot="end"></ion-icon>
+        </ion-item>
+      </ion-card>
+    </ion-card>
+  </ion-card>
+</ion-content>

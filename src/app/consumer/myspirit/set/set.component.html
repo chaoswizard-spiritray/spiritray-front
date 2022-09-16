@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon name="arrow-back-outline" (click)="dismiss()" slot="start"></ion-icon>
+    <label>设置</label>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="ui.userInf!=null" class="inf" (click)="openInf()">
+    <ion-item>
+      <ion-avatar>
+        <img [src]="ui.userInf.consumerHead|trustUrl" />
+      </ion-avatar>
+      <div>
+        <label>{{ui.userInf.consumerNickname}}</label>
+        <div>
+          <label>手机号:</label>
+          <label>{{ui.userInf.consumerPhone}}</label>
+        </div>
+      </div>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+  </div>
+  <div class="address" (click)="openAddress()">
+    <ion-item>
+      <label>收货地址</label>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+  </div>
+  <div class="password" (click)="openPassword()">
+    <ion-item>
+      <label>修改密码</label>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+  </div>
+  <div class="logout" (click)="openLogOut()">
+    <ion-item>
+      <label>退出登录</label>
+    </ion-item>
+  </div>
+</ion-content>

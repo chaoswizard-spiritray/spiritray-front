@@ -1,0 +1,92 @@
+.see {
+    width: 100%;
+    height: 100%;
+    background: rgb(0, 0, 0);
+}
+
+.see div {
+    color: aliceblue;
+    font-size: 40px;
+    font-family: cursive;
+    margin-bottom: 3%;
+    opacity: .5;
+}
+
+.see ion-img {
+    height: 50%;
+}
+
+
+.menu {
+    margin-top: 1px;
+}
+
+.photo .img {
+    width: 80%;
+    height: auto;
+    background: rgba(255, 226, 226, 0.559);
+    margin-left: 10%;
+    margin-top: 10%;
+    border-radius: 10px;
+    border: solid 1px rgba(71, 69, 69, 0.559);
+}
+
+.img div {
+    width: 100%;
+    height: 200px;
+}
+
+.img ion-img {
+    height: 100%;
+}
+
+.photo ion-icon {
+    display: block;
+    font-size: 250%;
+    margin-left: 41%;
+    margin-top: 1%;
+    opacity: .3;
+}
+
+.photo ion-label {
+    margin-top: 1%;
+    display: block;
+    margin-left: 26%;
+    font-family: cursive;
+    opacity: .6;
+}
+
+.full {
+    background: rgb(255, 221, 221);
+    box-shadow: 0px 0px 5px rgb(246, 129, 129);
+}
+
+.head {
+    margin-top: 0%;
+    margin-left: .5%;
+    width: 99%;
+    height: 10%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.footer {
+    margin-top: 3%;
+    margin-left: .5%;
+    width: 99%;
+    height: 32%;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.footer ion-button {
+    --background: rgb(53, 2, 2);
+    margin-top: 5%;
+    box-shadow: 0px 0px 14px rgb(90, 10, 10);
+    width: 60%;
+    margin-left: 20%;
+}

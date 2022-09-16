@@ -1,0 +1,45 @@
+<app-detail-show></app-detail-show>
+<ion-content>
+  <div class="head">
+    <label>我的收货地址</label>
+    <ion-icon name="trash-outline" (click)="toggleDelete()"></ion-icon>
+  </div>
+  <div *ngIf="!isExist();else nodata">
+    <div *ngFor="let address of locationService.addresses;index as i" class="adr">
+      <div class="delete" hidden>
+        <ion-icon name="trash-outline" (click)="removeAddress(i)"></ion-icon>
+      </div>
+      <div *ngIf="isEnabled" class="inf noshow" (click)="dismissAndReturnValue(i)">
+        <label class="tn">{{locationService.addresses[i].takeName}}</label>
+        <label class="tp">{{locationService.addresses[i].takePhone}}</label>
+        <label class="td" *ngIf="locationService.addresses[i].isDefault>0">默认</label>
+        <ion-textarea disabled class="ai"
+          value="{{locationService.addressFirstShow[i]}}{{locationService.addressLastShow[i]}}">
+        </ion-textarea>
+      </div>
+      <div *ngIf="!isEnabled" class="inf noshow">
+        <label class="tn">{{locationService.addresses[i].takeName}}</label>
+        <label class="tp">{{locationService.addresses[i].takePhone}}</label>
+        <label class="td" *ngIf="locationService.addresses[i].isDefault>0">默认</label>
+        <ion-textarea disabled class="ai"
+          value="{{locationService.addressFirstShow[i]}}{{locationService.addressLastShow[i]}}">
+        </ion-textarea>
+      </div>
+      <div class="modify">
+        <ion-icon name="pencil-outline" (click)="modifyAddress(i)"></ion-icon>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="addAddress()" expand="block" fill="clear" shape="round">
+      添加收货地址
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+<ng-template #nodata>
+  <div class="nodata">
+    <label>还没有收货地址</label>
+  </div>
+</ng-template>

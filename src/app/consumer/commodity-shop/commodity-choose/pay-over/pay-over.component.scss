@@ -1,0 +1,52 @@
+* {
+    font-family: cursive;
+}
+
+.max {
+    margin-left: 23%;
+    margin-top: 30%;
+}
+
+.success {
+    margin-top: 5%;
+    font-size: 25px;
+    margin-left: 14%;
+}
+
+ion-checkbox {
+    --background: #ffffff;
+    --background-checked: #727272;
+    --border-color: #ffffff;
+    --border-color-checked: #bcf8bc;
+    --border-radius: 200px;
+    --border-style: solid;
+    --border-width: 3px;
+    --checkmark-color: #035c00;
+    --checkmark-width: 4px;
+    --size: 200px;
+    --transition: background-color 15ms linear;
+}
+
+.skip {
+    width: 17%;
+    height: 3%;
+    border-radius: 15px;
+    background: rgba(43, 43, 43, 0.529);
+    color: white;
+    border: 1px solid rgb(36, 35, 35);
+    margin-left: 5%;
+    margin-top: 5%;
+    padding-top: 3px;
+    padding-left: 4px;
+}
+
+ion-button {
+    width: 40%;
+    height: 40px;
+    margin-top: 40%;
+    margin-left: 30%;
+    --background: #ff8103;
+    --color: #ffffff;
+    --ripple-color: #e17c7c;
+    --transition: background-color 15ms linear;
+}

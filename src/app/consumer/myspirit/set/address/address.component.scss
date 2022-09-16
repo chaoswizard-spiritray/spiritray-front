@@ -1,0 +1,123 @@
+* {
+    font-family: cursive;
+}
+
+ion-content {
+    --background: rgb(248, 204, 204);
+}
+
+.head {
+    padding-top: 8%;
+    padding-bottom: 2%;
+    background: rgb(255, 255, 255);
+    position: relative;
+    opacity: .8;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    color: rgb(213, 86, 12);
+    text-shadow: 0px 1px 1px black;
+    box-shadow: 0px 1px 2px black;
+}
+
+.adr {
+    float: left;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
+    background-color: rgb(255, 247, 237);
+    border-radius: 20px;
+    margin-bottom: -4%;
+    box-shadow: 0px 1px 1px rgb(0, 0, 0);
+    width: 90%;
+}
+
+.delete {
+    float: left;
+    font-size: 24px;
+    display: inline;
+    margin-top: 12%;
+    margin-left: 2%;
+    margin-right: 5%;
+    color: rgb(57, 1, 1);
+}
+
+.inf {
+    float: left;
+    margin-top: 5%;
+    margin-bottom: 4%;
+    display: inline-block;
+    width: 70%;
+}
+
+.modify {
+    float: left;
+    font-size: 26px;
+    display: inline;
+    margin-top: 12%;
+    margin-left: 5%;
+    margin-right: 2%;
+    color: rgb(222, 104, 36);
+}
+
+.tn {
+    font-size: 22px;
+    color: rgb(246, 97, 97);
+}
+
+.tp {
+    margin-left: 3%;
+    color: rgb(218, 147, 121);
+}
+
+.td {
+    margin-left: 15%;
+}
+
+.ai {
+    margin-top: 1%;
+    display: block;
+    color: rgb(50, 1, 1);
+    font-weight: 900;
+}
+
+
+.head label {
+    font-size: 20px;
+    margin-left: 5%;
+    text-shadow: 0px 1px 1px black;
+}
+
+.head ion-icon {
+    float: right;
+    font-size: 25px;
+    margin-right: 5%;
+    color: rgb(109, 46, 4);
+}
+
+.nodata {
+    border-radius: 100px;
+    background-color: rgb(85, 0, 0);
+    float: left;
+    width: 6%;
+    height: 2%;
+    font-size: 20px;
+    margin-top: 20%;
+    margin-left: 46%;
+    padding-top: 40%;
+    box-shadow: 0px 1px 3px rgb(0, 0, 0);
+}
+
+.nodata label {
+    float: left;
+    color: rgb(0, 0, 0);
+    text-shadow: 0px -1px 1px black;
+}
+
+ion-button {
+    --color: rgb(205, 145, 145);
+    --background: rgb(46, 2, 2);
+}
+
+.inf.noshow{
+    margin-left: 10%;
+}

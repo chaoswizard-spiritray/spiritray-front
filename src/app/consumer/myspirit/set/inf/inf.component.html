@@ -1,0 +1,33 @@
+<ion-content *ngIf="ui.userInf!=null">
+  <div class="max">
+    <div class="img">
+      <div>
+        <ion-avatar>
+          <img [src]="ui.userInf.consumerHead|trustUrl" />
+        </ion-avatar>
+      </div>
+      <div>
+        <input accept="image/*" type="file" id="head" (change)="upload($event)" hidden />
+        <label for="head">修改头像</label>
+      </div>
+    </div>
+    <div class="inf">
+      <ion-item>
+        <label>电话：{{ui.userInf.consumerPhone}}</label>
+        <ion-icon name="copy-outline" slot="end" (click)="copyPhone()"></ion-icon>
+      </ion-item>
+    </div>
+    <div class="inf" (click)="modifyNickName()">
+      <ion-item>
+        <label>昵称：{{ui.userInf.consumerNickname}}</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+    <div class="inf" (click)="modifySex()">
+      <ion-item>
+        <label>性别：{{ui.userInf.consumerSex|sex}}</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>

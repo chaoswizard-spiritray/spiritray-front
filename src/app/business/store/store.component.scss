@@ -1,0 +1,42 @@
+* {
+    font-family: cursive;
+}
+
+.outerMenuLog {
+    font-size: 30px;
+    margin-left: 89%;
+    opacity: .5;
+}
+
+.storeName {
+    float: right;
+    font-size: 15px;
+    font-family: cursive;
+    margin-right: 27%;
+    margin-top: 10%;
+}
+
+.masetrMenu {
+    --width: 80%;
+    opacity: .7;
+}
+
+ion-avatar {
+    width: 90px;
+    height: 90px;
+    display: inline-block;
+    float: left;
+    margin-right: auto;
+}
+
+.salveMenu {
+    margin-left: 22%;
+}
+
+.salveMenu::content:hover {
+    color: rgb(249, 213, 167);
+}
+
+ion-card {
+    border-radius: 20px;
+}

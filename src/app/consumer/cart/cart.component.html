@@ -1,0 +1,50 @@
+<ion-header *ngIf="commoditys">
+    <div class="header">
+        <div class="box1" (click)="clearCart()">
+            <span>清空</span>
+        </div>
+        <div class="box2">
+            <ion-searchbar placeholder="search" (ionBlur)="searchcommodity()" (ionClear)="queryCart()"></ion-searchbar>
+        </div>
+    </div>
+</ion-header>
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="refreshing($event)" pullFactor="1" pullMin="30" pullMax="50">
+        <ion-refresher-content pullingIcon="add" refreshingText="刷新中">
+        </ion-refresher-content>
+    </ion-refresher>
+    <div class="content" *ngIf="commoditys">
+        <ion-card *ngFor="let commodity of commoditys;index as i" (press)="deleteCart(i)">
+            <div class="check">
+                <ion-checkbox (ionChange)="check($event,0,i)"></ion-checkbox>
+            </div>
+            <div>
+                <div class="img" (click)="toCommodityShop(commodity.commodityId)">
+                    <img [src]="commodity.skuMap|trustUrl">
+                </div>
+                <div class="info">
+                    <div>
+                        <label>{{commodity.commodityName}}</label>
+                        <label>{{commodity.skuValue}}</label>
+                    </div>
+                    <div>
+                        <label>{{commodity.totalFee}}￥</label>
+                        <label>×{{commodity.commodityNum}}</label>
+                    </div>
+                </div>
+            </div>
+        </ion-card>
+    </div>
+</ion-content>
+<ion-footer *ngIf="commoditys">
+    <div class="footer">
+        <div class="box3">
+            <ion-checkbox (ionChange)="check($event,1,-1)"></ion-checkbox>
+            <span>全选</span>
+        </div>
+        <div class="box4">
+            <span>合计:{{totalMoney}}￥</span>
+            <ion-button>结账</ion-button>
+        </div>
+    </div>
+</ion-footer>

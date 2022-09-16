@@ -1,0 +1,43 @@
+* {
+    font-family: cursive;
+}
+
+.head {
+    font-size: 20px;
+    font-weight: 300;
+    height: 10%;
+    background: rgb(251, 250, 250);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom: 1px solid rgb(164, 160, 160);
+}
+
+.head div {
+    margin-top: 8%;
+    float: left;
+    margin-left: 25%;
+    opacity: .8;
+}
+
+.head div:first-child {
+    margin-left: 5%;
+}
+
+.head div:last-child {
+    margin-right: 5%;
+}
+
+ion-item {
+    margin-bottom: 10%;
+}
+
+.name {
+    width:70%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.img {
+    width: 120px;
+}

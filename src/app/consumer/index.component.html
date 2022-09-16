@@ -1,0 +1,25 @@
+<!-- 切换首页、购物车、个人中心的路由出口 -->
+<ion-router-outlet></ion-router-outlet>
+<!-- 底部标签导航条 -->
+<div>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="home" class="home">
+        <ion-label>首页</ion-label>
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button tab="attention" class="attention">
+        <ion-label>关注</ion-label>
+        <ion-icon name="chatbubble-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button tab="cart" class="cart">
+        <ion-label>购物车</ion-label>
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button tab="myspirit" class="myspirit">
+        <ion-label>个人中心</ion-label>
+        <ion-icon name="person-outline"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</div>

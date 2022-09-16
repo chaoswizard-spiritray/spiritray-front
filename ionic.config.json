@@ -1,0 +1,7 @@
+{
+  "name": "spiritray",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

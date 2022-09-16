@@ -1,0 +1,140 @@
+* {
+    font-family: cursive;
+    font-size: 15px;
+}
+
+.ftn ion-thumbnail {
+    margin-top: 3%;
+    margin-left: 3%;
+    width: 90px;
+    height: 90px;
+}
+
+.ftn ion-icon {
+    font-size: 30px;
+    margin-top: -25%;
+    color: rgb(154, 56, 3);
+    opacity: .8;
+}
+
+.ftn .price,
+ion-icon {
+    float: right;
+}
+
+.price {
+    margin-top: -10%;
+    color: rgb(244, 115, 46);
+    margin-right: 60%;
+    margin-bottom: 3%;
+}
+
+.price label {
+    display: inline-block;
+}
+
+.price label:first-child {
+    font-size: 10px;
+
+}
+
+.price label:last-child {
+    font-size: 30px;
+}
+
+.name {
+    margin-top: 3%;
+    font-weight: 600;
+}
+
+.valueBox,
+.valueBox::before {
+    margin-top: 3%;
+}
+
+.ionChip {
+    background: rgb(236, 236, 236);
+    display: inline-block;
+    margin-left: 10%;
+}
+
+.ionChip ion-thumbnail {
+    float: left;
+    height: 20%;
+}
+
+.ionChip div ion-thumbnail,
+label {
+    display: inline;
+}
+
+.ionChip div label {
+    display: inline;
+    font-weight: 300;
+}
+
+ion-chip {
+    margin-bottom: 10%;
+}
+
+ion-item:last-child label:first-child {
+    margin-bottom: 25%;
+}
+
+.numb div,
+label {
+    margin-top: 30%;
+    font-size: 20px;
+}
+
+.numb label {
+    color: #ff8103;
+}
+
+.fee {
+    color: #ff8103;
+}
+
+.fee div {
+    display: inline;
+}
+
+.fee div:first-child {
+    margin-right: 50%;
+}
+
+.fee label:first-child {
+    font-size: 25px;
+}
+
+.fee label:last-child {
+    font-size: 30px;
+}
+
+.button0 {
+    width: 40%;
+    height: 40px;
+    margin-right: 7%;
+    float: right;
+    --background: #ff8103;
+    --color: #ffffff;
+    --ripple-color: #e17c7c;
+    --transition: background-color 15ms linear;
+}
+
+.button1,
+.button2 {
+    width: 40%;
+    height: 40px;
+    margin-right: 30%;
+    float: right;
+    --background: #ff8103;
+    --color: #ffffff;
+    --ripple-color: #e17c7c;
+    --transition: background-color 15ms linear;
+}
+
+.select {
+    box-shadow:0px 0px 5px #ff8103;
+    background-color: rgb(255, 87, 3);
+}

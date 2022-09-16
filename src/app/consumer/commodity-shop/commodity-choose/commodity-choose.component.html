@@ -1,0 +1,82 @@
+<ion-header>
+  <div>
+    <div>
+      <div *ngIf="skus" class="ftn">
+        <ion-thumbnail slot="start" (click)="showAll(skus[nowIndex].skuMap)">
+          <img [src]="skus[nowIndex].skuMap|trustUrl">
+        </ion-thumbnail>
+        <ion-icon name="chevron-down-outline" (click)="dismiss()"></ion-icon>
+        <div class="price">
+          <label>￥</label>
+          <label>{{skus[nowIndex].skuPrice}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-header>
+<ion-content *ngIf="attributeNames">
+  <ion-item *ngFor="let name of attributeNames;index as i">
+    <div>
+      <div class="name">
+        <label>{{attributeNames[i].attributeName}}</label>
+      </div>
+      <div *ngIf="isColor(attributeNames[i].attributeName)" class="valueBox">
+        <ion-item *ngFor="let st of mulCavs[i];index as j" [class]="attributeNames[i].attributeName+' ionChip'"
+          (click)="checkCav($event,i,j)">
+          <ion-thumbnail slot="start">
+            <img [src]="getMap(st)|trustUrl">
+          </ion-thumbnail>
+          <div slot="end">
+            <label>{{st}}</label>
+          </div>
+        </ion-item>
+      </div>
+      <div *ngIf="!isColor(attributeNames[i].attributeName)" class="valueBox">
+        <ion-chip *ngFor="let st of mulCavs[i];index as j" [class]="attributeNames[i].attributeName"
+          (click)="checkCav($event,i,j)">
+          {{st}}
+        </ion-chip>
+      </div>
+    </div>
+  </ion-item>
+  <ion-item *ngIf="skus[nowIndex].num>0">
+    <label>购买数量</label>
+    <div class="numb" slot="end">
+      <div (click)="sub()">-</div>
+      <label>{{commodityNum}}</label>
+      <div (click)="add()">+</div>
+    </div>
+  </ion-item>
+  <ion-item *ngIf="skus[nowIndex].num<=0" disabled>
+    <label>购买数量</label>
+    <div class="numb" slot="end">
+      <div (click)="sub()">-</div>
+      <label>{{commodityNum}}</label>
+      <div (click)="add()">+</div>
+    </div>
+  </ion-item>
+</ion-content>
+<div class="fee">
+  <div>
+    <label>总计</label>
+  </div>
+  <div>
+    <label>{{totalFee}}￥</label>
+  </div>
+</div>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button *ngIf="comIndex==0" class="button0" (click)="addCart()" expand="block" fill="clear" shape="round">
+      添加购物车
+    </ion-button>
+    <ion-button *ngIf="comIndex==0" class="button0" (click)="toOrder()" expand="block" fill="clear" shape="round">
+      立即购买
+    </ion-button>
+    <ion-button *ngIf="comIndex==1" class="button1" (click)="toOrder()" expand="block" fill="clear" shape="round">
+      购买
+    </ion-button>
+    <ion-button *ngIf="comIndex==2" class="button2" (click)="addCart()" expand="block" fill="clear" shape="round">
+      添加
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

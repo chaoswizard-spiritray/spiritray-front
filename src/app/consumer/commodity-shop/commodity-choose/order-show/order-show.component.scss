@@ -1,0 +1,63 @@
+* {
+    font-family: cursive;
+}
+
+.iconAli {
+    color: rgb(0, 69, 159);
+}
+
+.iconWec {
+    color: rgb(20, 122, 2);
+}
+
+.address {
+    margin-bottom: 5%;
+    color: #bdbdbd;
+    font-style: italic;
+}
+
+.address label:first-child {
+    display: block;
+    color: #c37200;
+}
+
+.address ion-item ion-icon {
+    font-size: 18px;
+    margin-left: 5%;
+}
+
+.commodityName {
+    display: block;
+    height: 20px;
+    overflow: hidden;
+}
+
+.sku {
+    margin-top: 5%;
+    display: block;
+}
+
+.commodityNum {
+    color: rgb(148, 147, 145);
+}
+
+.price {
+    font-size: 25px;
+    color: rgb(251, 151, 43);
+}
+
+.total {
+    color: #c06205;
+    font-size: 18px;
+}
+
+ion-button {
+    width: 40%;
+    height: 40px;
+    margin-right: 7%;
+    float: right;
+    --background: #ff8103;
+    --color: #ffffff;
+    --ripple-color: #e17c7c;
+    --transition: background-color 15ms linear;
+}

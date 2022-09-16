@@ -1,0 +1,35 @@
+<!-- 侧边菜单 -->
+<ion-menu side="start" class="masetrMenu" menu-id="hmaster" content-id="main-content">
+  <ion-header>
+    <ion-toolbar translucent>
+      <ion-title>平台店铺</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <div>
+        <div>
+          <ion-item>
+            <ion-icon name="mail" slot="start"></ion-icon>
+            <label (click)="openProductAndCloseOther('allStore')">店铺</label>
+          </ion-item>
+        </div>
+        <div class="salveMenu allStore" hidden>
+          <ion-list>
+            <ion-item>
+              <label (click)="skip('allStore','/plant/shop/all')">所有店铺</label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<!-- 主页面 -->
+<ion-icon name="list-outline" (click)="openMenu('hmaster')" class="outerMenuLog"></ion-icon>
+<ion-content>
+  <div class="flag">
+    平台店铺
+  </div>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-content>

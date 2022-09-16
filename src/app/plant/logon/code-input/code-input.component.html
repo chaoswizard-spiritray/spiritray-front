@@ -1,0 +1,11 @@
+<ion-content>
+  <div class="msg">
+    <label>{{msg}}</label>
+  </div>
+  <code-input [isCodeHidden]="false" [isNonDigitsCode]="false" [codeLength]="inputNum"
+    (codeChanged)="onCodeChanged($event)" (codeCompleted)="onCodeCompleted($event)">
+  </code-input>
+  <div class="error">
+    <label>{{error}}</label>
+  </div>
+</ion-content>

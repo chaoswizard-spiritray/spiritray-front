@@ -1,0 +1,59 @@
+<!-- 侧边菜单 -->
+<ion-menu side="start" class="masetrMenu" menu-id="wmaster" content-id="main-content">
+  <ion-header>
+    <ion-toolbar translucent>
+      <ion-title>平台商品</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <div>
+        <div>
+          <ion-item>
+            <ion-icon name="mail" slot="start"></ion-icon>
+            <label (click)="openProductAndCloseOther('allCommodity')">商品</label>
+          </ion-item>
+        </div>
+        <div class="salveMenu allCommodity" hidden>
+          <ion-list>
+            <ion-item>
+              <label (click)="skip('allCommodity','/plant/wares/all')">所有商品</label>
+            </ion-item>
+            <ion-item>
+              <label (click)="skip('allCommodity','/plant/wares/cate')">商品种类</label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+      <div>
+        <div>
+          <ion-item>
+            <ion-icon name="paper-plane" slot="start"></ion-icon>
+            <label (click)="openProductAndCloseOther('checkCommodity')">审核商品</label>
+          </ion-item>
+        </div>
+        <div class="salveMenu checkCommodity" hidden>
+          <ion-list>
+            <ion-item>
+              <label (click)="skip('checkCommodity','/plant/wares/check',0)">未审核商品</label>
+            </ion-item>
+            <ion-item>
+              <label (click)="skip('checkCommodity','/plant/wares/check',1)">通过审核商品</label>
+            </ion-item>
+            <ion-item>
+              <label (click)="skip('checkCommodity','/plant/wares/check',2)">已拒绝商品</label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<!-- 主页面 -->
+<ion-icon name="list-outline" (click)="openMenu('wmaster')" class="outerMenuLog"></ion-icon>
+<ion-content>
+  <div class="flag">
+    平台商品
+  </div>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-content>

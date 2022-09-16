@@ -1,0 +1,47 @@
+<div>
+  <div></div>
+  <ion-icon class="backIcon" name="chevron-back-outline" slot="start" (click)="dismiss()"></ion-icon>
+</div>
+<div class="outer">
+  <div class="pay alipy">
+    <ion-icon *ngIf="accaId==1" name="logo-alipay"></ion-icon>
+  </div>
+  <div class="pay wechat">
+    <ion-icon *ngIf="accaId==2" name="logo-wechat"></ion-icon>
+  </div>
+  <ion-card class="inf">
+    <div *ngIf="accaId==2">
+      <ion-item>
+        <label slot="start">appId:</label>
+        <div>
+          <ion-input slot="start" type="text" [(ngModel)]="accountObj.appId"></ion-input>
+        </div>
+      </ion-item>
+    </div>
+    <div>
+      <ion-item>
+        <label slot="start">商户号</label>
+        <div>
+          <ion-input slot="start" type="text" [(ngModel)]="accountObj.accountNo"></ion-input>
+        </div>
+      </ion-item>
+    </div>
+    <div>
+      <ion-item>
+        <label slot="start">密钥</label>
+        <div>
+          <ion-input slot="start" type="text" [(ngModel)]="accountObj.accountKey"></ion-input>
+        </div>
+      </ion-item>
+    </div>
+    <div>
+      <ion-item>
+        <label>启用</label>
+        <ion-toggle slot="end" [(ngModel)]="isUseable"></ion-toggle>
+      </ion-item>
+    </div>
+  </ion-card>
+  <ion-button (click)="addAccount($event)" expand="block" fill="clear" shape="round">
+    添加
+  </ion-button>
+</div>

@@ -1,0 +1,23 @@
+<div class="box">
+  <div class="words">历史记录</div>
+  <div *ngIf="!isNull();else no">
+    <div class="clear" (tap)="deleteAll()">清空历史</div>
+  </div>
+  <div class="historyWord">
+    <div *ngFor="let word of historyWord">
+      <ion-chip (tap)="tobar($event)" (press)="showDelete($event)" (pressup)="noShow($event)">
+        {{word}}
+      </ion-chip>
+      <ion-icon name="close-circle-outline" hidden (tap)="delete($event)"></ion-icon>
+    </div>
+  </div>
+  <div class="words">热词</div>
+  <div class="hotWord">
+    <ion-card *ngFor="let word of hotWord">
+      {{word}}
+    </ion-card>
+  </div>
+</div>
+<ng-template #no>
+  <div></div>
+</ng-template>

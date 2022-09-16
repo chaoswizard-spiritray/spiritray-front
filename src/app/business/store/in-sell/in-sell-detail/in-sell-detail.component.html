@@ -1,0 +1,99 @@
+<ion-content>
+  <div class="max" *ngIf="inCheckDetail">
+    <div class="img">
+      <div>
+        <ion-avatar>
+          <img [src]="inCheckDetail.masterMap|trustUrl" />
+        </ion-avatar>
+      </div>
+      <div>
+        <input disabled accept="image/*" type="file" id="head" (change)="upload($event)" hidden />
+        <label for="head">商品主图</label>
+      </div>
+    </div>
+    <div class="inf">
+      <ion-item>
+        <label>商品名称：{{inCheckDetail.commodityName}}</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+    <div class="inf">
+      <ion-item>
+        <label *ngIf="inCheckDetail.checkState==0" class="check0">审核状态：{{inCheckDetail.checkInfo}}</label>
+        <label *ngIf="inCheckDetail.checkState==1" class="check1">审核状态：{{inCheckDetail.checkInfo}}</label>
+        <label *ngIf="inCheckDetail.checkState==2" class="check2">审核状态：{{inCheckDetail.checkInfo}}</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+    <div class="inf">
+      <ion-item>
+        <label>申请日期：{{inCheckDetail.applyDate|datepipe}}</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+    <div class="inf">
+      <ion-item>
+        <label *ngIf="!inCheckDetail.checkDate">审核日期：无</label>
+        <label *ngIf="inCheckDetail.checkDate">审核日期：{{inCheckDetail.checkDate|datepipe}}</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+    <div class="inf">
+      <ion-item (click)="toggleSku()">
+        <label>商品规格</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+      <div class="sku" hidden>
+        <div *ngFor="let sku of skus">
+          <ion-item>
+            <ion-avatar class="small" slot="start">
+              <img [src]="sku.skuMap|trustUrl" (click)="showAll(sku.skuMap)" />
+            </ion-avatar>
+            <label>{{sku.skuValue}}</label>
+            <label slot="end">{{sku.skuPrice}}元</label>
+          </ion-item>
+          <ion-item>
+            <label slot="start">余量：</label>
+            <label>{{sku.num}}</label>
+            <ion-icon slot="end" name="add"></ion-icon>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+    <div class="inf">
+      <ion-item (click)="toggleCav()">
+        <label>基本参数</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+      <div class="cav" hidden>
+        <div *ngIf="simpleCavs">
+          <ion-item *ngFor="let cav of simpleCavs;">
+            <label slot="start">{{cav.attributeName}}</label>
+            <label slot="end">{{cav.attributeValue}}</label>
+          </ion-item>
+          <ion-item *ngFor="let cav of mulCavs;">
+            <label slot="start">{{cav.attributeName}}</label>
+            <label slot="end">{{cav.attributeValue}}</label>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+    <div class="inf">
+      <ion-item>
+        <label *ngIf="!inCheckDetail.remark">备注：无</label>
+        <label *ngIf="inCheckDetail.remark">备注：{{inCheckDetail.remark}}</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+    <div class="inf">
+      <ion-item>
+        <label *ngIf="inCheckDetail.staffId!=0">审核员工号：{{inCheckDetail.staffId}}</label>
+        <label *ngIf="inCheckDetail.staffId==0">审核员工号：无人审核</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+    <ion-button (click)="dismiss()" expand="block" fill="clear" shape="round">
+      确定
+    </ion-button>
+  </div>
+</ion-content>

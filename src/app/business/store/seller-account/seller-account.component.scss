@@ -1,0 +1,15 @@
+* {
+    font-family: cursive;
+}
+
+.paycate {
+    display: inline-block;
+    margin-left: 20%;
+}
+
+ion-segment-button {
+    --color: #f2cccc;
+    --color-checked: #230101;
+    --indicator-height: 0px;
+    --border-radius: 20px;
+}

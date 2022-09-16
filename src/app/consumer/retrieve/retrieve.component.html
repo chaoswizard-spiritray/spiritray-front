@@ -1,0 +1,26 @@
+<ion-card class="outer">
+  <ion-card>
+    <ion-item>
+      <label slot="start">邮箱地址</label>
+      <ion-input type="text" placeholder="输入邮箱地址" ngDefaultControl [(ngModel)]="email"></ion-input>
+      <ion-button slot="end" (click)="getEmail()" expand="block" fill="clear" shape="round">
+        发送验证码
+      </ion-button>
+    </ion-item>
+    <ion-item>
+      <label slot="start">新密码</label>
+      <ion-input type="text" placeholder="新密码" ngDefaultControl [(ngModel)]="newPass"></ion-input>
+    </ion-item>
+    <ion-item>
+      <label slot="start">确认密码</label>
+      <ion-input type="text" placeholder="确认密码" ngDefaultControl [(ngModel)]="newPassT"></ion-input>
+    </ion-item>
+    <ion-item>
+      <label slot="start">邮箱验证码</label>
+      <ion-input type="text" placeholder="邮箱验证码" ngDefaultControl [(ngModel)]="code"></ion-input>
+    </ion-item>
+  </ion-card>
+  <ion-button class="submit" (click)="modifyPass()" expand="block" fill="clear" shape="round">
+    重置密码
+  </ion-button>
+</ion-card>

@@ -1,0 +1,13 @@
+* {
+    font-family: cursive;
+}
+
+ion-button {
+    float: left;
+    position: fixed;
+    width: 50%;
+    margin-top: 10%;
+    margin-left: 25%;
+    --color: rgb(255, 255, 255);
+    --background: rgb(253, 147, 7);
+}

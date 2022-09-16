@@ -1,0 +1,37 @@
+<div class="max">
+  <div class="chanle" (click)="dismiss()">
+    <label>取消</label>
+  </div>
+  <div class="body">
+    <div class="takeName">
+      <label slot="start">收货人</label>
+      <ion-input type="text" clearInput="true" placeholder="收货人" [(ngModel)]="takeName"></ion-input>
+    </div>
+    <div class="takePhone">
+      <label>收货人电话</label>
+      <ion-input type="text" clearInput="true" placeholder="手机号" [(ngModel)]="takePhone">
+      </ion-input>
+    </div>
+    <div class="address">
+      <div>
+        <label>收货地址</label>
+        <ion-input type="text" (click)="getLocation()" placeholder="所在省、市、区" [value]="addressShow">
+        </ion-input>
+        <ion-input type="text" clearInput="true" placeholder="详细地址" [(ngModel)]="addressStr"></ion-input>
+      </div>
+      <div></div>
+    </div>
+    <div class="default">
+      <label>默认收货地址</label>
+      <ion-toggle [(ngModel)]="isDefault"></ion-toggle>
+    </div>
+  </div>
+  <div class="submit">
+    <ion-button *ngIf="index>=0" (click)="modifyAddress($event)" expand="block" fill="clear" shape="round">
+      保存
+    </ion-button>
+    <ion-button *ngIf="index<0" (click)="addAddress($event)" expand="block" fill="clear" shape="round">
+      添加
+    </ion-button>
+  </div>
+</div>

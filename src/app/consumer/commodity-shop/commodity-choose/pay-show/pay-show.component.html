@@ -1,0 +1,20 @@
+<ion-content>
+  <div (click)="dismiss()" class="back">
+    <ion-icon name="close-outline"></ion-icon>
+  </div>
+  <div class="icon">
+    <ion-icon class="iconAli" *ngIf="accaId==1" name="logo-alipay" slot="start"></ion-icon>
+    <ion-icon class="iconWec" *ngIf="accaId==2" name="logo-wechat" slot="start"></ion-icon>
+  </div>
+  <div class="msg">
+    <label>{{msg}}￥</label>
+  </div>
+  <div class="pass">
+    <label>请输入密码</label>
+  </div>
+  <code-input isCodeHidden="true" isNonDigitsCode="false" codeLength="6" (codeCompleted)="onCodeCompleted($event)">
+  </code-input>
+  <div class="error">
+    <label>{{error}}</label>
+  </div>
+</ion-content>

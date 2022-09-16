@@ -1,0 +1,41 @@
+<!-- 图片详情 -->
+<div *ngIf="isSee;" class="see">
+  <div>
+    <ion-icon name="close-outline" (click)="noSee()"></ion-icon>
+  </div>
+  <ion-img src="{{hdsrc}}" (click)="noSee()"></ion-img>
+</div>
+<!-- 表单内容 -->
+<ion-content>
+  <ion-backdrop *ngIf="disabled;"(ionBackdropTap)="tip()"></ion-backdrop>
+  <div class="full head"></div>
+  <div class="menu">
+    <div class="id">
+      <ion-item>
+        <ion-label position="floating">身份证号</ion-label>
+        <ion-input placeholder="居民身份证号" ngDefaultControl [(ngModel)]="id"></ion-input>
+      </ion-item>
+    </div>
+    <div class="name">
+      <ion-item>
+        <ion-label position="floating">姓名</ion-label>
+        <ion-input placeholder="真实姓名" ngDefaultControl [(ngModel)]="name"></ion-input>
+      </ion-item>
+    </div>
+    <div class="photo">
+      <div class="img">
+        <div>
+          <ion-img (click)="see()"></ion-img>
+        </div>
+      </div>
+      <input type="file" id="hd" accept="image/jpeg" capture="user" hidden />
+      <label for="hd">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </label>
+      <ion-label for="hd">上传身份证人像面图片</ion-label>
+    </div>
+  </div>
+  <div class="full footer">
+    <ion-button (click)="submitData()">提交</ion-button>
+  </div>
+</ion-content>

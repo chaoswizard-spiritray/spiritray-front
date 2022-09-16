@@ -1,0 +1,17 @@
+<ion-content>
+  <div class="cav">
+    <div *ngIf="simpleCavs">
+      <ion-item *ngFor="let cav of simpleCavs;">
+        <label slot="start">{{cav.attributeName}}</label>
+        <label slot="end">{{cav.attributeValue}}</label>
+      </ion-item>
+      <ion-item *ngFor="let cav of mulCavs;">
+        <label slot="start">{{cav.attributeName}}</label>
+        <label slot="end">{{cav.attributeValue}}</label>
+      </ion-item>
+    </div>
+  </div>
+  <ion-button (click)="dismiss()" expand="block" fill="clear" shape="round">
+    确定
+  </ion-button>
+</ion-content>

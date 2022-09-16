@@ -1,0 +1,18 @@
+<div *ngIf="show">
+  <label class="titl">检测到工号</label>
+  <label class="num">{{staffId}}</label>
+
+</div>
+
+<div *ngIf="!show">
+  <label class="titl">输入工号</label>
+  <ion-item>
+    <ion-input type="text" placeholder="请填写工号" [(ngModel)]="staffId"></ion-input>
+  </ion-item>
+</div>
+
+<ion-button (click)="submit()" expand="block" fill="clear" shape="round">
+  确定
+</ion-button>
+
+

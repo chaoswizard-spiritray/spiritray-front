@@ -1,0 +1,85 @@
+* {
+    font-family: cursive;
+}
+
+ion-input {
+    width: 70%;
+    border-radius: 10px;
+    background: rgb(247, 231, 231);
+    height: 50px;
+    margin-left: 27%;
+    margin-top: -10%;
+}
+
+.max {
+    background: rgb(249, 245, 245);
+    border-radius: 20px;
+    box-shadow: 0px -1px 1px black;
+    width: 96%;
+    margin-left: 2%;
+    margin-top: 1%;
+}
+
+.chanle {
+    font-size: 20px;
+    margin-top: 8%;
+    margin-left: 83%;
+    margin-bottom: 15%;
+    opacity: .6;
+}
+
+.body {
+    font-size: 15px;
+}
+
+.body div {
+    margin-top: 3%;
+}
+
+.takeName {
+    margin-bottom: 8%;
+}
+
+label {
+    display: inline;
+    margin-left: 2%;
+}
+
+.address label {
+    float: left;
+    margin-top: 10px;
+}
+
+.address ion-input {
+    margin-top: 2%;
+}
+
+.address ion-input:last-child {
+    height: 70px;
+}
+
+.default label {
+    float: left;
+    margin-top: 5%;
+}
+
+.default ion-toggle {
+    margin-top: 5px;
+    margin-left: 55%;
+}
+
+.submit{
+    margin-top: 40%;
+    margin-bottom: 75%;
+}
+
+ion-button {
+    --color: rgb(205, 145, 145);
+    --background: rgb(0, 0, 0);
+    height: 40px;
+}
+
+ion-toggle {
+    --handle-background-checked: rgb(210, 174, 239);
+    --background-checked: rgb(96, 50, 131);
+}

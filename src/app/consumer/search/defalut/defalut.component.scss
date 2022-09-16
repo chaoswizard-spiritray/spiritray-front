@@ -1,0 +1,53 @@
+.box {
+    width: 96%;
+    height: 99%;
+    margin-left: 2%;
+    background-color: rgba(241, 179, 149, 0.253);
+    border-radius: 20px;
+    box-shadow: 0px 0px 15px rgb(250, 190, 190);
+    border: 1px solid rgba(246, 223, 244, 0.386);
+}
+
+.words {
+    color: rgb(253, 173, 173);
+    margin-left: 10px;
+    margin-top: 5px;
+    text-shadow: 1px 1px 15px rgb(247, 28, 196);
+    font-family: cursive;
+    font-size: 18px;
+}
+
+.clear {
+    display: inline-block;
+    color: rgb(9, 1, 1);
+    margin-left: 80%;
+    margin-top: 5px;
+    font-size: 15px;
+    font-family: cursive;
+}
+
+.historyWord {
+    margin: 20px;
+    font-family: cursive;
+}
+
+.historyWord div {
+    display: inline-block;
+}
+
+.historyWord ion-chip {
+    --background: rgb(241, 211, 211);
+    --color: rgb(240, 185, 126);
+    box-shadow: 0px 1px 1px rgb(240, 198, 147);
+    font-size: 16px;
+    font-family: cursive;
+    color: rgb(0, 0, 0);
+    opacity: 40%;
+}
+
+.historyWord ion-icon {
+    float: right;
+    margin-left: -15px;
+    color: rgb(248, 154, 154);
+    position: relative;
+}

@@ -1,0 +1,13 @@
+<ion-card>
+  <ion-item>
+    <label>价格:</label>
+    <ion-input type="text" placeholder="填充价格" [(ngModel)]="price"></ion-input>
+  </ion-item>
+  <ion-item>
+    <label>数量:</label>
+    <ion-input type="text" placeholder="填充数量"  [(ngModel)]="num"></ion-input>
+  </ion-item>
+</ion-card>
+<ion-button (click)="submit()" expand="block" fill="clear" shape="round">
+  确认
+</ion-button>

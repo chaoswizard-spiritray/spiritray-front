@@ -1,0 +1,72 @@
+* {
+    font-family: cursive;
+}
+
+ion-button {
+    background: rgb(252, 252, 252);
+    --color: black;
+    border-radius: 10px;
+    width: 50%;
+    margin-left: 25%;
+    border-bottom: 1px solid #000;
+    box-shadow: 0px 0px 3px rgb(38, 37, 37);
+    float: left;
+    position: relative;
+}
+
+.see {
+    width: 100%;
+    height: 100%;
+    background: rgb(0, 0, 0);
+    padding-top: 10%;
+}
+
+.cate {
+    margin-bottom: 5%;
+}
+
+// 初始各级颜色
+.cate1 {
+    background-color: rgb(248, 185, 185);
+}
+
+.cate2 {
+    background-color: rgb(243, 209, 137);
+}
+
+.cate3 {
+    background-color: rgb(170, 243, 130);
+}
+
+.cate4 {
+    background-color: rgb(151, 220, 250);
+}
+
+.cate5 {
+    background-color: rgb(241, 133, 223);
+}
+
+//默认种类节点点击后的颜色
+.cateDefalut {
+    background-color: rgb(118, 97, 114);
+}
+
+.chip {
+    display: inline-block;
+}
+
+.addressStr ion-input:last-child {
+    margin-left: 34%;
+}
+
+.put {
+    background: rgb(60, 58, 58);
+    --color: rgb(255, 255, 255);
+    border-radius: 10px;
+    width: 20%;
+    margin-left: 80%;
+    border-bottom: 0px solid rgb(255, 255, 255);
+    box-shadow: 0px 0px 0px rgb(38, 37, 37);
+    float: none;
+    position: static;
+}

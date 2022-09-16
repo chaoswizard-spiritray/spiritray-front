@@ -1,0 +1,38 @@
+* {
+    font-family: cursive;
+    font-size: 18px;
+}
+
+ion-toolbar label {
+    margin-left: 10%;
+}
+
+ion-toolbar ion-icon {
+    font-size: 25px;
+    opacity: .7;
+}
+
+.inf ion-avatar {
+    width: 80px;
+    height: 80px;
+    box-shadow: -1px -1px 1px black;
+
+}
+
+.inf div {
+    margin-top: 5%;
+}
+
+.inf div label {
+    font-size: 20px;
+}
+
+
+.inf div div label:first-child {
+    font-size: 10px;
+    opacity: .6;
+}
+
+.inf div div label:last-child {
+    font-size: 15px;
+}

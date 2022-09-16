@@ -1,0 +1,46 @@
+.box {
+    width: 96%;
+    height: auto;
+    margin-left: 2%;
+    background-color: rgba(241, 179, 149, 0.253);
+    border-radius: 20px;
+    box-shadow: 0px 0px 15px rgb(250, 217, 190);
+    border: 1px solid rgba(246, 223, 244, 0.386);
+}
+
+.conditions {
+    margin-top: -1.5px;
+    position: fixed;
+    background: rgba(255, 255, 255, 0.9);
+    width: 96%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: 999;
+}
+
+.price {
+    display: inline-block;
+    color: rgb(136, 135, 134);
+    margin-left: 3%;
+    margin-top: 2%;
+}
+
+.price div {
+    display: inline-block;
+    float: right;
+}
+
+.price :last-child {
+    padding-top: 15%;
+}
+
+.price ion-icon {
+    display: block;
+    font-size: 20px;
+    margin-left: 0.8px;
+    margin-bottom: -5px;
+}
+
+.price ion-lable {
+    padding-top: 10px;
+}

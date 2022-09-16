@@ -1,0 +1,21 @@
+<!-- 切换首页、购物车、个人中心的路由出口 -->
+<ion-router-outlet></ion-router-outlet>
+<!-- 底部标签导航条 -->
+<div>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="store" class="home">
+        <ion-label>营业</ion-label>
+        <ion-icon name="at-circle-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button tab="data" class="attention">
+        <ion-label>数据</ion-label>
+        <ion-icon name="albums-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button tab="platService" class="cart">
+        <ion-label>平台服务</ion-label>
+        <ion-icon name="aperture-outline"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</div>

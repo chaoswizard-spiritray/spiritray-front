@@ -1,0 +1,87 @@
+.menu {
+    margin-top: 1px;
+}
+
+.code {
+    display: inline-block;
+}
+
+.code div {
+    display: inline-block;
+    position: relative;
+    float: left;
+}
+
+.code :last-child {
+    position: relative;
+    float: right;
+    padding-top: 13px;
+    padding-left: 8px;
+}
+
+.sex {
+    margin-top: 5%;
+    margin-left: 35%;
+    margin-right: auto;
+    color: rgb(173, 122, 122);
+    font-size: 22px;
+    font-family: cursive;
+}
+
+.sex input {
+    width: 18px;
+    height: 18px;
+    opacity: 30%;
+}
+
+.sex :last-child {
+    margin-left: 10%;
+}
+
+
+.other {
+    margin-top: 15%;
+    margin-left: 38%;
+    opacity: 40%;
+}
+
+.other :first-child {
+    margin-left: -56%;
+    margin-right: 99%;
+}
+
+ion-button {
+    --background: rgb(53, 2, 2);
+    margin-top: 18%;
+    margin-left: 10%;
+    box-shadow: 0px 0px 14px rgb(90, 10, 10);
+    opacity: 95%;
+    width: 80%;
+}
+
+.full {
+    background: rgb(247, 228, 228);
+    box-shadow: 0px 0px 5px rgb(246, 129, 129);
+}
+
+.head {
+    margin-top: 0%;
+    margin-left: .5%;
+    width: 99%;
+    height: 10%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.footer {
+    margin-top: -62%;
+    margin-left: .5%;
+    width: 99%;
+    height: 56%;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}

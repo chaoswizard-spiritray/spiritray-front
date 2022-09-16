@@ -1,0 +1,96 @@
+<ion-header>
+    <div class="outer">
+        <div *ngIf="province!=null;else p" class="shape loadcolor" (click)="queryProvince()">
+            <div class="circle"></div>
+            <div class="row">
+                <p></p>
+            </div>
+            <label>{{province.value}}</label>
+            <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+        </div>
+        <div *ngIf="show1;else l" class="line loadline"></div>
+        <div *ngIf="city!=null;else c" class="shape loadcolor" (click)="queryCity(province.key)">
+            <div class="circle"></div>
+            <div class="row">
+                <p></p>
+            </div>
+            <label>{{city.value}}</label>
+            <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+        </div>
+        <div *ngIf="show2;else l" class="line loadline"></div>
+        <div *ngIf="district!=null;else d" class="shape loadcolor" (click)="queryDistrict(city.key)">
+            <div class="circle"></div>
+            <div class="row">
+                <p></p>
+            </div>
+            <label>{{district.value}}</label>
+            <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+        </div>
+    </div>
+</ion-header>
+<ion-content>
+    <div *ngIf="proList!=null" class="content">
+        <div *ngFor="let item of proList;index as i">
+            <ion-chip color="primary" (click)="selectProValue(i)">
+                <ion-label> {{proList[i].value}}</ion-label>
+            </ion-chip>
+        </div>
+    </div>
+    <div *ngIf="cityList!=null" class="content">
+        <div *ngFor="let item of cityList;index as i">
+            <ion-chip color="primary" (click)="selectCityValue(i)">
+                <ion-label> {{cityList[i].value}}</ion-label>
+            </ion-chip>
+        </div>
+    </div>
+    <div *ngIf="disList!=null" class="content">
+        <div *ngFor="let item of disList;index as i">
+            <ion-chip color="primary" (click)="selectDisValue(i)">
+                <ion-label> {{disList[i].value}}</ion-label>
+            </ion-chip>
+        </div>
+    </div>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="dismiss()">
+        <ion-fab-button>
+            <ion-icon name="close-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+</ion-content>
+
+<ng-template #p>
+    <div class="shape">
+        <div class="circle"></div>
+        <div class="row">
+            <p></p>
+        </div>
+        <label>请选择省</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </div>
+</ng-template>
+
+<ng-template #c>
+    <div class="shape">
+        <div class="circle"></div>
+        <div class="row">
+            <p></p>
+        </div>
+        <label>请选择市</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </div>
+</ng-template>
+
+<ng-template #d>
+    <div class="shape">
+        <div class="circle"></div>
+        <div class="row">
+            <p></p>
+        </div>
+        <label>请选择区</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </div>
+</ng-template>
+
+<ng-template #l>
+    <div class="line"></div>
+</ng-template>

@@ -1,0 +1,62 @@
+<ion-refresher slot="fixed" (ionRefresh)="refreshing($event)" pullFactor="0.8" pullMin="10" pullMax="10">
+  <ion-refresher-content pullingIcon="add" refreshingText="刷新中">
+  </ion-refresher-content>
+</ion-refresher>
+<!-- 下拉刷新 -->
+<!-- 加载数据时的图标 -->
+<div class="loadFlag">
+  <ion-progress-bar type="indeterminate" value="0.5" buffer="1.5" reversed="false">
+  </ion-progress-bar>
+</div>
+<!-- 定时加载失败的展示内容 -->
+<div class="errorFlag" hidden>
+  <ion-icon name="wifi-outline"></ion-icon>
+  <ion-label>加载失败</ion-label>
+</div>
+<!-- 无数据时展示的内容 -->
+<div class="nodataFlag" hidden>
+  <ion-label>还没有在售商品</ion-label>
+</div>
+<!-- 信息内容,因为是每行两个，但是ng不能进行i运算，所以只有通过奇偶或者函数进行验证 -->
+<ion-content>
+  <div class="contentFlag" hidden>
+    <ion-grid fixed *ngIf="commoditys!=null">
+      <div *ngFor="let commodity of commoditys;index as i;even as isEven">
+        <ion-row *ngIf="isEven">
+          <ion-col>
+            <ion-card *ngIf="commoditys[i]">
+              <ion-card-header>
+                <ion-avatar>
+                  <img [src]="commoditys[i].masterMap|trustUrl" (click)="showAll(commoditys[i].masterMap)" />
+                </ion-avatar>
+                <ion-card-subtitle>{{commoditys[i].commodityName}}</ion-card-subtitle>
+                <ion-card-title>上架{{commoditys[i].inSellDay+1}}天</ion-card-title>
+                <label>月售数{{getMonthNum(commoditys[i].commodityId)}}笔</label>
+              </ion-card-header>
+              <ion-card-content (click)="toDetail(commoditys[i].commodityId)">
+                <label>查看详情</label>
+                <ion-icon slot="start" name="code-outline"></ion-icon>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card *ngIf="commoditys[i+1]">
+              <ion-card-header>
+                <ion-avatar>
+                  <img [src]="commoditys[i+1].masterMap|trustUrl" (click)="showAll(commoditys[i+1].masterMap)" />
+                </ion-avatar>
+                <ion-card-subtitle>{{commoditys[i+1].commodityName}}</ion-card-subtitle>
+                <ion-card-title>上架{{commoditys[i+1].inSellDay+1}}天</ion-card-title>
+                <label>月售数{{getMonthNum(commoditys[i+1].commodityId)}}笔</label>
+              </ion-card-header>
+              <ion-card-content (click)="toDetail(commoditys[i+1].commodityId)">
+                <label>查看详情</label>
+                <ion-icon slot="start" name="code-outline"></ion-icon>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-grid>
+  </div>
+</ion-content>

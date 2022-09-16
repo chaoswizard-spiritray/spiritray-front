@@ -1,0 +1,49 @@
+<ion-card>
+  <ion-item>
+    <ion-avatar slot="start">
+      <img *ngIf="srd.storeInf!=null" [src]="srd.storeInf.storeHead|trustUrl"
+        (click)="showAll(srd.storeInf.storeHead)" />
+    </ion-avatar>
+    <ion-label slot="end">
+      <input id="head" type="file" accept="image/*" hidden />
+      <label for="head">修改头像</label>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <label slot="start">店铺名</label>
+    <ion-input *ngIf="srd.storeInf!=null" placeholder="{{srd.storeInf.storeName}}"></ion-input>
+    <ion-icon name="chevron-forward-outline" slot="end" (click)="modifyStoreName()"></ion-icon>
+  </ion-item>
+  <ion-item>
+    <label slot="start">状态</label>
+    <label class="state">{{state}}</label>
+    <ion-icon name="chevron-forward-outline" slot="end" (click)="skipClose()"></ion-icon>
+  </ion-item>
+  <ion-item>
+    <label slot="start">店铺执照</label>
+    <ion-icon name="chevron-forward-outline" slot="end" (click)="queryLicense($event)"></ion-icon>
+  </ion-item>
+  <div class="license" hidden>
+    <input id="license" type="file" accept="image/*" multiple hidden (change)="upLicense($event)" />
+    <label for="license">
+      <div class="up">
+        <ion-item>
+          <label>
+            上传
+          </label>
+        </ion-item>
+      </div>
+    </label>
+    <ion-list *ngIf="licenses!=null">
+      <div *ngFor="let license of licenses" class="imgL">
+        <ion-avatar>
+          <img [src]="license|trustUrl" (click)="showAll(license)" />
+        </ion-avatar>
+      </div>
+    </ion-list>
+  </div>
+  <ion-item>
+    <label slot="start">店铺账户</label>
+    <ion-icon name="chevron-forward-outline" slot="end" (click)="skip('/business/store/account')"></ion-icon>
+  </ion-item>
+</ion-card>

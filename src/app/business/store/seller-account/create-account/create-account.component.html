@@ -1,0 +1,36 @@
+<app-detail-show></app-detail-show>
+<div class="outer">
+  <div class="pay alipy">
+    <ion-icon *ngIf="accaId==1" name="logo-alipay"></ion-icon>
+  </div>
+  <div class="pay wechat">
+    <ion-icon *ngIf="accaId==2" name="logo-wechat"></ion-icon>
+  </div>
+  <ion-card class="inf">
+    <div>
+      <ion-item>
+        <label slot="start">商户名</label>
+        <div>
+          <ion-input slot="start" type="text" [(ngModel)]="accountObj.accountName"></ion-input>
+        </div>
+      </ion-item>
+    </div>
+    <div>
+      <ion-item>
+        <label slot="start">商户号</label>
+        <div>
+          <ion-input slot="start" type="text" [(ngModel)]="accountObj.accountNo"></ion-input>
+        </div>
+      </ion-item>
+    </div>
+    <div>
+      <ion-item>
+        <label>默认收款</label>
+        <ion-toggle slot="end" [(ngModel)]="isCollection"></ion-toggle>
+      </ion-item>
+    </div>
+  </ion-card>
+  <ion-button (click)="addAccount($event)" expand="block" fill="clear" shape="round">
+    添加
+  </ion-button>
+</div>

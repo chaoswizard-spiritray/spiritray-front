@@ -1,0 +1,49 @@
+<ion-content>
+  <div class="full head"></div>
+  <!-- 注册表单 -->
+  <div class="menu">
+    <!-- 手机 -->
+    <ion-item>
+      <ion-label position="floating">手机号</ion-label>
+      <ion-input placeholder="11位手机号" [(ngModel)]="phone"></ion-input>
+    </ion-item>
+    <!-- 密码 -->
+    <ion-item>
+      <ion-label position="floating">密码</ion-label>
+      <ion-input placeholder="6-12位的数字、字母密码" type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+    <!-- 再次确认密码 -->
+    <ion-item>
+      <ion-label position="floating">再次确认密码</ion-label>
+      <ion-input placeholder="6-12位的数字、字母密码" type="password" [(ngModel)]="dpassword"></ion-input>
+    </ion-item>
+    <!-- 昵称 -->
+    <ion-item>
+      <ion-label position="floating">昵称</ion-label>
+      <ion-input placeholder="最多6个汉字或者12个字母" [(ngModel)]="nickname"></ion-input>
+    </ion-item>
+    <!-- 短信验证码 -->
+    <div class="code">
+      <div>
+        <ion-item>
+          <ion-input placeholder="验证码" slot="start" [(ngModel)]="code"></ion-input>
+        </ion-item>
+      </div>
+      <div>
+        <ion-label (click)="getCode($event)">获取验证码</ion-label>
+
+      </div>
+    </div>
+    <!-- 性别 -->
+    <div class="sex">
+      <input type="radio" name="sex" checked="true" (click)="setSex('0')" />♂
+      <input type="radio" name="sex" (click)="setSex('1')" />♀
+    </div>
+
+  </div>
+  <div class="other">
+    <ion-label (click)="tologin()">登录</ion-label>
+  </div>
+  <ion-button (click)="register()">注册</ion-button>
+  <div class="full footer"></div>
+</ion-content>

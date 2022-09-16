@@ -1,0 +1,18 @@
+<div class="head">
+  <div (click)="load0(0)">未审核</div>
+  <div (click)="load1(1)">通过</div>
+  <div (click)="load2(2)">拒绝</div>
+</div>
+<ion-content>
+  <ion-item *ngFor="let commodity of commoditys;index as i" (click)="checkInfoDetail(i)">
+    <div class="img">
+      <ion-avatar>
+        <img [src]="commodity.masterMap|trustUrl">
+      </ion-avatar>
+    </div>
+    <div class="name">
+      <label>{{commodity.commodityName}}</label>
+    </div>
+    <ion-icon name="chevron-forward-outline"></ion-icon>
+  </ion-item>
+</ion-content>

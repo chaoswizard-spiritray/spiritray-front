@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon class="backIcon" name="chevron-back-outline" slot="start" (click)="dismiss()"></ion-icon>
+    <ion-icon class="cartIcon" name="cart-outline" slot="end" (click)="toCart()"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="commodityShop">
+  <div class="img">
+    <div class="head">
+      <img [src]="commodityShop.masterMap|trustUrl" />
+    </div>
+  </div>
+  <div class="box1">
+    <ion-card>
+      <div class="price">
+        <label>{{commodityShop.priceMin}}￥起</label>
+      </div>
+      <div class="name">
+        <label>{{commodityShop.commodityName}}</label>
+      </div>
+    </ion-card>
+  </div>
+  <div class="box2">
+    <div class="inf" (click)="skipChoose(0)">
+      <ion-item>
+        <label>选择规格</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+    <div class="inf">
+      <ion-item>
+        <label>发货</label>
+        <label>&nbsp;{{commodityShop.address}}</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+    <div class="inf">
+      <ion-item>
+        <label>运费</label>
+        <label>&nbsp;{{commodityShop.shipping|shippingpipe}}</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+    <div class="inf">
+      <ion-item (click)="toParam()">
+        <label>参数</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+  </div>
+  <div class="box3">
+
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-icon *ngIf="!isCollection" (click)="modifyCollection()" slot="end" name="egg-outline" class="eggIcon"
+      slot="start"></ion-icon>
+    <ion-icon *ngIf="isCollection" (click)="modifyCollection()" slot="end" name="egg" class="eggIcon" slot="start">
+    </ion-icon>
+    <ion-button (click)="skipChoose(1)" expand="block" fill="clear" shape="round">
+      立即购买
+    </ion-button>
+    <ion-button slot="end" (click)="skipChoose(2)" expand="block" fill="clear" shape="round">
+      加入购物车
+      <ion-icon class="cartIcon" name="cart-outline" slot="end"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

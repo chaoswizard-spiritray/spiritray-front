@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon class="backIcon" name="chevron-back-outline" slot="start" (click)="dismiss()"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="orderCommoditys">
+  <div class="address" *ngIf="address">
+    <ion-item (click)="toAddress()">
+      <div>
+        <label>{{addShow}}</label>
+        <label>{{address.takeName}}</label>
+        <label>{{address.takePhone}}</label>
+      </div>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+  </div>
+  <div class="address" *ngIf="!address">
+    <ion-item (click)="toAddress()">
+      <div>
+        <label>您还没有收货地址</label>
+      </div>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+  </div>
+  <div>
+    <ion-card *ngFor="let orderCommodity of orderCommoditys">
+      <div>
+        <ion-item>
+          <ion-avatar slot="start">
+            <img [src]="orderCommodity.sku.skuMap|trustUrl" />
+          </ion-avatar>
+          <div>
+            <label class="commodityName">{{orderCommodity.commodityName}}</label>
+            <label class="sku">{{orderCommodity.sku.skuValue}}</label>
+          </div>
+          <div>
+            <label class="commodityNum">×{{orderCommodity.commodityNum}}</label>
+            <label class="price">￥{{orderCommodity.commodityNum*orderCommodity.sku.skuPrice}}</label>
+          </div>
+        </ion-item>
+      </div>
+      <div>
+        <ion-item>
+          <ion-label>
+            <label>运费</label>
+          </ion-label>
+          <label>{{orderCommodity.shipping}}</label>
+          <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+        </ion-item>
+      </div>
+    </ion-card>
+  </div>
+  <div>
+    <ion-card *ngIf="payCategory">
+      <ion-radio-group (ionChange)="changeValue($event)">
+        <ion-item *ngFor="let cate of payCategory ">
+          <ion-icon class="iconAli" *ngIf="cate.accaId==1" name="logo-alipay" slot="start" slot="start"></ion-icon>
+          <ion-icon class="iconWec" *ngIf="cate.accaId==2" name="logo-wechat" slot="start" slot="start"></ion-icon>
+          <ion-radio [value]="cate.accaId" slot="end"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-card>
+    <ion-card *ngIf="!payCategory">
+      <ion-item>
+        <label>还没有支付方式</label>
+      </ion-item>
+    </ion-card>
+    <ion-card *ngIf="payCategory">
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div>
+      <label class="total">总计:￥{{totalFee}}</label>
+    </div>
+    <ion-button slot="end" (click)="submitOrder()" expand="block" fill="clear" shape="round">
+      提交订单
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

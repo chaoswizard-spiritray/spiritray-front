@@ -1,0 +1,19 @@
+* {
+    font-family: cursive;
+}
+
+ion-tabs {
+    --ion-tab-bar-background: rgb(242, 194, 194);
+    --ion-tab-bar-background-focused: rgb(245, 104, 4);
+    --ion-tab-bar-color-selected: rgb(210, 103, 16);
+}
+
+ion-tab-button {
+    --ripple-color: rgb(231, 124, 66);
+    --color-selected: rgb(211, 92, 6);
+}
+
+ion-icon {
+    color: rgb(182, 137, 137);
+    opacity: 70%;
+}

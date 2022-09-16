@@ -1,0 +1,32 @@
+<ion-content>
+  <div class="full head"></div>
+  <!-- 登录表单 -->
+  <div class="menu">
+    <!-- 手机 -->
+    <ion-item>
+      <ion-label position="floating" type="tel">手机号</ion-label>
+      <ion-input placeholder="已注册手机号" [(ngModel)]="phone"></ion-input>
+    </ion-item>
+    <!-- 密码 -->
+    <ion-item>
+      <ion-label position="floating">密码</ion-label>
+      <ion-input placeholder="" type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+    <div class="code">
+      <div>
+        <ion-item>
+          <ion-input placeholder="验证码" slot="start" [(ngModel)]="code"></ion-input>
+        </ion-item>
+      </div>
+      <div>
+        <ion-label (click)="getCode($event)">获取验证码</ion-label>
+      </div>
+    </div>
+  </div>
+  <div class="other">
+    <ion-label (click)="retrievePass()">忘记密码？</ion-label>
+    <ion-label (click)="toregister()">注册</ion-label>
+  </div>
+  <ion-button (click)="login()">登录</ion-button>
+  <div class="full footer"></div>
+</ion-content>

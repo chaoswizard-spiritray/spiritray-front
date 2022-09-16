@@ -1,0 +1,34 @@
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HammerModule } from '@angular/platform-browser';
+import { IonicModule } from '@ionic/angular';
+import { CommodityShopComponent } from './commodity-shop/commodity-shop.component';
+import { ConsumerRoutingModule } from './consumer-routing.module';
+import { IndexComponent } from './index.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { RetrieveComponent } from './retrieve/retrieve.component';
+
+
+
+@NgModule({
+  declarations: [
+    IndexComponent,
+    LoginComponent,
+    RegisterComponent,
+    RetrieveComponent,
+    CommodityShopComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    HammerModule,
+    IonicModule,
+    HttpClientModule,
+    ConsumerRoutingModule
+  ]
+})
+export class ConsumerModule {
+}

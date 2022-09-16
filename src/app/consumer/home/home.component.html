@@ -1,0 +1,78 @@
+<!-- 头部标签 -->
+<div class="header">
+  <div>
+    <ion-label class="log">SpiritRay</ion-label>
+    <ion-icon id="sea" name="search" slot="end" class="sea"></ion-icon>
+  </div>
+  <ion-card>
+  </ion-card>
+  <div class="real">
+    <ion-label>SpiritRay</ion-label>
+    <ion-icon id="realSea" name="search" slot="end" routerLink="/search"></ion-icon>
+  </div>
+</div>
+<ion-content>
+  <!-- 轮播图 -->
+  <ion-slides #homeSlides class="slides" *ngIf="slideShows.length>0">
+    <ion-slide *ngFor="let slideShow of slideShows">
+      <ion-card>
+        <img [src]="slideShow.mapUrl|trustUrl" (click)="enterStore(slideShow.storeId)" />
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+  <!-- 首页商品 -->
+  <ion-grid fixed *ngIf="commoditys">
+    <div *ngFor="let commodity of commoditys;index as i;even as isEven">
+      <ion-row *ngIf="isEven">
+        <ion-col>
+          <div class="commodity" *ngIf="commoditys[i]" (click)="toCommodity(commoditys[i].commodityId)">
+            <div class="head">
+              <img [src]="commoditys[i].masterMap|trustUrl" />
+            </div>
+            <div class="body">
+              <label class="commodityName">{{commoditys[i].commodityName}}</label>
+              <label *ngIf="commoditys[i].priceMin==commoditys[i].priceMax"
+                class="price">{{commoditys[i].priceMin}}￥</label>
+              <label *ngIf="commoditys[i].priceMin!=commoditys[i].priceMax"
+                class="price">{{commoditys[i].priceMin}}-{{commoditys[i].priceMax}}￥</label>
+              <div class="rate">
+                <label>好评率:{{commoditys[i].favorableRate*100}}%</label>
+              </div>
+              <div class="ico">
+                <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="commodity" *ngIf="commoditys[i+1]" (click)="toCommodity(commoditys[i+1].commodityId)">
+            <div class="head">
+              <img [src]="commoditys[i+1].masterMap|trustUrl" />
+            </div>
+            <div class="body">
+              <label class="commodityName">{{commoditys[i+1].commodityName}}</label>
+              <label *ngIf="commoditys[i+1].priceMin==commoditys[i+1].priceMax"
+                class="price">{{commoditys[i+1].priceMin}}￥</label>
+              <label *ngIf="commoditys[i+1].priceMin!=commoditys[i+1].priceMax"
+                class="price">{{commoditys[i+1].priceMin}}-{{commoditys[i+1].priceMax}}￥</label>
+              <div class="rate">
+                <label>好评率:{{commoditys[i+1].favorableRate*100}}%</label>
+              </div>
+              <div class="ico">
+                <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-grid>
+  <!-- 无限滚动组件 -->
+  <ion-infinite-scroll threshold="80px" (ionInfinite)="loadData($event)" #IonInfiniteScroll>
+    <ion-infinite-scroll-content loadingSpinner="circular" loadingText="加载中...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <div class="dataover" hidden>
+    <label>已经到底了....</label>
+  </div>
+</ion-content>

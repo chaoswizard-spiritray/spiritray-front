@@ -1,0 +1,38 @@
+* {
+    font-family: cursive;
+}
+
+ion-avatar {
+    width: 60px;
+    height: 60px;
+    box-shadow: -1px -1px 1px black;
+}
+
+ion-card {
+    border-radius: 30px;
+    height: auto;
+}
+
+.state {
+    margin-left: 9%;
+    opacity: .6;
+}
+
+.up {
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.151);
+    border-radius: 10px;
+    margin-left: .5%;
+}
+
+.up label {
+    float: left;
+    margin-left: 45%;
+    opacity: 1;
+    font-size: 10px;
+}
+
+.imgL {
+    float: right;
+    margin-right: 10%;
+}

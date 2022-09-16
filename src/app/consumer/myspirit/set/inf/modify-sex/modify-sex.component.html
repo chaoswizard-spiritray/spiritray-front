@@ -1,0 +1,13 @@
+<ion-list *ngIf="ui.userInf!=null">
+    <ion-radio-group value="{{ui.userInf.consumerSex}}">
+        <ion-item (click)="modifySex(0)">
+            <label>男</label>
+            <ion-radio slot="start" value="0"></ion-radio>
+        </ion-item>
+
+        <ion-item (click)="modifySex(1)">
+            <label>女</label>
+            <ion-radio slot="start" value="1"></ion-radio>
+        </ion-item>
+    </ion-radio-group>
+</ion-list>

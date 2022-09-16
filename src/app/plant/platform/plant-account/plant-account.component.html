@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title center>YUNGOUOS商户</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card *ngIf="cates">
+    <ion-card>
+      <div class="paycate" *ngFor="let cate of cates;index as i">
+        <ion-segment *ngIf="cate.accaId==1" value="cate.accaId" (click)="queryPlantAccount(i)">
+          <ion-segment-button type="reset" value="cate.accaId">
+            <ion-icon name="logo-alipay" class="iconAli"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+        <ion-segment *ngIf="cate.accaId==2" value="cate.accaId" (click)="queryPlantAccount(i)">
+          <ion-segment-button type="reset" value="cate.accaId">
+            <ion-icon name="logo-wechat" class="iconWec"></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+    </ion-card>
+    <!-- 具体账户信息 -->
+    <ion-card>
+      <!-- 禁用桌布 -->
+      <!-- <ion-backdrop stopPropagation="ture" *ngIf="cates[nowAccountCategory].isOpen<1" (ionBackdropTap)="showTip()">
+      </ion-backdrop> -->
+      <!-- 添加图标 -->
+      <ion-item>
+        <ion-icon slot="end" name="create-outline" (click)="addAccount()"></ion-icon>
+      </ion-item>
+      <!-- 遍历账户信息 -->
+      <ion-card *ngFor="let account of accounts;index as i;">
+        <div *ngIf="cates[nowAccountCategory].accaId==1">
+          <ion-item>
+            <label slot="start">商户号:</label>
+            <label slot="end">{{account.accountNo}}</label>
+          </ion-item>
+          <ion-item>
+            <label slot="start">密钥:</label>
+            <label slot="end">{{account.accountKey}}</label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="trash-outline" slot="start" (click)="deleteAccount(i)"></ion-icon>
+            <ion-icon name="receipt-outline" (click)="modifyAccount(i)" slot="end"></ion-icon>
+          </ion-item>
+        </div>
+        <div *ngIf="cates[nowAccountCategory].accaId==2">
+          <ion-item>
+            <label slot="start">appID:</label>
+            <label slot="end">{{account.appId}}</label>
+          </ion-item>
+          <ion-item>
+            <label slot="start">商户号:</label>
+            <label slot="end">{{account.accountNo}}</label>
+          </ion-item>
+          <ion-item>
+            <label slot="start">密钥:</label>
+            <label slot="end">{{account.accountKey}}</label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="trash-outline" slot="start" (click)="deleteAccount(i)"></ion-icon>
+            <ion-icon name="receipt-outline" (click)="modifyAccount(i)" slot="end"></ion-icon>
+          </ion-item>
+        </div>
+
+      </ion-card>
+    </ion-card>
+  </ion-card>
+</ion-content>

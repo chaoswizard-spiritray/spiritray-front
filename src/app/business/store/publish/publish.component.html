@@ -1,0 +1,159 @@
+<!-- 图片放大展示 -->
+<div class="see" hidden>
+  <img src="" (click)="noShowImg($event)">
+</div>
+<!-- 头部回退组件 -->
+<app-detail-show></app-detail-show>
+<ion-content class="childContent">
+  <!-- 商品基本信息 -->
+  <ion-card>
+    <ion-card-title>基本信息</ion-card-title>
+    <ion-card-content>
+      <ion-item>
+        <label slot="start">商品主图:</label>
+        <input id="masterMap" type="file" accept="image/jpeg" (change)="addMasterMap($event)" hidden />
+        <label for="masterMap">上传</label>
+        <ion-icon name="add"></ion-icon>
+        <ion-avatar slot="end">
+          <ion-img src="" (click)="showImg($event)"></ion-img>
+        </ion-avatar>
+      </ion-item>
+      <ion-item>
+        <label slot="start">商品名:</label>
+        <ion-input type="text" placeholder="填写商品名" ngDefaultControl [(ngModel)]="commodityName">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <label slot="start">商品简述:</label>
+        <ion-input type="text" placeholder="30字符内描述商品" ngDefaultControl [(ngModel)]="commodityDescribe">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <label slot="start">运费:</label>
+        <ion-input type="text" placeholder="运费" ngDefaultControl [(ngModel)]="shipping">
+        </ion-input>
+        <label>元</label>
+      </ion-item>
+      <ion-item>
+        <label slot="start">发货地址:</label>
+        <ion-input type="text" placeholder="省、市、区" ngDefaultControl [value]="addressShow" (click)="getLocation()">
+        </ion-input>
+      </ion-item>
+      <ion-item class="addressStr">
+        <ion-input type="text" placeholder="详细信息" ngDefaultControl [(ngModel)]="addressStr"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <!-- 选取商品类型 -->
+  <ion-card>
+    <ion-card-title>类型</ion-card-title>
+    <ion-card-content>
+      <ion-item>
+        <label slot="start">商品类型</label>
+      </ion-item>
+      <div *ngFor="let category of categorys;index as i" class="cate">
+        <div *ngFor="let item of category" class="chip">
+          <ion-chip (click)="categoryToggle($event,item.father,item.categoryId,i)" [class]="cateColor[i]">
+            {{item.categoryName}}
+          </ion-chip>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <!-- 商品标准单元属性 -->
+  <ion-card>
+    <ion-card-title>
+      <ion-item>
+        商品标准单元属性
+      </ion-item>
+    </ion-card-title>
+    <ion-card-content>
+      <div *ngFor="let attribute of attributes">
+        <div *ngFor="let item of attribute">
+          <ion-item *ngIf="isZero(item.isMul);">
+            <label>{{item.attributeName}}:</label>
+            <ion-input type="text" placeholder="" [class]="item.attributeName"></ion-input>
+          </ion-item>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <!-- 影响库存的属性 -->
+  <ion-card>
+    <ion-card-title>
+      <ion-item>
+        商品库存属性
+        <ion-icon slot="end" name="add" (click)="generateSkus()">生成sku</ion-icon>
+      </ion-item>
+      <ion-button class="put" (click)="putData()" expand="block" fill="clear" shape="round">
+        填充
+      </ion-button>
+    </ion-card-title>
+    <ion-card-content>
+      <div *ngFor="let attribute of attributes;">
+        <div *ngFor="let item of attribute">
+          <div *ngIf="isOne(item.isMul);">
+            <div>
+              <ion-item>
+                <label>{{item.attributeName}}</label>
+                <ion-input type="text" placeholder="填写属性值">
+                </ion-input>
+                <ion-icon slot="end" name="add" (click)="addMulValue($event,item.attributeName)"></ion-icon>
+              </ion-item>
+            </div>
+            <div>
+              <div>
+                <ion-chip *ngFor="let str of getMulValue(item.attributeName);"
+                  (press)="deleteMulValue($event,item.attributeName)">
+                  {{str}}
+                </ion-chip>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <!-- 规格属性 -->
+  <ion-card>
+    <ion-card-title>
+      <ion-item>
+        规格参数
+      </ion-item>
+    </ion-card-title>
+    <ion-card-content>
+      <ion-card *ngFor="let sku of skus;index as i">
+        <ion-item>
+          <label slot="start">规格</label>
+          <label slot="end">{{sku}}</label>
+        </ion-item>
+        <ion-item>
+          <input type="file" [id]="i" accept="image/jpeg" (change)="addSalveMap($event,i)" hidden />
+          <label [for]="i" slot="start">添加附图</label>
+          <ion-avatar slot="end">
+            <ion-img src="" (click)="showImg($event)"></ion-img>
+          </ion-avatar>
+        </ion-item>
+        <ion-item>
+          <label slot="start">价格</label>
+          <ion-input type="text" placeholder="设置价格" class="price"></ion-input>
+        </ion-item>
+        <ion-item>
+          <label slot="start">数量</label>
+          <ion-input type="text" placeholder="设置数量" class="num"></ion-input>
+        </ion-item>
+      </ion-card>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-footer class="childFooter">
+  <ion-toolbar>
+    <ion-button (click)="submit($event)" expand="block" fill="clear" shape="round">
+      提交
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+<script>
+
+</script>
+<ng-template #null></ng-template>

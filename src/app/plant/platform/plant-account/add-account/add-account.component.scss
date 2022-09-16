@@ -1,0 +1,58 @@
+* {
+    font-family: cursive;
+}
+
+.outer {
+    width: 96%;
+    margin-left: 2%;
+    box-shadow: 0px 1px 1px rgb(117, 116, 116);
+    border-radius: 10px;
+    float: left;
+}
+
+.pay {
+    font-size: 300%;
+    margin-left: 43%;
+    margin-top: 20%;
+}
+
+.alipy {
+    color: rgb(0, 62, 143);
+}
+
+.wechat {
+    color: rgb(0, 129, 37);
+}
+
+.inf {
+    border-radius: 15px;
+    margin-top: 5%;
+}
+
+.inf div {
+    margin-bottom: 5%;
+}
+
+.inf div div {
+    margin-top: 5%;
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 1px -1px .5px rgb(225, 225, 225);
+}
+
+.inf div:last-child ion-toggle {
+    --handle-background-checked: rgb(210, 174, 239);
+    --background-checked: rgb(96, 50, 131);
+}
+
+ion-button {
+    margin-top: 30%;
+    margin-bottom: 90%;
+    margin-top: 10%;
+    --color: rgb(254, 254, 254);
+    --background: rgb(49, 2, 49);
+}
+
+.backIcon {
+    margin-top: 3%;
+}

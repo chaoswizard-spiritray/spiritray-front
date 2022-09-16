@@ -1,0 +1,17 @@
+<div class="skip" (click)="skip()">
+    <label slot="start">跳过</label>
+    <label slot="end">{{timeTrmier}}s</label>
+</div>
+<ion-content>
+    <div class="max">
+        <div class="box">
+            <ion-checkbox color="primary"></ion-checkbox>
+        </div>
+        <div class="success">
+            <label>支付完成</label>
+        </div>
+    </div>
+    <ion-button (click)="skip()" expand="block" fill="clear" shape="round">
+        返回首页
+    </ion-button>
+</ion-content>

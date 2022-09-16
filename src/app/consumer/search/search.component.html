@@ -1,0 +1,6 @@
+<!-- keypress和keyup,前者当按下回车时触发，后者每次输入都会进行触发，注意这个事件在ionic文档中并没有进行声明指出 -->
+<ion-searchbar placeholder="{{placeholderWord}}" #searchbar (keypress)="queryCommodity()">
+</ion-searchbar>
+<ion-content>
+  <ion-router-outlet></ion-router-outlet>
+</ion-content>

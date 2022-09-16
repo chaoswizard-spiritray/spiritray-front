@@ -1,0 +1,27 @@
+* {
+    font-family: cursive;
+}
+
+.outer {
+    margin-top: -1%;
+    background: url("../../../assets/img/retrieve.jpeg") center/ cover no-repeat;
+    height: 100%;
+    width: 100%;
+    margin-left: 0%;
+    opacity: .9;
+}
+
+.outer ion-card {
+    margin-top: 15%;
+    opacity: .7;
+}
+
+ion-button {
+    --color: rgb(0, 0, 0);
+}
+
+.submit {
+    margin-top: 10%;
+    --background: rgb(255, 255, 255);
+    opacity: .6;
+}

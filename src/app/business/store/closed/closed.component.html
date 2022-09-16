@@ -1,0 +1,33 @@
+<div *ngIf="storeCloseInf>0;else ofen">
+    <ion-card>
+        <ion-item>
+            <label class="msg">该店铺已封闭</label>
+        </ion-item>
+        <ion-item class="cause">
+            <label slot="start">封闭原因</label>
+            <label slot="end">{{storeCloseInf.closeCause}}</label>
+        </ion-item>
+        <ion-item>
+            <label slot="start">封闭时间</label>
+            <label slot="end">{{storeCloseInf.closeDate}}</label>
+        </ion-item>
+        <ion-item>
+            <label slot="start" class="please">解封申请</label>
+            <label slot="end" class="please consumer" routerLink="/index/myspirit">买家中心</label>
+        </ion-item>
+    </ion-card>
+</div>
+<ng-template #ofen>
+    <ion-card>
+        <ion-item>
+            <label class="msg">该店铺营业中</label>
+        </ion-item>
+        <ion-item class="cause">
+            <label slot="start">关闭原因</label>
+            <ion-input type="text" placeholder="填写原因" class="closeCause"></ion-input>
+        </ion-item>
+        <ion-button (click)="close()" expand="block" fill="clear" shape="round">
+            提交
+        </ion-button>
+    </ion-card>
+</ng-template>
