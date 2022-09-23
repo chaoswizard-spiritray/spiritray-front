@@ -5,13 +5,12 @@ import { ModalController, NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { CommodityShop, GlobalALert, GlobalFinal } from '../../dto-model/dto-model.component';
 import { LocationService } from '../../service/location.service';
-import { CommodityChooseComponent } from './commodity-choose/commodity-choose.component';
 import { CommodityParamComponent } from './commodity-param/commodity-param.component';
 
 @Component({
   selector: 'app-commodity-shop',
   templateUrl: './commodity-shop.component.html',
-  styleUrls: ['./commodity-shop.component.scss'],
+  styleUrls: ['./commodity-shop.component.scss']
 })
 export class CommodityShopComponent implements OnInit, OnDestroy {
 
@@ -36,7 +35,7 @@ export class CommodityShopComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     //解析参数
-    this.activatedRoute.params.subscribe((params) => {
+    this.activatedRoute.queryParams.subscribe((params) => {
       this.commodityId = params.commodityId;
       //请求数据
       this.queryCommodityShop();
@@ -95,7 +94,7 @@ export class CommodityShopComponent implements OnInit, OnDestroy {
 
   //跳转choose地址
   skipChoose(index: number) {
-    this.router.navigate(["/consumer/shop/" + this.commodityId + "/choose"], {
+    this.router.navigate(["/consumer/shop/" + "/choose"], {
       queryParams: {
         'commodityId': this.commodityId,
         'comIndex': index,
@@ -103,25 +102,6 @@ export class CommodityShopComponent implements OnInit, OnDestroy {
         'commodityName': this.commodityShop.commodityName
       }
     });
-  }
-
-  //打开规格选取模态框
-  async toChoose(index: number) {
-    const modal = await this.modalController.create({
-      component: CommodityChooseComponent,//模态框中展示的组件
-      handle: false,
-      componentProps: {
-        'commodityId': this.commodityId,
-        'comIndex': index,
-        'shipping': this.commodityShop.shipping,
-        'commodityName': this.commodityShop.commodityName
-      },
-      initialBreakpoint: 1,
-      breakpoints: [1, 1, 1],
-      swipeToClose: true,
-      presentingElement: await this.modalController.getTop()
-    });
-    await modal.present();
   }
 
   //打开参数查看模态框

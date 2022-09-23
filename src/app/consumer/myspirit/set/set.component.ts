@@ -10,7 +10,7 @@ import { ModifyPdComponent } from './modify-pd/modify-pd.component';
 @Component({
   selector: 'app-set',
   templateUrl: './set.component.html',
-  styleUrls: ['./set.component.scss'],
+  styleUrls: ['./set.component.scss']
 })
 export class SetComponent implements OnInit {
 
@@ -66,7 +66,7 @@ export class SetComponent implements OnInit {
   }
 
   //退出登录
-  openLogOut(){
+  openLogOut() {
     //清除缓存
     localStorage.clear();
     GlobalALert.getToast("已退出");

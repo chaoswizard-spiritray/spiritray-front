@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
-import { ModalController, NavController, NavParams } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController, NavController } from '@ionic/angular';
 import { Cart, GlobalALert, GlobalFinal, OrderBeforeCommodity, Sku, SSMap } from '../../../dto-model/dto-model.component';
 import { ImgShowComponent } from '../../../img-show/img-show.component';
-import { OrderShowComponent } from './order-show/order-show.component';
 
 @Component({
   selector: 'app-commodity-choose',
@@ -12,14 +11,14 @@ import { OrderShowComponent } from './order-show/order-show.component';
   styleUrls: ['./commodity-choose.component.scss'],
 })
 export class CommodityChooseComponent implements OnInit {
+  //组件传递的基本参数
+  commodityId: string;
 
-  @Input() commodityId: string;
+  comIndex: number = 0;
 
-  @Input() comIndex: number = 0;
+  shipping: number;
 
-  @Input() shipping: number;
-
-  @Input() commodityName: string;
+  commodityName: string;
 
   //当前选取sku,存储的是数组下标
   sku: Array<number>;
@@ -45,40 +44,24 @@ export class CommodityChooseComponent implements OnInit {
 
   constructor(
     private hr: HttpClient,
+    private router: Router,
     private modalController: ModalController,
     private activatedRoute: ActivatedRoute,
-    private navController: NavController,
-    private activatedRouteSnapshot: ActivatedRouteSnapshot
-    //  private nav: NavParams
+    private navController: NavController
   ) { }
 
   ngOnInit() {
-    const rou = this.activatedRoute.firstChild;
-    this.activatedRouteSnapshot.params.subscribe((data) => {
-      console.log(data);
-
-      // this.commodityId = data.commodityId;
-      // this.comIndex = data.comIndex;
-      // this.shipping = data.shipping;
-      // this.commodityName = data.commodityName;
+    //解析参数
+    this.activatedRoute.queryParams.subscribe(data => {
+      //保存参数值
+      this.commodityId = data.commodityId;
+      this.comIndex = data.comIndex;
+      this.shipping = data.shipping;
+      this.commodityName = data.commodityName;
+      //请求参数值
+      this.querySku();
+      this.queryMulAttribute();
     });
-    // if (rou != null) {
-    //   rou.params.subscribe((data) => {
-    //     console.log(data);
-
-    //     this.commodityId = data.commodityId;
-    //     this.comIndex = data.comIndex;
-    //     this.shipping = data.shipping;
-    //     this.commodityName = data.commodityName;
-
-    //   });
-    //}
-    // this.commodityId = this.nav.get("commodityId");
-    // this.comIndex = this.nav.get("comIndex");
-    // this.shipping = this.nav.get("shipping");
-    // this.commodityName = this.nav.get("commodityName");
-    this.querySku();
-    this.queryMulAttribute();
   }
 
   //加入购物车
@@ -126,18 +109,14 @@ export class CommodityChooseComponent implements OnInit {
       });
   }
 
-  //打开订单模态框
-  async openOrderModal(orderCommoditys: Array<OrderBeforeCommodity>) {
-    const modal = await this.modalController.create({
-      component: OrderShowComponent,//模态框中展示的组件
-      handle: false,
-      componentProps: {
-        "orderCommoditys": JSON.stringify(orderCommoditys)
-      },
-      swipeToClose: true,
-      presentingElement: await this.modalController.getTop()
-    });
-    await modal.present();
+  //跳转订单界面
+  openOrderModal(orderCommoditys: Array<OrderBeforeCommodity>) {
+    this.router.navigate(['/consumer/shop/choose/order'],
+      {
+        queryParams: {
+          "orderCommoditys": JSON.stringify(orderCommoditys)
+        }
+      });
   }
 
 
@@ -297,6 +276,5 @@ export class CommodityChooseComponent implements OnInit {
 
   dismiss() {
     this.navController.back();
-    // this.modalController.dismiss();
   }
 }

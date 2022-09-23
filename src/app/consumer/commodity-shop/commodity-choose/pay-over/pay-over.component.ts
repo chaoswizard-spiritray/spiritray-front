@@ -24,7 +24,7 @@ export class PayOverComponent implements OnInit {
     this.timing();
   }
 
-  //计时5s后自动跳转
+  //计时指定时间后自动跳转
   timing() {
     this.timer = setInterval(() => {
       if (this.timeTrmier > 0) {

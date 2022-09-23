@@ -124,6 +124,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   //进入商品购买页面
   toCommodity(commodityId) {
-    this.router.navigateByUrl("/consumer/shop/" + commodityId);
+    this.router.navigate(['/consumer/shop'], {
+      queryParams: {
+        'commodityId': commodityId
+      }
+    });
   }
 }

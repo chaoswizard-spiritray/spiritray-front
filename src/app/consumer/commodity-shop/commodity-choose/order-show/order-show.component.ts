@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ModalController, NavController, NavParams } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController, NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { AccountCategory, Address, GlobalALert, GlobalFinal, Order, OrderBeforeCommodity, OrderDetail } from '../../../../dto-model/dto-model.component';
 import { LocationService } from '../../../../service/location.service';
 import { AddressComponent } from '../../../myspirit/set/address/address.component';
-import { PayShowComponent } from '../pay-show/pay-show.component';
 
 @Component({
   selector: 'app-order-show',
@@ -31,16 +30,18 @@ export class OrderShowComponent implements OnInit {
 
   constructor(
     private hr: HttpClient,
+    private rou: Router,
     private modalController: ModalController,
     private activatedRoute: ActivatedRoute,
     private navController: NavController,
-    private navParams: NavParams,
     private locationService: LocationService
   ) { }
 
   ngOnInit() {
     //解析参数
-    this.orderCommoditys = JSON.parse(this.navParams.get("orderCommoditys"));
+    this.activatedRoute.queryParams.subscribe(data => {
+      this.orderCommoditys = JSON.parse(data.orderCommoditys);
+    });
     this.queryAddress();
     this.queryAccountCategory();
     //计算总费用
@@ -69,19 +70,15 @@ export class OrderShowComponent implements OnInit {
   }
 
   //展示支付页面
-  async openPayShow(orderId, totalMoney: string) {
-    const modal = await this.modalController.create({
-      component: PayShowComponent,//模态框中展示的组件
-      handle: false,
-      componentProps: {
+  openPayShow(orderId, totalMoney: string) {
+    //跳转支付页面
+    this.rou.navigate(['/consumer/shop' + '/choose' + '/pay-show'], {
+      queryParams: {
         "accaId": this.usePaycate,
         "msg": totalMoney,
         "orderId": orderId
-      },
-      swipeToClose: true,
-      presentingElement: await this.modalController.getTop()
+      }
     });
-    await modal.present();
   }
 
   //查询平台支付方式
@@ -163,7 +160,7 @@ export class OrderShowComponent implements OnInit {
 
   //关闭模态框
   dismiss() {
-    this.modalController.dismiss();
+    this.navController.back();
   }
 
 }

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { GlobalFinal, SSMap } from '../../../dto-model/dto-model.component';
 
 @Component({
@@ -19,9 +18,7 @@ export class CommodityParamComponent implements OnInit {
 
   constructor(
     private hr: HttpClient,
-    private modalController: ModalController,
-    private activatedRoute: ActivatedRoute,
-    private navController: NavController,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -34,6 +31,8 @@ export class CommodityParamComponent implements OnInit {
     this.hr.get(GlobalFinal.SELLER_DOMAIN + "/cav/cav/simple/" + this.commodityId, GlobalFinal.PLAT_HEADER)
       .subscribe((data: any) => {
         this.simpleCavs = data.data;
+        console.log(data);
+
       });
   }
 
@@ -41,6 +40,8 @@ export class CommodityParamComponent implements OnInit {
     this.hr.get(GlobalFinal.SELLER_DOMAIN + "/cav/cav/mul/" + this.commodityId, GlobalFinal.PLAT_HEADER)
       .subscribe((data: any) => {
         //注意编译后的指令重排序,完全无法理解这个ＴＳ编译器
+        console.log(data);
+
         const cavs: Array<SSMap> = data.data;
         let i = 0;
         let flag = false;

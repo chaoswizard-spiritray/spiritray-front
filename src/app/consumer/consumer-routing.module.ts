@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {
-    path: 'shop/:commodityId',
+    path: 'shop',
     loadChildren: () => import('./commodity-shop/commodity-shop.module').then(m => m.CommodityShopModule)
   },
   {
