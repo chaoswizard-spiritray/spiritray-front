@@ -97,5 +97,16 @@ ion-avatar {
 }
 
 .extra ion-icon {
-    color:black;
+    color: black;
+}
+
+.num {
+    float: right;
+    margin-right: 18px;
+    margin-top: -47px;
+    background-color: rgb(255, 180, 225);
+    border-radius: 30px;
+    font-size: 110%;
+    color: #222;
+    text-shadow: 0px 2px 3px #555;
 }

@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginGuard } from '../../guard/login.guard';
-import { MyspiritComponent } from './myspirit.component';
+import { ConsumerOrderComponent } from './consumer-order.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MyspiritComponent,
-    canActivate: [LoginGuard]
+    component: ConsumerOrderComponent
   }
 
 ];
@@ -16,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MyspiritRoutingModule { }
+export class ConsumerOrderRoutingModule { }

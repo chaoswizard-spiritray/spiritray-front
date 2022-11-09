@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HammerModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
+import { BackService } from '../service/back.service';
 import { ConsumerRoutingModule } from './consumer-routing.module';
 import { IndexComponent } from './index.component';
 import { LoginComponent } from './login/login.component';

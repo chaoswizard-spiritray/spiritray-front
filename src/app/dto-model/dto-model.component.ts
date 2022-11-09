@@ -62,7 +62,17 @@ export class GlobalFinal {
     el.innerHTML = htmls;
     obj.appendChild(el);
   }
+  //获取get请求方式可携带参数的jwt请求头
+  public static getGetHeaderCanTakeParamJWTHeader(data) {
+    return {
+      headers: new HttpHeaders({ "Cache-Control": "no-cache", "Pragma": "no-cache", "Expires": "0", 'jwt': localStorage.getItem("jwt") }),
+      params: data,
+      withCredentials: true
+    };
+  }
 }
+
+
 
 //全局对话框
 export class GlobalALert {

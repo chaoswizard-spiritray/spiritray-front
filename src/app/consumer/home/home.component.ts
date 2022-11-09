@@ -32,9 +32,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   //数据初始化
   ngOnInit() {
+  }
+
+  //每次进入页面时都会触发这个函数，不论是否初始化
+  ionViewWillEnter() {
     this.queryHomeCommodity();
     this.querySlide();
-
   }
 
   ngAfterViewInit() {

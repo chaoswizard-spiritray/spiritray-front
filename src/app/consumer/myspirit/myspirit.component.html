@@ -46,20 +46,24 @@
                         <ion-col (click)="toOrder(0)">
                             <ion-icon name="wallet-outline"></ion-icon>
                             <ion-label>待付款</ion-label>
+                            <label *ngIf="noPayNum>0" class="num">{{noPayNum}}</label>
                         </ion-col>
                         <ion-col (click)="toOrder(1)">
                             <ion-icon name="briefcase-outline"></ion-icon>
                             <ion-label>待发货</ion-label>
+                            <label *ngIf="payNum>0" class="num">{{payNum}}</label>
                         </ion-col>
                         <ion-col (click)="toOrder(2)">
                             <ion-icon name="airplane-outline"></ion-icon>
                             <ion-label>待收货</ion-label>
+                            <label *ngIf="noTakeNum>0" class="num">{{noTakeNum}}</label>
                         </ion-col>
                         <ion-col (click)="toOrder(3)">
                             <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
                             <div class="center">
                                 <ion-label>评价</ion-label>
                             </div>
+                            <label *ngIf="noCommentNum>0" class="num">{{noCommentNum}}</label>
                         </ion-col>
                     </ion-row>
                 </ion-grid>

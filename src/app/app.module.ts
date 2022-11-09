@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { BeforeStoreComponent } from './before-store/before-store.component';
 import { DtoModelComponent } from './dto-model/dto-model.component';
 import { ErrorComponent } from './error/error.component';
+import { BackService } from './service/back.service';
 
 
 
@@ -33,7 +34,9 @@ import { ErrorComponent } from './error/error.component';
       HttpClientModule,
       AppRoutingModule
     ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    , { provide: 'backService', useClass: BackService }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

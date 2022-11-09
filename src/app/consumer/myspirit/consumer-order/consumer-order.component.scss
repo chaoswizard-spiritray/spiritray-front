@@ -18,6 +18,10 @@
 
 }
 
+.checkedOrder {
+    text-shadow: 1px 13px 10px #f98472;
+}
+
 .check,
 .img,
 .info {
@@ -76,4 +80,42 @@
 
 .info div:last-child label:last-child {
     margin-left: 55%;
+}
+
+.overTime {
+    float: left;
+}
+
+.overTime label {
+    float: left;
+    margin-top: 15px;
+    margin-left: 20px;
+    color: #e45609;
+    font-weight: 600;
+}
+
+.overTime ion-button {
+    float: right;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+//按钮基本样式
+ion-button {
+    float: right;
+    width: 20%;
+    height: 30px;
+    --background: #ff8103;
+    border: #e45609;
+    --color: #ffffff;
+    --ripple-color: #790303;
+    --transition: background-color 15ms linear;
+}
+
+.noTransButton ion-button:first-child {
+    margin-left: 10%;
+}
+
+.noTransButton ion-button:last-child {
+    margin-right: 10%;
 }

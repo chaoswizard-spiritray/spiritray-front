@@ -6,10 +6,10 @@
 <div class="change">
   <ion-grid fixed>
     <ion-row>
-      <ion-col><label>待付款</label></ion-col>
-      <ion-col><label>待发货</label></ion-col>
-      <ion-col><label>待收货</label></ion-col>
-      <ion-col><label>订单评价</label></ion-col>
+      <ion-col class="orderType" (click)="queryNoPay()"><label>待付款</label></ion-col>
+      <ion-col class="orderType" (click)="queryNoTrans()"><label>待发货</label></ion-col>
+      <ion-col class="orderType" (click)="queryNoTake()"><label>待收货</label></ion-col>
+      <ion-col class="orderType" (click)="queryOver()"><label>订单评价</label></ion-col>
     </ion-row>
   </ion-grid>
 </div>
@@ -19,11 +19,11 @@
       <!-- 如果是待付款 -->
       <div *ngIf="flag==0">
         <div class="img">
-          <img src="order.skuMap|trustUrl">
+          <img [src]="order.skuMap|trustUrl">
         </div>
         <div class="info">
           <div>
-            <label *ngIf="commodityNames">{{commodityNames[i]}}</label>
+            <label *ngIf="commodityNames">{{getCommodityName(order.commodityId)}}</label>
             <label>{{order.skuValue}}</label>
           </div>
           <div>
@@ -31,23 +31,21 @@
             <label>×{{order.commodityNum}}</label>
           </div>
         </div>
-        <div *ngIf="overTimes">
-          <ion-button (click)="topay()" expand="block" fill="clear" shape="round">
-            剩余时间{{overTimes[i].value|timepipe}}
-          </ion-button>
-          <ion-button (click)="topay()" expand="block" fill="clear" shape="round">
-            继续付款
+        <div *ngIf="overTimes" class="overTime">
+          <label>剩余:{{overTimes[i].value|timepipe}}</label>
+          <ion-button (click)="toPay(i)" expand="block" fill="clear" shape="round">
+            去付款
           </ion-button>
         </div>
       </div>
       <!-- 如果是待发货-->
       <div *ngIf="flag==1">
         <div class="img">
-          <img src="order.skuMap|trustUrl">
+          <img [src]="order.skuMap|trustUrl">
         </div>
         <div class="info">
           <div>
-            <label *ngIf="commodityNames">{{commodityNames[i]}}</label>
+            <label *ngIf="commodityNames">{{getCommodityName(order.commodityId)}}</label>
             <label>{{order.skuValue}}</label>
           </div>
           <div>
@@ -55,20 +53,23 @@
             <label>×{{order.commodityNum}}</label>
           </div>
         </div>
-        <div>
-          <ion-button (click)="topay()" expand="block" fill="clear" shape="round">
+        <div class="noTransButton">
+          <ion-button (click)="chanelOrder(order.orderNumber,order.odId)" expand="block" fill="clear" shape="round">
             取消订单
+          </ion-button>
+          <ion-button (click)="modifyAddress(order.orderNumber,order.odId)" expand="block" fill="clear" shape="round">
+            修改地址
           </ion-button>
         </div>
       </div>
-       <!-- 如果是待收货-->
-       <div *ngIf="flag==2">
+      <!-- 如果是待收货-->
+      <div *ngIf="flag==2">
         <div class="img">
-          <img src="order.skuMap|trustUrl">
+          <img [src]="order.skuMap|trustUrl">
         </div>
         <div class="info">
           <div>
-            <label *ngIf="commodityNames">{{commodityNames[i]}}</label>
+            <label *ngIf="commodityNames">{{getCommodityName(order.commodityId)}}</label>
             <label>{{order.skuValue}}</label>
           </div>
           <div>
@@ -82,14 +83,14 @@
           </ion-button>
         </div>
       </div>
-       <!-- 如果是评价-->
-       <div *ngIf="flag==1">
+      <!-- 如果是评价-->
+      <div *ngIf="flag==3">
         <div class="img">
-          <img src="order.skuMap|trustUrl">
+          <img [src]="order.skuMap|trustUrl">
         </div>
         <div class="info">
           <div>
-            <label *ngIf="commodityNames">{{commodityNames[i]}}</label>
+            <label *ngIf="commodityNames">{{getCommodityName(order.commodityId)}}</label>
             <label>{{order.skuValue}}</label>
           </div>
           <div>

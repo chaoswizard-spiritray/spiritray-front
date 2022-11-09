@@ -38,26 +38,29 @@ export class PayShowComponent implements OnInit {
   }
 
   //填写完成之后请求付款信息
-  onCodeCompleted(code: string) {
+  onCodeCompleted(event) {
     const body = new SSMap(this.orderId, this.msg);
     const formdata = new FormData();
     formdata.append("body", JSON.stringify(body));
     formdata.append("payState", 1 + "");
-    formdata.append("password", code);
+    formdata.append("password", event);
     if (this.accaId == 1) {
       this.hr.put(GlobalFinal.ORDER_DOMAIN + "/pay/app/order/state/ali", formdata, GlobalFinal.JWTHEADER).subscribe((data: any) => {
         if (data.stausCode == 200) {
           this.queryOrderState(data.msg);
+        } else {
+          GlobalALert.getToast(data.msg, 1000);
         }
       });
     } else if (this.accaId == 2) {
       this.hr.put(GlobalFinal.ORDER_DOMAIN + "/pay/app/order/state/wechat", formdata, GlobalFinal.JWTHEADER).subscribe((data: any) => {
         if (data.stausCode == 200) {
           this.queryOrderState(data.msg);
+        } else {
+          GlobalALert.getToast(data.msg, 1000);
         }
       });
     } else {
-
     }
   }
 
@@ -76,9 +79,6 @@ export class PayShowComponent implements OnInit {
       }, 1200);
       this.flag = false;
     }
-    GlobalALert.getToast(msg);
-    //打开支付完成对话框
-    this.toSuccess();
   }
 
   //支付成功

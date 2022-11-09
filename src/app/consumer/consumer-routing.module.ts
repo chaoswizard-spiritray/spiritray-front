@@ -18,6 +18,10 @@ const routes: Routes = [
     canActivate: [LoginGuard]
   },
   {
+    path: 'order',
+    loadChildren: () => import('./myspirit/consumer-order/consumer-order.moudule').then(m => m.ConsumerOrderModule),
+  },
+  {
     path: '',
     component: IndexComponent,
     children:

@@ -4,15 +4,15 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HammerModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
-import { TimePipe } from '../../trustUrlPipe/time.pipe';
-import { TrustUrlPipe } from '../../trustUrlPipe/trust-url.pipe';
-import { MyspiritRoutingModule } from './myspirit-routing.module';
-import { MyspiritComponent } from './myspirit.component';
+import { TimePipe } from '../../../trustUrlPipe/time.pipe';
+import { TrustUrlPipe } from '../../../trustUrlPipe/trust-url.pipe';
+import { ConsumerOrderRoutingModule } from './consumer-order-routing.module';
+import { ConsumerOrderComponent } from './consumer-order.component';
 
 
 @NgModule({
   declarations: [
-    MyspiritComponent,
+    ConsumerOrderComponent,
     TrustUrlPipe,
     TimePipe,
   ],
@@ -22,7 +22,7 @@ import { MyspiritComponent } from './myspirit.component';
     HammerModule,
     IonicModule,
     HttpClientModule,
-    MyspiritRoutingModule,
+    ConsumerOrderRoutingModule
   ]
 })
-export class MyspiritModule { }
+export class ConsumerOrderModule { }

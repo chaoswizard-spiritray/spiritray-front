@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { AccountCategory, Address, GlobalALert, GlobalFinal, Order, OrderBeforeCommodity, OrderDetail } from '../../../../dto-model/dto-model.component';
+import { AccountCategory, Address, GlobalALert, GlobalFinal, Order, OrderBeforeCommodity, OrderDetail, SSMap } from '../../../../dto-model/dto-model.component';
 import { LocationService } from '../../../../service/location.service';
 import { AddressComponent } from '../../../myspirit/set/address/address.component';
 
@@ -63,14 +63,21 @@ export class OrderShowComponent implements OnInit {
     this.hr.post(GlobalFinal.ORDER_DOMAIN + "/order/generate", fromdata, GlobalFinal.JWTHEADER).subscribe((data: any) => {
       GlobalALert.getToast(data.msg, 1200);
       if (data.stausCode == 200) {
-        //展示支付界面
-        this.openPayShow(data.data.attributeName, data.data.attributeValue);
+        //如果下单成功，就向服务端请求支付界面拉取所需的支付数据
+        this.hr.get(GlobalFinal.ORDER_DOMAIN + "/order/pay/detail/" + this.usePaycate + "/" + data.data.attributeName + "/0", GlobalFinal.JWTHEADER)
+          .subscribe((param: any) => {
+            GlobalALert.getToast("正在跳转支付界面", 1200);
+            //将数据拉取后通过前端支付插件拉取，这里我们模拟支付界面
+            //将字符串转化为SSMAP类
+            const temp: SSMap = JSON.parse(param.data);
+            this.openPayShow(temp.attributeName, temp.attributeValue);
+          });
       }
     });
   }
 
   //展示支付页面
-  openPayShow(orderId, totalMoney: string) {
+  openPayShow(orderId, totalMoney) {
     //跳转支付页面
     this.rou.navigate(['/consumer/shop' + '/choose' + '/pay-show'], {
       queryParams: {

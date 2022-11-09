@@ -29,6 +29,10 @@ export class CartComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+  }
+
+  ionViewWillEnter() {
     this.queryCart();
   }
 

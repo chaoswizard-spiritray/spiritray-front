@@ -209,7 +209,7 @@ export class CommodityChooseComponent implements OnInit {
 
   //加载可选规格属性
   queryMulAttribute() {
-    this.hr.get(GlobalFinal.SELLER_DOMAIN + "/cav/cav/mul/" + this.commodityId, GlobalFinal.PLAT_HEADER)
+    this.hr.get(GlobalFinal.SELLER_DOMAIN + "/cav/cav/mul/" + this.commodityId, GlobalFinal.JWTHEADER)
       .subscribe((data: any) => {
         const cavs: Array<SSMap> = data.data;
         let i = 0;
