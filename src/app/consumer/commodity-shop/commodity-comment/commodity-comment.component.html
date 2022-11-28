@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon class="backIcon" name="chevron-back-outline" slot="start" (click)="back()"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="types">
+    <ul>
+      <li *ngFor="let type of types;index as i" (click)="changeType(i)">
+        <label>{{type}}</label>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="comments;else noData" class="comments">
+    <ion-card *ngFor="let comment of comments;index as i">
+      <ion-avatar>
+        <img [src]="comment.consumerHead|trustUrl" />
+      </ion-avatar>
+      <div>
+        <ul>
+          <li> <label>{{comment.consumerNickname}}</label></li>
+          <li>
+            <ion-icon name="star"></ion-icon>
+            <label>{{comment.starLevel}}</label>
+          </li>
+        </ul>
+      </div>
+      <ion-card-content>
+        <div>
+          {{comment.commentContent}}
+        </div>
+        <div>
+          <img [src]="comment.attchedMap|trustUrl">
+        </div>
+      </ion-card-content>
+      <div>
+        <label>{{comment.startDate|commentDate}}</label>
+      </div>
+    </ion-card>
+  </div>
+  <!-- 无限滚动组件 -->
+  <ion-infinite-scroll threshold="80px" (ionInfinite)="loadMoreData($event)" #IonInfiniteScroll>
+    <ion-infinite-scroll-content loadingSpinner="circular" loadingText="加载中...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <div class="dataover" hidden>
+    <label>没有更多了</label>
+  </div>
+</ion-content>
+
+<ng-template class="noData" #noData>
+  暂无评论
+</ng-template>

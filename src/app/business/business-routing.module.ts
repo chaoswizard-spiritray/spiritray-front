@@ -9,6 +9,10 @@ const routes: Routes = [
     component: EnterComponent
   },
   {
+    path: 'store-order',
+    loadChildren: () => import('./store/store-order/store-order.module').then(m => m.StoreOrderModule)
+  },
+  {
     path: '',
     component: BusinessComponent,
     children:
@@ -16,6 +20,10 @@ const routes: Routes = [
         {
           path: 'store',
           loadChildren: () => import('./store/store.module').then(m => m.StoreModule)
+        },
+        {
+          path: 'msg',
+          loadChildren: () => import('./msg-home/msg-home.module').then(m => m.MsgHomeModule)
         },
         {
           path: 'data',

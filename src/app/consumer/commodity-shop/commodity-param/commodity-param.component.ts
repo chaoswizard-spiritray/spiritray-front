@@ -28,20 +28,16 @@ export class CommodityParamComponent implements OnInit {
 
   //加载参数信息
   querySimpleAttribute() {
-    this.hr.get(GlobalFinal.SELLER_DOMAIN + "/cav/cav/simple/" + this.commodityId, GlobalFinal.PLAT_HEADER)
+    this.hr.get(GlobalFinal.SELLER_DOMAIN + "/cav/cav/simple/" + this.commodityId, GlobalFinal.JWTHEADER)
       .subscribe((data: any) => {
         this.simpleCavs = data.data;
-        console.log(data);
-
       });
   }
 
   queryMulAttribute() {
-    this.hr.get(GlobalFinal.SELLER_DOMAIN + "/cav/cav/mul/" + this.commodityId, GlobalFinal.PLAT_HEADER)
+    this.hr.get(GlobalFinal.SELLER_DOMAIN + "/cav/cav/mul/" + this.commodityId, GlobalFinal.JWTHEADER)
       .subscribe((data: any) => {
         //注意编译后的指令重排序,完全无法理解这个ＴＳ编译器
-        console.log(data);
-
         const cavs: Array<SSMap> = data.data;
         let i = 0;
         let flag = false;

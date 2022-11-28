@@ -25,6 +25,7 @@ import { StoreInfComponent } from './store-inf/store-inf.component';
 import { StoreRoutingModule } from './store-routing.module';
 import { StoreComponent } from './store.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 
 
 
@@ -55,7 +56,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
     HammerModule,
     IonicModule,
     HttpClientModule,
-    StoreRoutingModule
+    StoreRoutingModule,
+    NgZorroAntdMobileModule
   ],
   providers: [
     { provide: 'locationService', useClass: LocationService },

@@ -28,6 +28,10 @@ export class OrderShowComponent implements OnInit {
 
   totalFee: number = 0;//所有商品总计费用
 
+  subButtonType: number = 0;//如果是0显示提交订单，如果是1显示支付按钮
+
+  odId;//用于未付款商品单独付款时指定的订单细节编号，只有这种情况我们需要明确指定细节编号，如果是浏览时进行下单支付，那么必然是0
+
   constructor(
     private hr: HttpClient,
     private rou: Router,
@@ -41,6 +45,8 @@ export class OrderShowComponent implements OnInit {
     //解析参数
     this.activatedRoute.queryParams.subscribe(data => {
       this.orderCommoditys = JSON.parse(data.orderCommoditys);
+      this.subButtonType = parseInt(data.subButtonType);
+      this.odId = data.odId;
     });
     this.queryAddress();
     this.queryAccountCategory();
@@ -76,6 +82,31 @@ export class OrderShowComponent implements OnInit {
     });
   }
 
+  //只调用付款
+  submitPay() {
+    //如果支付单个商品进行支付
+    if (this.orderCommoditys.length > 1) {
+      this.hr.get(GlobalFinal.ORDER_DOMAIN + "/order/pay/together/" + this.usePaycate + "/" + this.orderCommoditys[0].orderId, GlobalFinal.JWTHEADER)
+        .subscribe((param: any) => {
+          GlobalALert.getToast("正在跳转支付界面", 1200);
+          //将数据拉取后通过前端支付插件拉取，这里我们模拟支付界面
+          //将字符串转化为SSMAP类
+          const temp: SSMap = JSON.parse(param.data);
+          this.openPayShow(temp.attributeName, temp.attributeValue);
+        });
+    }
+    if (this.orderCommoditys.length == 1) {
+      this.hr.get(GlobalFinal.ORDER_DOMAIN + "/order/pay/detail/" + this.usePaycate + "/" + this.orderCommoditys[0].orderId + "/" + this.odId, GlobalFinal.JWTHEADER)
+        .subscribe((param: any) => {
+          GlobalALert.getToast("正在跳转支付界面", 1200);
+          //将数据拉取后通过前端支付插件拉取，这里我们模拟支付界面
+          //将字符串转化为SSMAP类
+          const temp: SSMap = JSON.parse(param.data);
+          this.openPayShow(temp.attributeName, temp.attributeValue);
+        });
+    }
+  }
+
   //展示支付页面
   openPayShow(orderId, totalMoney) {
     //跳转支付页面
@@ -109,7 +140,7 @@ export class OrderShowComponent implements OnInit {
   //计算当前商品的总费用
   takeTotalFee() {
     this.orderCommoditys.forEach((o) => {
-      this.totalFee += o.commodityNum * o.sku.skuPrice - o.shipping;
+      this.totalFee += (o.commodityNum * o.sku.skuPrice) + parseFloat(o.shipping + "");
     });
   }
 

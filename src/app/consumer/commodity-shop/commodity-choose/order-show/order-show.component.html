@@ -75,8 +75,11 @@
     <div>
       <label class="total">总计:￥{{totalFee}}</label>
     </div>
-    <ion-button slot="end" (click)="submitOrder()" expand="block" fill="clear" shape="round">
+    <ion-button *ngIf="subButtonType==0" slot="end" (click)="submitOrder()" expand="block" fill="clear" shape="round">
       提交订单
+    </ion-button>
+    <ion-button *ngIf="subButtonType==1" slot="end" (click)="submitPay()" expand="block" fill="clear" shape="round">
+      去付款
     </ion-button>
   </ion-toolbar>
 </ion-footer>

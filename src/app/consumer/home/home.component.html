@@ -21,52 +21,42 @@
     </ion-slide>
   </ion-slides>
   <!-- 首页商品 -->
-  <ion-grid fixed *ngIf="commoditys">
-    <div *ngFor="let commodity of commoditys;index as i;even as isEven">
-      <ion-row *ngIf="isEven">
-        <ion-col>
-          <div class="commodity" *ngIf="commoditys[i]" (click)="toCommodity(commoditys[i].commodityId)">
-            <div class="head">
-              <img [src]="commoditys[i].masterMap|trustUrl" />
-            </div>
-            <div class="body">
-              <label class="commodityName">{{commoditys[i].commodityName}}</label>
-              <label *ngIf="commoditys[i].priceMin==commoditys[i].priceMax"
-                class="price">{{commoditys[i].priceMin}}￥</label>
-              <label *ngIf="commoditys[i].priceMin!=commoditys[i].priceMax"
-                class="price">{{commoditys[i].priceMin}}-{{commoditys[i].priceMax}}￥</label>
-              <div class="rate">
-                <label>好评率:{{commoditys[i].favorableRate*100}}%</label>
-              </div>
-              <div class="ico">
-                <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
-              </div>
-            </div>
+  <div fixed *ngIf="commoditys">
+    <div class="lbox">
+      <div *ngFor="let commodity of commoditys;let i=index;let odd=odd;let even = even;">
+        <div class="commodity1" *ngIf="commoditys[i]&& odd" (click)="toCommodity(commoditys[i].commodityId)">
+          <div class="head">
+            <img [src]="commoditys[i].masterMap|trustUrl" />
           </div>
-        </ion-col>
-        <ion-col>
-          <div class="commodity" *ngIf="commoditys[i+1]" (click)="toCommodity(commoditys[i+1].commodityId)">
-            <div class="head">
-              <img [src]="commoditys[i+1].masterMap|trustUrl" />
-            </div>
-            <div class="body">
-              <label class="commodityName">{{commoditys[i+1].commodityName}}</label>
-              <label *ngIf="commoditys[i+1].priceMin==commoditys[i+1].priceMax"
-                class="price">{{commoditys[i+1].priceMin}}￥</label>
-              <label *ngIf="commoditys[i+1].priceMin!=commoditys[i+1].priceMax"
-                class="price">{{commoditys[i+1].priceMin}}-{{commoditys[i+1].priceMax}}￥</label>
-              <div class="rate">
-                <label>好评率:{{commoditys[i+1].favorableRate*100}}%</label>
-              </div>
-              <div class="ico">
-                <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
-              </div>
-            </div>
+          <div class="body">
+            <label class="commodityName">{{commoditys[i].commodityName}}</label>
+            <label *ngIf="commoditys[i].priceMin==commoditys[i].priceMax"
+              class="price">{{commoditys[i].priceMin}}￥</label>
+            <label *ngIf="commoditys[i].priceMin!=commoditys[i].priceMax"
+              class="price">{{commoditys[i].priceMin}}-{{commoditys[i].priceMax}}￥</label>
+            <span class="rate">好评率:{{commoditys[i].favorableRate*100}}%</span>
           </div>
-        </ion-col>
-      </ion-row>
+        </div>
+      </div>
     </div>
-  </ion-grid>
+    <div class="rbox">
+      <div *ngFor="let commodity of commoditys;let i=index;let odd=odd;let even = even;">
+        <div class="commodity2" *ngIf="commoditys[i]&&even" (click)="toCommodity(commoditys[i].commodityId)">
+          <div class="head">
+            <img [src]="commoditys[i].masterMap|trustUrl" />
+          </div>
+          <div class="body">
+            <label class="commodityName">{{commoditys[i].commodityName}}</label>
+            <label *ngIf="commoditys[i].priceMin==commoditys[i].priceMax"
+              class="price">{{commoditys[i].priceMin}}￥</label>
+            <label *ngIf="commoditys[i].priceMin!=commoditys[i].priceMax"
+              class="price">{{commoditys[i].priceMin}}-{{commoditys[i].priceMax}}￥</label>
+            <span class="rate">好评率:{{commoditys[i].favorableRate*100}}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- 无限滚动组件 -->
   <ion-infinite-scroll threshold="80px" (ionInfinite)="loadData($event)" #IonInfiniteScroll>
     <ion-infinite-scroll-content loadingSpinner="circular" loadingText="加载中...">

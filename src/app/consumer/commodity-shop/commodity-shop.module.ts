@@ -5,12 +5,16 @@ import { FormsModule } from '@angular/forms';
 import { HammerModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
 import { ImgShowComponent } from '../../img-show/img-show.component';
+import { MsgDetailComponent } from '../../msg-detail/msg-detail.component';
 import { LocationService } from '../../service/location.service';
+import { CommentDatePipe } from '../../trustUrlPipe/comment-date.pipe';
 import { ShippingPipe } from '../../trustUrlPipe/shipping.pipe';
 import { TrustUrlPipe } from '../../trustUrlPipe/trust-url.pipe';
+import { CommodityCommentComponent } from './commodity-comment/commodity-comment.component';
 import { CommodityParamComponent } from './commodity-param/commodity-param.component';
 import { CommodityShopRoutingModule } from './commodity-shop-routing.module';
 import { CommodityShopComponent } from './commodity-shop.component';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 
 
 
@@ -19,9 +23,12 @@ import { CommodityShopComponent } from './commodity-shop.component';
     CommodityShopComponent,
     TrustUrlPipe,
     ShippingPipe,
+    CommentDatePipe,
     LocationService,
     CommodityParamComponent,
-    ImgShowComponent
+    ImgShowComponent,
+    CommodityCommentComponent,
+    MsgDetailComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +36,8 @@ import { CommodityShopComponent } from './commodity-shop.component';
     HammerModule,
     IonicModule,
     HttpClientModule,
-    CommodityShopRoutingModule
+    CommodityShopRoutingModule,
+    NgZorroAntdMobileModule
   ],
   providers: [
     { provide: 'locationService', useClass: LocationService }

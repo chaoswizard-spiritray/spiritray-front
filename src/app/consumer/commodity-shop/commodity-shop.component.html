@@ -50,16 +50,50 @@
     </div>
   </div>
   <div class="box3">
-
+    <div class="inf">
+      <ion-item (click)="showComment()">
+        <label>评论({{commentNum}})</label>
+        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+      </ion-item>
+      <ion-card *ngIf="firstComment">
+        <div class="firstComment">
+          <ion-avatar>
+            <img [src]="firstComment.consumerHead|trustUrl" />
+          </ion-avatar>
+          <div>
+            <ul>
+              <li> <label>{{firstComment.consumerNickname}}</label></li>
+              <li>
+                <ion-icon name="star"></ion-icon>
+                <label>{{firstComment.starLevel}}</label>
+              </li>
+            </ul>
+          </div>
+          <ion-card-content>
+            <div>
+              {{firstComment.commentContent}}
+            </div>
+            <div>
+              <img [src]="firstComment.attchedMap|trustUrl">
+            </div>
+          </ion-card-content>
+          <div>
+            <label>{{firstComment.startDate|commentDate}}</label>
+          </div>
+        </div>
+      </ion-card>
+    </div>
   </div>
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-icon *ngIf="!isCollection" (click)="modifyCollection()" slot="end" name="egg-outline" class="eggIcon"
-      slot="start"></ion-icon>
-    <ion-icon *ngIf="isCollection" (click)="modifyCollection()" slot="end" name="egg" class="eggIcon" slot="start">
+    <ion-icon *ngIf="!isCollection" (click)="modifyCollection()" name="egg-outline" class="eggIcon" slot="start">
     </ion-icon>
-    <ion-button (click)="skipChoose(1)" expand="block" fill="clear" shape="round">
+    <ion-icon *ngIf="isCollection" (click)="modifyCollection()" name="egg" class="eggIcon" slot="start">
+    </ion-icon>
+    <ion-icon name="storefront-outline" slot="start" class="icon"></ion-icon>
+    <ion-icon (click)="openMsgDetail()" name="chatbubble-ellipses-outline" slot="start" class="icon"></ion-icon>
+    <ion-button slot="end" (click)="skipChoose(1)" expand="block" fill="clear" shape="round">
       立即购买
     </ion-button>
     <ion-button slot="end" (click)="skipChoose(2)" expand="block" fill="clear" shape="round">

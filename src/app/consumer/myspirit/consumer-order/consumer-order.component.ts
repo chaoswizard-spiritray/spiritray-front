@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, NavController } from '@ionic/angular';
+import { IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
 import { Address, Commodity, GlobalALert, GlobalFinal, OrderBeforeCommodity, OrderDetail, Sku, SNMap, SSMap } from '../../../dto-model/dto-model.component';
+import { OrderDetailComponent } from '../../../order-detail/order-detail.component';
 import { LocationService } from '../../../service/location.service';
 import { AddressComponent } from '../set/address/address.component';
 
@@ -15,8 +16,6 @@ export class ConsumerOrderComponent implements OnInit {
 
   flag: number = 0;
 
-  resolve: any;
-
   orders: any;
 
   commodityNames: Array<SSMap>;
@@ -24,6 +23,8 @@ export class ConsumerOrderComponent implements OnInit {
   overTimes: Array<SNMap>;
 
   address: Address;//收货地址
+
+  // pro: Promise<boolean>;
 
   timer;
 
@@ -34,7 +35,8 @@ export class ConsumerOrderComponent implements OnInit {
     private modalController: ModalController,
     private activatedRoute: ActivatedRoute,
     private navController: NavController,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private routerOutlet: IonRouterOutlet
   ) { }
 
   ngOnInit() {
@@ -43,7 +45,6 @@ export class ConsumerOrderComponent implements OnInit {
   ionViewWillEnter() {
     this.activatedRoute.queryParams.subscribe((param) => {
       this.flag = parseInt(param.flag);
-      this.resolve = this.parseFunction(param.resolve);
       switch (this.flag) {
         case 0:
           this.queryNoPay();
@@ -65,26 +66,10 @@ export class ConsumerOrderComponent implements OnInit {
     });
   }
 
-  //将字符串转换为函数
-  parseFunction = function (str) {
-    try {
-      let str_ = str.replace(/\n/g, ';')
-      str_ = str_.replace(/\s+/g, '')
-      str_ = str_.slice(str_.indexOf('function')).replace(/\{\;/g, '{')
-      if (str_.slice(-1) != '}') {
-        str_ = str_.slice(0, -1)
-      }
-      let p1 = str_.indexOf('){') + 2
-      let left = str_.slice(0, p1).replace('function(', '').replace('){', '').split(',')
-      return new Function(...left, str_.slice(p1, -1))
-    } catch (err) {
-      console.warn(err)
-      return new Function()
-    }
-  }
-
   back() {
+    //回退上一页，开启通知
     this.navController.pop();
+    //location.replace("/consumer/myspirit");
   }
 
   //获取商品名字
@@ -250,20 +235,22 @@ export class ConsumerOrderComponent implements OnInit {
         if (data.stausCode == 200) {
           commodity = data.data;
           const sku = new Sku(order.commodityId, order.skuValue, order.skuMap, order.totalAmount - commodity.shipping, 0);
-          const orderCommodity = new OrderBeforeCommodity(order.orderNumber, order.commodityId, this.commodityNames[index].attributeValue, sku, 0, commodity.shipping);
+          const orderCommodity = new OrderBeforeCommodity(order.orderNumber, order.commodityId, this.commodityNames[index].attributeValue, sku, order.commodityNum, commodity.shipping);
           orderCommoditys.push(orderCommodity);
           //打开订单提交模态框页面
-          this.openOrderModal(orderCommoditys);
+          this.openOrderModal(orderCommoditys, order.odId);
         }
       });
   }
 
   //跳转订单界面
-  openOrderModal(orderCommoditys: Array<OrderBeforeCommodity>) {
+  openOrderModal(orderCommoditys: Array<OrderBeforeCommodity>, odId) {
     this.router.navigate(['/consumer/shop/choose/order'],
       {
         queryParams: {
-          "orderCommoditys": JSON.stringify(orderCommoditys)
+          "orderCommoditys": JSON.stringify(orderCommoditys),
+          "subButtonType": 1,
+          "odId": odId
         }
       });
   }
@@ -309,5 +296,38 @@ export class ConsumerOrderComponent implements OnInit {
     this.hr.put(GlobalFinal.ORDER_DOMAIN + "/order/notrans/address", formdata, GlobalFinal.JWTHEADER).subscribe((data: any) => {
       GlobalALert.getToast(data.msg, 1000);
     });
+  }
+
+  //订单详情
+  async orderDetailInfo(index) {
+    const modal = await this.modalController.create({
+      component: OrderDetailComponent,//模态框中展示的组件
+      componentProps: {
+        'type': 1,
+        'childType': this.flag,
+        "orderNumber": this.orders[index].orderNumber,
+        "odId": this.orders[index].odId,
+        "commodityName": this.getCommodityName(this.orders[index].commodityId)
+      },//打开模态框的类型标识
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl
+    });
+    await modal.present();
+  }
+
+  //查看订单物流信息
+  showOrderLogstic(orderNumber, odId) {
+
+  }
+
+  //确认订单收货
+  async sureOrderOver(orderNumber, odId) {
+    //确认操作
+    const data = await GlobalALert.getSureAlert("确认收货");
+    // const websocket=new WebSocket();
+    // if (data == 'confirm') {
+    //   //执行确认收货请求
+    //   this.hr.put(GlobalFinal.ORDER_DOMAIN + "/",);
+    // }
   }
 }

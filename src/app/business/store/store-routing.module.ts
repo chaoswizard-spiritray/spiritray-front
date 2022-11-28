@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { StoreSearchGuard } from '../../guard/store-search.guard';
 import { ClosedComponent } from './closed/closed.component';
 import { InCheckComponent } from './in-check/in-check.component';
 import { InSellComponent } from './in-sell/in-sell.component';
@@ -15,22 +16,22 @@ const routes: Routes = [
     component: StoreComponent,
     children:
       [
-        { path: 'welcome', component: WelcomeComponent },
-        { path: 'closed', component: ClosedComponent },
-        { path: 'storeInf', component: StoreInfComponent },
+        { path: 'welcome', component: WelcomeComponent, canActivate: [StoreSearchGuard] },
+        { path: 'closed', component: ClosedComponent, canActivate: [StoreSearchGuard] },
+        { path: 'storeInf', component: StoreInfComponent, canActivate: [StoreSearchGuard] },
         {
-          path: 'account', component: SellerAccountComponent
+          path: 'account', component: SellerAccountComponent, canActivate: [StoreSearchGuard]
         },
         {
-          path: 'insell', component: InSellComponent
+          path: 'insell', component: InSellComponent, canActivate: [StoreSearchGuard]
         },
         {
-          path: 'incheck', component: InCheckComponent
+          path: 'incheck', component: InCheckComponent, canActivate: [StoreSearchGuard]
         },
         {
-          path: 'nosell', component: NoSellComponent
+          path: 'nosell', component: NoSellComponent, canActivate: [StoreSearchGuard]
         },
-        { path: '', redirectTo: "welcome", pathMatch: "full" }
+        { path: '', redirectTo: "welcome", pathMatch: "full", canActivate: [StoreSearchGuard] }
       ]
   }
 ];

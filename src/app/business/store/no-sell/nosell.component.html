@@ -19,7 +19,7 @@
 </div>
 <!-- 信息内容,因为是每行两个，但是ng不能进行i运算，所以只有通过奇偶或者函数进行验证 -->
 <div class="contentFlag" hidden>
-  <ion-grid fixed *ngIf="commoditys!=null">
+  <ion-grid fixed *ngIf="commoditys;else noData">
     <div *ngFor="let commodity of commoditys;index as i;even as isEven">
       <ion-row *ngIf="isEven">
         <ion-col>
@@ -56,3 +56,14 @@
     </div>
   </ion-grid>
 </div>
+<!-- 隐藏根据输入信息搜索商品 -->
+<div hidden>
+  <div *ngIf="srd.searchContext=='';else loadData"></div>
+</div>
+<ng-template #loadData>
+  {{startQuery()}}
+</ng-template>
+<ng-template #noData>
+  <!-- 没有数据时 -->
+  <div class="nodata">没有相关数据</div>
+</ng-template>

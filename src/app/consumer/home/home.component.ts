@@ -12,7 +12,6 @@ import { GlobalFinal, HomeCommoditySimple, SlideShow } from '../../dto-model/dto
 export class HomeComponent implements OnInit, AfterViewInit {
   //无限滚动组件
   @ViewChild(IonInfiniteScroll, { static: true }) infiniteScroll: IonInfiniteScroll;
-  tests = [1, 2, 3, 4, 5, , 6, 7, 7, 8, 9, 9, , 0, 0];
   // 轮播图片对象
   @ViewChild('homeSlides', { static: true })
   private homeSlides: IonSlides;
@@ -32,11 +31,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   //数据初始化
   ngOnInit() {
+    this.queryHomeCommodity();
   }
 
   //每次进入页面时都会触发这个函数，不论是否初始化
   ionViewWillEnter() {
-    this.queryHomeCommodity();
     this.querySlide();
   }
 
@@ -48,7 +47,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.play(document.getElementById("sea"));
     });
     //开启刷新
-    this.refreshHome();
+    // this.refreshHome();
   }
 
   // https://www.cnblogs.com/shiweida/p/7785185.html
@@ -84,7 +83,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (data == null) {
       event.target.disabled = true;
       document.getElementsByClassName('dataover')[0].removeAttribute('hidden');
-      setTimeout(() => { event.target.disabled = false }, 3000);
+      setTimeout(() => {
+        event.target.disabled = false;
+        document.getElementsByClassName('dataover')[0].setAttribute('hidden', "true");
+      }, 700);
     }
   }
 

@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
-import { GlobalFinal } from '../../dto-model/dto-model.component';
+import { GlobalALert, GlobalFinal } from '../../dto-model/dto-model.component';
 import { StoreRouterDataService } from '../../service/store-router-data.service';
+import { ConsumerOrderComponent } from './consumer-order/consumer-order.component';
 
 @Component({
   selector: 'app-myspirit',
@@ -13,7 +14,6 @@ import { StoreRouterDataService } from '../../service/store-router-data.service'
 export class MyspiritComponent implements OnInit, AfterViewInit {
   //入驻文字
   enter = "入驻";
-
   //各类订单的数目统计
   noPayNum = 0;
   payNum = 0;
@@ -24,17 +24,11 @@ export class MyspiritComponent implements OnInit, AfterViewInit {
     private hr: HttpClient,
     private ui: StoreRouterDataService,
     private modalController: ModalController,
-    private navController: NavController
-  ) { }
+    private navController: NavController) { }
 
 
   //初始化组件时调用请求数据，因为是观察者模式所以不会产生数据页面初始化异常问题
   ngOnInit() {
-    document.onreadystatechange = function () {
-      if (document.readyState === "complete") {
-        console.log("myspirit加载成功");
-      }
-    }
   }
 
   ionViewWillEnter() {
@@ -87,6 +81,13 @@ export class MyspiritComponent implements OnInit, AfterViewInit {
       .subscribe((data: any) => {
         if (data.data != null) {
           this.ui.userInf = data.data;
+          //将信息缓存
+          const temp = {
+            "phone": data.data.consumerPhone,
+            "name": data.data.consumerName,
+            "head": data.data.consumerHead
+          }
+          localStorage.setItem("consumer", JSON.stringify(temp));
         }
         //判断用户是否入驻
         if (this.ui.userInf.isEnter == 1 || localStorage.getItem("storeId") != null) {
@@ -126,17 +127,12 @@ export class MyspiritComponent implements OnInit, AfterViewInit {
 
   // //开启订单信息
   toOrder(index) {
-    const promise = new Promise((resolve, reject) => {
-      this.router.navigate(['/consumer/order'], {
-        queryParams: {
-          "flag": index,
-          "resolve": resolve
-        }
-      });
-    });
-    promise.then((resolve) => {
-      console.log("+++++++");
-      this.queryOrderNum();
+    //先获取订单页面观测对象并启动观测
+    this.router.navigate(['/consumer/order'], {
+      queryParams: {
+        "flag": index
+      }
     });
   }
+
 }

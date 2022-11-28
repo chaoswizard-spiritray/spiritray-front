@@ -13,7 +13,6 @@ import { PublishComponent } from './publish/publish.component';
   providers: [MenuController]
 })
 export class StoreComponent implements OnInit {
-
   constructor(
     private menu: MenuController,
     private router: Router,
@@ -25,6 +24,9 @@ export class StoreComponent implements OnInit {
 
   ngOnInit() {
     this.queryStore();
+  }
+
+  ionViewWillEnter() {
   }
 
   //打开指定菜单
@@ -56,7 +58,7 @@ export class StoreComponent implements OnInit {
   closeOtherMenu(menuId: string) {
     let menuList = document.getElementsByClassName("salveMenu");
     for (let i = 0; i < menuList.length; i++) {
-      if (menuList[i].getAttribute("class").indexOf(menuId) > -1) {
+      if ((menuList[i].getAttribute("class") + "").indexOf(menuId) > -1) {
         continue;
       }
       menuList[i].setAttribute("hidden", "true");
@@ -79,7 +81,7 @@ export class StoreComponent implements OnInit {
 
   //查询信息,因为后端会话中存储有phone，所以不用传参
   queryStore() {
-    this.hr.get(GlobalFinal.SELLER_DOMAIN + "/store/storeInf/phone", GlobalFinal.JWTHEADER)
+    this.hr.get(GlobalFinal.SELLER_DOMAIN + "/store/storeInf/phone", GlobalFinal.STORE_HEADER)
       .subscribe((data: any) => {
         //因为data本身就被转换为了一个Object，你通过．获取到的就是他的属性，这个就是一个对象，不用手动解析。就是说我们前端接收时完全不用转换
         this.srd.storeInf = data.data;
@@ -119,5 +121,26 @@ export class StoreComponent implements OnInit {
       return await modal.present();
     }
   }
+
+  // 返回买家端首页
+  backConsumer() {
+    this.router.navigateByUrl("/consumer/home");
+  }
+
+  // 提交搜索内容
+  searchSub(event) {
+    if (event != "") {
+      //设置内容
+      this.srd.searchContext = event;
+    }
+  }
+
+  // 当搜索框失去焦点触发
+  reLoad() {
+    //失去焦点时，内容必然为空
+    //设置内容
+    this.srd.searchContext = "cb160e334b727bc2b91c2073a795b95e";//加密字符串
+  }
+
 }
 

@@ -1,0 +1,60 @@
+* {
+    font-family: cursive;
+    font-size: 16px;
+}
+
+.cancel {
+    border: 1px #ea6207 solid;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 19px;
+    margin-right: 320px;
+    box-shadow: 0 0 5px rgb(255, 201, 163); //就是一个阴影，通过阴影实现高亮
+}
+
+.cancel span {
+    font-size: 20px;
+    margin-left: 6px;
+    margin-right: 6px;
+    color: #5f5e5d;
+}
+
+.condition {
+    margin-left: 23px;
+    margin-top: 21px;
+}
+
+ion-segment-button {
+    font-size: 16px;
+    --indicator-color: #f6d9b6;
+    --color: #b0afae;
+    --color-checked: #ea6207;
+}
+
+ion-select {
+    font-size: 16px;
+    color: #ea6207;
+    --placeholder-color: #000000;
+}
+
+.sub-title {
+    color: rgb(26, 25, 25);
+    font-weight: 600;
+    font-size: 18px;
+}
+
+ion-footer ion-button:first-child {
+    float: left;
+    width: 30%;
+    margin-left: 3%;
+    --color: rgb(0, 0, 0);
+    --background: rgb(238, 237, 237);
+}
+
+ion-footer ion-button:last-child {
+    float: left;
+    width: 50%;
+    margin-left: 10%;
+    --color: rgb(255, 255, 255);
+    --background: rgb(253, 147, 7);
+}

@@ -1,0 +1,22 @@
+<ion-icon class="back" name="close-outline" (click)="dismiss(-1)"></ion-icon>
+<ion-content>
+  <!-- 商家端订单排序条件 -->
+  <div class="reorder" *ngIf="type==0">
+    <ion-radio-group mode="ios" [allowEmptySelection]="false" (ionChange)="dismiss(0)" [(ngModel)]="checkReorderValue">
+      <ion-item>
+        <span>下单时间</span>
+        <ion-radio slot="end" value="startTime"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <span>总计费用</span>
+        <ion-radio slot="end" value="totalMoney"></ion-radio>
+      </ion-item>
+
+      <ion-item *ngIf="childType==3">
+        <span>完单时间</span>
+        <ion-radio slot="end" value="endTime"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </div>
+</ion-content>

@@ -20,7 +20,7 @@ export class GlobalFinal {
   constructor() { };
 
   //数据是否为空
-  public static IS_EXIST = [null, '', 0, undefined, NaN];
+  public static IS_EXIST = [null, '', 0, 'undefined', undefined, NaN];
   //请求头
   public static HEADER = {
     headers: new HttpHeaders({ "Cache-Control": "no-cache", "Pragma": "no-cache", "Expires": "0", "content-type": "application/json" }),
@@ -28,22 +28,22 @@ export class GlobalFinal {
   };
   //带jwt的请求头
   public static JWTHEADER = {
-    headers: new HttpHeaders({ "Cache-Control": "no-cache", "Pragma": "no-cache", "Expires": "0", 'jwt': localStorage.getItem("jwt") }),
+    headers: new HttpHeaders({ "Cache-Control": "no-cache", "Pragma": "no-cache", "Expires": "0", 'jwt': localStorage.getItem("jwt") + "" }),
     withCredentials: true
   };
   //店铺相关操作请求头
   public static STORE_HEADER = {
-    headers: new HttpHeaders({ "Cache-Control": "no-cache", "Pragma": "no-cache", "Expires": "0", 'jwt': localStorage.getItem("jwt"), 'storeId': localStorage.getItem("storeId") }),
+    headers: new HttpHeaders({ "Cache-Control": "no-cache", "Pragma": "no-cache", "Expires": "0", 'jwt': localStorage.getItem("jwt") + "", 'storeId': localStorage.getItem("storeId") + "" }),
     withCredentials: true,
 
   }
   //平台相关操作请求头
   public static PLAT_HEADER = {
-    headers: new HttpHeaders({ "Cache-Control": "no-cache", "Pragma": "no-cache", "Expires": "0", 'jwt': localStorage.getItem("staffJwt"), 'staffId': localStorage.getItem("staffId") }),
+    headers: new HttpHeaders({ "Cache-Control": "no-cache", "Pragma": "no-cache", "Expires": "0", 'jwt': localStorage.getItem("staffJwt") + "", 'staffId': localStorage.getItem("staffId") + "" }),
     withCredentials: true
   }
   //用户电话
-  public PHONE = (localStorage.getItem("userInf") != null) ? (JSON.parse(localStorage.getItem("userInf"))).consumerPhone : null;
+  public PHONE = (localStorage.getItem("userInf") != null) ? (JSON.parse(localStorage.getItem("userInf") + "")).consumerPhone : null;
   //ip
   public static DEVIP = "http://localhost";
   //consumer测试地址
@@ -56,6 +56,8 @@ export class GlobalFinal {
   public static PLANT_DOMAIN = GlobalFinal.DEVIP + ":8083";
   //file服务地址
   public static FILE_DOMAIN = GlobalFinal.DEVIP + ":80";
+  //websocket建立地址
+  public static WEBSOCKET_DOMAIN = "ws://localhost:8083"
   //给指定元素追加指定div内容
   public static appendHTML(obj: Element, htmls: string) {
     let el: Element = document.createElement("div");
@@ -65,7 +67,7 @@ export class GlobalFinal {
   //获取get请求方式可携带参数的jwt请求头
   public static getGetHeaderCanTakeParamJWTHeader(data) {
     return {
-      headers: new HttpHeaders({ "Cache-Control": "no-cache", "Pragma": "no-cache", "Expires": "0", 'jwt': localStorage.getItem("jwt") }),
+      headers: new HttpHeaders({ "Cache-Control": "no-cache", "Pragma": "no-cache", "Expires": "0", 'jwt': localStorage.getItem("jwt") + "" }),
       params: data,
       withCredentials: true
     };
@@ -99,6 +101,30 @@ export class GlobalALert {
     }).then(async (e) => {
       await e.present();
     })
+  }
+
+  static async getSureAlert(head) {
+    const alert = await this.alertM.create({
+      header: head,
+      cssClass: 'sure-alter',
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel',
+          handler: () => {
+          },
+        },
+        {
+          text: '确认',
+          role: 'confirm',
+          handler: () => {
+          },
+        },
+      ],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    return role;
   }
 }
 //全部数据加载错误控制
@@ -343,6 +369,37 @@ export class Cav {
     public attributeValue: string
   ) { }
 }
+
+//商品评论信息
+export class CommodityComment {
+  constructor(
+    public commentNo: string,
+    public commentContent: string,
+    public attchedMap: string,
+    public starLevel: number,
+    public startDate: number,
+    public consumerHead: string,//头像
+    public consumerNickname: string,//昵称
+    public skuValue: string//评论购买商品的sku值
+  ) { }
+}
+
+//评论
+export class Comment {
+  constructor(
+    public commentNo: string,
+    public orderNumber: string,
+    public odId: number,
+    public commodityId: string,
+    public consumerPhone: number,
+    public commentContent: string,
+    public attchedMap: string,
+    public starLevel: number,
+    public isAnonymous: number,
+    public startDate: number,
+  ) { }
+}
+
 
 //审查信息
 export class CheckInfo {

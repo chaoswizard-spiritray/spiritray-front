@@ -1,0 +1,128 @@
+<div class="cancel" (click)="dismiss(-1)">
+  <span>取消</span>
+</div>
+<ion-content>
+  <!-- 商家端订单管理筛选条件 -->
+  <div class="store" *ngIf="type==0">
+    <!-- 未付款筛选条件 -->
+    <div>
+      <div class="condition">
+        <div class="sub-title">下单时间</div>
+        <ion-segment [(ngModel)]="checkStartTime">
+          <ion-segment-button [value]="0">
+            <ion-label>不限</ion-label>
+          </ion-segment-button>
+          <ion-segment-button [value]="7">
+            <ion-label>近一周</ion-label>
+          </ion-segment-button>
+          <ion-segment-button [value]="14">
+            <ion-label>近两周</ion-label>
+          </ion-segment-button>
+          <ion-segment-button [value]="30">
+            <ion-label>近一月</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+      <div class="condition">
+        <div class="sub-title">总价</div>
+        <ion-segment [(ngModel)]="checkTotalMoneyIndex">
+          <ion-segment-button [value]="-1">
+            <ion-label>不限</ion-label>
+          </ion-segment-button>
+          <ion-segment-button *ngIf="orderTotalMoney" [value]="0">
+            <ion-label>小于{{orderTotalMoney[0]}}</ion-label>
+          </ion-segment-button>
+          <ion-segment-button *ngIf="orderTotalMoney" [value]="1">
+            <ion-label>{{orderTotalMoney[0]}}-{{orderTotalMoney[1]}}</ion-label>
+          </ion-segment-button>
+          <ion-segment-button *ngIf="orderTotalMoney" [value]="2">
+            <ion-label>{{orderTotalMoney[1]}}-{{orderTotalMoney[2]}}</ion-label>
+          </ion-segment-button>
+          <ion-segment-button *ngIf="!orderTotalMoney" [value]="" disabled="true">
+            <ion-label>没有更多</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+      <div class="condition">
+        <div class="sub-title">收货地址</div>
+        <ion-select mode="ios" [(ngModel)]="checkAddress" interface="popover" placeholder="选取收货地址">
+          <ion-select-option value="undefined">暂不选取</ion-select-option>
+          <div *ngIf="addressShow">
+            <ion-select-option *ngFor="let address of addresses;index as i" [value]="address">
+              {{addressShow[i]}}
+            </ion-select-option>
+          </div>
+        </ion-select>
+      </div>
+      <div class="condition">
+        <div class="sub-title">收货电话</div>
+        <ion-select mode="ios" interface="popover" [(ngModel)]="checkTakePhone" placeholder="选取收货电话">
+          <ion-select-option value="undefined">暂不选取</ion-select-option>
+          <div *ngIf="takePhones">
+            <ion-select-option *ngFor="let phone of takePhones;index as i" [value]="phone">
+              {{phone}}
+            </ion-select-option>
+          </div>
+        </ion-select>
+      </div>
+      <!-- 已发货的额外条件 -->
+      <div *ngIf="childType>=2">
+        <div class="condition">
+          <div class="sub-title">物流单号</div>
+          <ion-select mode="ios" interface="popover" [(ngModel)]="checkLogisticsNo" placeholder="选取物流单号">
+            <ion-select-option value="undefined">暂不选取</ion-select-option>
+            <div *ngIf="logisticsNos">
+              <ion-select-option *ngFor="let logisticsNo of logisticsNos;index as i" [value]="logisticsNo">
+                {{logisticsNo}}
+              </ion-select-option>
+            </div>
+          </ion-select>
+        </div>
+      </div>
+      <!-- 完单的额外条件 -->
+      <div *ngIf="childType==3">
+        <div class="condition">
+          <div class="sub-title">完单时间</div>
+          <ion-segment [(ngModel)]="checkEndTime">
+            <ion-segment-button [value]="0">
+              <ion-label>不限</ion-label>
+            </ion-segment-button>
+            <ion-segment-button [value]="7">
+              <ion-label>近一周</ion-label>
+            </ion-segment-button>
+            <ion-segment-button [value]="14">
+              <ion-label>近两周</ion-label>
+            </ion-segment-button>
+            <ion-segment-button [value]="30">
+              <ion-label>近一月</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+        <div class="condition">
+          <div class="sub-title">评价</div>
+          <ion-segment [(ngModel)]="checkComment">
+            <ion-segment-button [value]="-1">
+              <ion-label>不限</ion-label>
+            </ion-segment-button>
+            <ion-segment-button [value]="0">
+              <ion-label>已评论</ion-label>
+            </ion-segment-button>
+            <ion-segment-button [value]="1">
+              <ion-label>未评论</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="clearStoreOrderCheck()" expand="block" fill="clear" shape="round">
+      重置
+    </ion-button>
+    <ion-button (click)="dismiss(0)" expand="block" fill="clear" shape="round">
+      确定
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

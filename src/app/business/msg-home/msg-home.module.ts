@@ -4,14 +4,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HammerModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
-import { AttentionRoutingModule } from './attention-routing.module';
-import { AttentionComponent } from './attention.component';
+import { MsgHomeRoutingModule } from './msg-home-routing.module';
+import { MsgHomeComponent } from './msg-home.component';
 
 
 
 @NgModule({
   declarations: [
-    AttentionComponent
+    MsgHomeComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +19,7 @@ import { AttentionComponent } from './attention.component';
     HammerModule,
     IonicModule,
     HttpClientModule,
-    AttentionRoutingModule
+    MsgHomeRoutingModule
   ]
 })
-export class AttentionModule { }
+export class MsgHomeModule { }

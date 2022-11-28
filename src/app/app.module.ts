@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule, HammerModule } from '@angular/platform-browser';
+import { HammerModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
@@ -11,8 +11,7 @@ import { BeforeStoreComponent } from './before-store/before-store.component';
 import { DtoModelComponent } from './dto-model/dto-model.component';
 import { ErrorComponent } from './error/error.component';
 import { BackService } from './service/back.service';
-
-
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 
 
 @NgModule({
@@ -27,12 +26,12 @@ import { BackService } from './service/back.service';
   imports:
     [
       CommonModule,
-      BrowserModule,
+      BrowserAnimationsModule,
       FormsModule,
       HammerModule,
       IonicModule.forRoot(),
       HttpClientModule,
-      AppRoutingModule
+      AppRoutingModule,
     ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
     , { provide: 'backService', useClass: BackService }

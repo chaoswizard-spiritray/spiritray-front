@@ -7,6 +7,8 @@ import { Consumer, Store } from '../dto-model/dto-model.component';
 export class StoreRouterDataService {
   public storeInf: Store = null;
   public userInf: Consumer = null;
+  public isShowSearch = 0;
+  public searchContext = "";
 
   constructor() { }
 }

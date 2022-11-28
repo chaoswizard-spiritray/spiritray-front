@@ -114,7 +114,8 @@ export class CommodityChooseComponent implements OnInit {
     this.router.navigate(['/consumer/shop/choose/order'],
       {
         queryParams: {
-          "orderCommoditys": JSON.stringify(orderCommoditys)
+          "orderCommoditys": JSON.stringify(orderCommoditys),
+          "subButtonType": 0
         }
       });
   }
@@ -209,6 +210,7 @@ export class CommodityChooseComponent implements OnInit {
 
   //加载可选规格属性
   queryMulAttribute() {
+    this.attributeNames = undefined;
     this.hr.get(GlobalFinal.SELLER_DOMAIN + "/cav/cav/mul/" + this.commodityId, GlobalFinal.JWTHEADER)
       .subscribe((data: any) => {
         const cavs: Array<SSMap> = data.data;

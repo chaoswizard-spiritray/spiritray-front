@@ -24,3 +24,21 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+@import "../node_modules/ng-zorro-antd-mobile/src//ng-zorro-antd-mobile.min.css";
+
+//订单发货popover样式
+.order-trans-popover {
+    --height: 200px;
+    --max-height: 200px;
+    --max-width: 360px;
+    --min-height: 200px;
+    --min-width: 340px;
+    --width: 360px;
+    --offset-x: -9px;
+    --offset-y: -200px;
+}
+
+//确定对话框
+.sure-alter {
+    font-family: cursive;
+}

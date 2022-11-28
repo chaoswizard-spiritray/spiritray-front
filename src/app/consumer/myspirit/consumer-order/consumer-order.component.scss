@@ -18,8 +18,17 @@
 
 }
 
+.orderType {
+    font-size: 18px;
+}
+
+ion-grid {
+    background-color: #ffffff;
+}
+
 .checkedOrder {
     text-shadow: 1px 13px 10px #f98472;
+    font-weight: 600;
 }
 
 .check,

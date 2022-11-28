@@ -4,13 +4,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HammerModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
-import { BackService } from '../service/back.service';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 import { ConsumerRoutingModule } from './consumer-routing.module';
 import { IndexComponent } from './index.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { RetrieveComponent } from './retrieve/retrieve.component';
-
 
 
 @NgModule({
@@ -26,7 +25,8 @@ import { RetrieveComponent } from './retrieve/retrieve.component';
     HammerModule,
     IonicModule,
     HttpClientModule,
-    ConsumerRoutingModule
+    ConsumerRoutingModule,
+    NgZorroAntdMobileModule
   ]
 })
 export class ConsumerModule {

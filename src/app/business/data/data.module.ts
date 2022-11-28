@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { TrustUrlPipe } from '../../trustUrlPipe/trust-url.pipe';
 import { DataRoutingModule } from './data-routing.module';
 import { DataComponent } from './data.component';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
+
 
 
 
@@ -21,7 +23,8 @@ import { DataComponent } from './data.component';
     HammerModule,
     IonicModule,
     HttpClientModule,
-    DataRoutingModule
+    DataRoutingModule,
+    NgZorroAntdMobileModule
   ]
 })
 export class DataModule { }

@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon class="backIcon" name="chevron-back-outline" slot="start" (click)="dismiss()"></ion-icon>
+    <span>{{receiverName}}</span>
+  </ion-toolbar>
+</ion-header>
+<ion-content scroll-events="true">
+  <div *ngIf="msgs">
+    <div class="msg" *ngFor="let msg of msgs;index as i">
+      <!-- 如果是对方的消息 -->
+      <div *ngIf="msg.senderRole==receiverRole" class="across">
+        <div class="head">
+          <ion-avatar>
+            <!-- 系统 -->
+            <img *ngIf="senderRole==0" src="../../../assets/icon/favicon.png" />
+            <!-- 买家与商家 -->
+            <img *ngIf="senderRole!=0" [src]="receiverHead|trustUrl" />
+          </ion-avatar>
+          <div>
+            <span>{{receiverName}}</span>
+          </div>
+        </div>
+        <div class="info">
+          <!-- 文字消息 -->
+          <div *ngIf="msg.msgType=='text'">{{msg.msg}}</div>
+          <!-- 图片消息 -->
+          <img *ngIf="msg.msgType=='img'" [src]="msg.msg|trustUrl" />
+        </div>
+      </div>
+      <!-- 如果是本方的消息 -->
+      <div *ngIf="msg.senderRole==senderRole" class="my">
+        <div class="head">
+          <ion-avatar>
+            <!-- 系统 -->
+            <img *ngIf="senderRole==0" src="../../../assets/icon/favicon.png" />
+            <!-- 买家与商家 -->
+            <img *ngIf="senderRole!=0" [src]="senderHead|trustUrl" />
+          </ion-avatar>
+        </div>
+        <div class="info">
+          <!-- 文字消息 -->
+          <div *ngIf="msg.msgType=='text'">
+            {{msg.msg}}
+          </div>
+          <!-- 图片消息 -->
+          <div *ngIf="msg.msgType=='img'">
+            <img [src]="msg.msg|trustUrl" />
+          </div>
+        </div>
+        <div class="isRead">
+          <span class="noread" *ngIf="msg.isRead==0">未读</span>
+          <span class="readed" *ngIf="msg.isRead==1">已读</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <input accept="image/*" type="file" id="upImg" (change)="upload($event)" hidden />
+</ion-content>
+<ion-footer *ngIf="senderRole!=0">
+  <ion-toolbar>
+    <div class="input">
+      <TextareaItem [autoFocus]="true" [rows]="2" [placeholder]="'说点什么吧'" [(ngModel)]="msgText"> </TextareaItem>
+    </div>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-button class="button" (click)="sendMsg()" expand="block" fill="clear" shape="round">
+      发送
+    </ion-button>
+    <label for="upImg">
+      <ion-icon class="up" name="arrow-up-circle-outline"></ion-icon>
+    </label>
+  </ion-toolbar>
+</ion-footer>

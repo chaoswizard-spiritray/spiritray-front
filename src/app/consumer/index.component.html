@@ -1,25 +1,62 @@
 <!-- 切换首页、购物车、个人中心的路由出口 -->
 <ion-router-outlet></ion-router-outlet>
 <!-- 底部标签导航条 -->
-<div>
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="home" class="home">
-        <ion-label>首页</ion-label>
-        <ion-icon name="home-outline"></ion-icon>
-      </ion-tab-button>
-      <ion-tab-button tab="attention" class="attention">
-        <ion-label>关注</ion-label>
-        <ion-icon name="chatbubble-outline"></ion-icon>
-      </ion-tab-button>
-      <ion-tab-button tab="cart" class="cart">
-        <ion-label>购物车</ion-label>
-        <ion-icon name="cart-outline"></ion-icon>
-      </ion-tab-button>
-      <ion-tab-button tab="myspirit" class="myspirit">
-        <ion-label>个人中心</ion-label>
-        <ion-icon name="person-outline"></ion-icon>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
-</div>
+<ion-tabs>
+  <ion-tab-bar slot="bottom" [style]="barStyle">
+    <ion-tab-button tab="home" class="home" (click)="change(0)">
+      <ion-icon *ngIf="checkIndex!=0" name="home-outline"></ion-icon>
+      <ion-icon *ngIf="checkIndex==0" name="home" class="checked"></ion-icon>
+      <ion-label>首页</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="msg" class="msg" (click)="change(1)">
+      <ion-icon *ngIf="checkIndex!=1" name="chatbubble-outline"></ion-icon>
+      <ion-icon *ngIf="checkIndex==1" name="chatbubble" class="checked"></ion-icon>
+      <ion-label>消息</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="cart" class="cart" (click)="change(2)">
+      <ion-icon *ngIf="checkIndex!=2" name="cart-outline"></ion-icon>
+      <ion-icon *ngIf="checkIndex==2" name="cart" class="checked"></ion-icon>
+      <ion-label>购物车</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="myspirit" class="myspirit" (click)="change(3)">
+      <ion-icon *ngIf="checkIndex!=3" name="person-outline"></ion-icon>
+      <ion-icon *ngIf="checkIndex==3" name="person" class="checked"></ion-icon>
+      <ion-label>个人中心</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+<!-- <TabBar [barTintColor]="barColor" [activeTab]="checkIndex" (onPress)="tabBarTabOnPress($event)">
+  <ion-router-outlet></ion-router-outlet>
+  <TabBarItem [title]="'首页'" [key]="0" [icon]="icon1" [selectedIcon]="icon11">
+    <ng-template #icon1>
+      <ion-icon name="home-outline"></ion-icon>
+    </ng-template>
+    <ng-template #icon11>
+      <ion-icon name="home"></ion-icon>
+    </ng-template>
+  </TabBarItem>
+  <TabBarItem [title]="'购物车'" [key]="1" [icon]="icon2" [selectedIcon]="icon22">
+    <ng-template #icon2>
+      <ion-icon name="cart-outline"></ion-icon>
+    </ng-template>
+    <ng-template #icon22>
+      <ion-icon name="cart"></ion-icon>
+    </ng-template>
+  </TabBarItem>
+  <TabBarItem [title]="'消息'" [key]="2" [icon]="icon3" [selectedIcon]="icon33">
+    <ng-template #icon3>
+      <ion-icon name="chatbubble-outline"></ion-icon>
+    </ng-template>
+    <ng-template #icon33>
+      <ion-icon name="chatbubble"></ion-icon>
+    </ng-template>
+  </TabBarItem>
+  <TabBarItem [title]="'个人中心'" [key]="3" [icon]="icon4" [selectedIcon]="icon44">
+    <ng-template #icon4>
+      <ion-icon name="person-outline"></ion-icon>
+    </ng-template>
+    <ng-template #icon44>
+      <ion-icon name="person"></ion-icon>
+    </ng-template>
+  </TabBarItem>
+</TabBar> -->

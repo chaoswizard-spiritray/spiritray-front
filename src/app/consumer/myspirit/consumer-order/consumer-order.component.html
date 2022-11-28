@@ -18,7 +18,7 @@
     <ion-card *ngFor="let order of orders;index as i">
       <!-- 如果是待付款 -->
       <div *ngIf="flag==0">
-        <div class="img">
+        <div class="img" (click)="orderDetailInfo(i)">
           <img [src]="order.skuMap|trustUrl">
         </div>
         <div class="info">
@@ -41,7 +41,7 @@
       <!-- 如果是待发货-->
       <div *ngIf="flag==1">
         <div class="img">
-          <img [src]="order.skuMap|trustUrl">
+          <img [src]="order.skuMap|trustUrl" (click)="orderDetailInfo(i)">
         </div>
         <div class="info">
           <div>
@@ -64,7 +64,7 @@
       </div>
       <!-- 如果是待收货-->
       <div *ngIf="flag==2">
-        <div class="img">
+        <div class="img" (click)="orderDetailInfo(i)">
           <img [src]="order.skuMap|trustUrl">
         </div>
         <div class="info">
@@ -78,14 +78,14 @@
           </div>
         </div>
         <div>
-          <ion-button (click)="topay()" expand="block" fill="clear" shape="round">
+          <ion-button (click)="sureOrderOver(order.orderNumber,order.odId)" expand="block" fill="clear" shape="round">
             确认收货
           </ion-button>
         </div>
       </div>
       <!-- 如果是评价-->
       <div *ngIf="flag==3">
-        <div class="img">
+        <div class="img" (click)="orderDetailInfo(i)">
           <img [src]="order.skuMap|trustUrl">
         </div>
         <div class="info">

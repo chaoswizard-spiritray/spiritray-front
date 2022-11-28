@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Header</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="stars">
+    <ul>
+      <li>
+        <ion-icon name="star" class="star" (click)="lightStar(1)"></ion-icon>
+      </li>
+      <li>
+        <ion-icon name="star" class="star" (click)="lightStar(2)"></ion-icon>
+      </li>
+      <li>
+        <ion-icon name="star" class="star" (click)="lightStar(3)"></ion-icon>
+      </li>
+      <li>
+        <ion-icon name="star" class="star" (click)="lightStar(4)"></ion-icon>
+      </li>
+      <li>
+        <ion-icon name="star" class="star" (click)="lightStar(5)"></ion-icon>
+      </li>
+    </ul>
+  </div>
+  <div class="text">
+    <ion-textarea placeholder="请填写你的评价"></ion-textarea>
+  </div>
+  <div class="attach">
+
+  </div>
+  <div class="check">
+
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="onClick()" expand="block" fill="clear" shape="round">
+      发布
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

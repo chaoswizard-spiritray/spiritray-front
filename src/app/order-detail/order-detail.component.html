@@ -1,0 +1,122 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>订单详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="orderInfo">
+    <div class="img">
+      <img [src]="orderInfo.skuMap|trustUrl" />
+    </div>
+    <div>
+      <div class="ex">
+        <ion-card *ngIf="consumerInfo">
+          <ion-avatar>
+            <img [src]="consumerInfo.consumerHead|trustUrl" />
+          </ion-avatar>
+          <span>{{consumerInfo.consumerNickname}}</span>
+        </ion-card>
+        <ion-card *ngIf="storeInfo">
+          <ion-avatar>
+            <img [src]="storeInfo.storeHead|trustUrl" />
+          </ion-avatar>
+          <span>{{storeInfo.storeName}}</span>
+        </ion-card>
+      </div>
+      <ion-list>
+        <ion-item>
+          <label slot="start">商品名称:{{commodityName}} </label>
+        </ion-item>
+        <ion-item>
+          <label slot="start">规格:{{orderInfo.skuValue}} </label>
+        </ion-item>
+        <ion-item>
+          <label slot="start">购买数量:{{orderInfo.commodityNum}} </label>
+        </ion-item>
+        <ion-item>
+          <div>
+            <label style="display: block;font-size: 16px;margin-bottom: 10px;">订单编号: </label>
+            <label>{{orderInfo.orderNumber}}{{orderInfo.odId}}</label>
+          </div>
+          <ion-icon name="copy-outline" slot="end" (click)="copy()"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <label slot="start" *ngIf="orderInfo.state==0">订单状态:待付款 </label>
+          <label slot="start" *ngIf="orderInfo.state==1">订单状态:待发货 </label>
+          <label slot="start" *ngIf="orderInfo.state==2">订单状态:待收货 </label>
+          <label slot="start" *ngIf="orderInfo.state==3">订单状态:已完成 </label>
+        </ion-item>
+        <ion-item>
+          <label slot="start">下单时间:{{orderInfo.orderDate|datepipe}} </label>
+        </ion-item>
+        <ion-item *ngIf="childType>=3">
+          <label slot="start">完成时间:{{orderInfo.overDate|datepipe}} </label>
+        </ion-item>
+        <ion-item *ngIf="childType==0">
+          <label slot="start">需付金额:{{orderInfo.totalAmount}}￥ </label>
+        </ion-item>
+        <ion-item *ngIf="childType!=0">
+          <label slot="start">实付金额:{{orderInfo.totalAmount}}￥ </label>
+        </ion-item>
+        <!-- 付款信息 -->
+        <div *ngIf="cpi">
+          <ion-item>
+            <label slot="start">支付方式 </label>
+            <ion-icon style="color: blue;" class="iconAli" *ngIf="cpi.accaId==1" name="logo-alipay" slot="end">
+            </ion-icon>
+            <ion-icon style="color: green;" class="iconWec" *ngIf="cpi.accaId==2" name="logo-wechat" slot="end">
+            </ion-icon>
+          </ion-item>
+          <ion-item>
+            <div>
+              <label style="display: block;font-size: 16px;margin-bottom: 10px;">支付单号: </label>
+              <label>{{cpi.payNo}}</label>
+            </div>
+            <ion-icon name="copy-outline" slot="end" (click)="copy()"></ion-icon>
+          </ion-item>
+          <ion-item>
+            <label slot="start">支付时间:{{cpi.payDate|datepipe}} </label>
+          </ion-item>
+        </div>
+        <!-- 物流单号 -->
+        <ion-item *ngIf="childType>1">
+          <div>
+            <label style="display: block;font-size: 16px;margin-bottom: 10px;">物流单号: </label>
+            <label>{{orderInfo.logisticsNo}}</label>
+          </div>
+          <ion-icon name="copy-outline" slot="end" (click)="copy()"></ion-icon>
+        </ion-item>
+        <!-- 收款信息 -->
+        <div>
+          <div *ngIf="pts">
+            <ion-item>
+              <div>
+                <label style="display: block;font-size: 16px;margin-bottom: 10px;">收款账号: </label>
+                <label>{{pts.accountNo}}</label>
+              </div>
+              <ion-icon name="copy-outline" slot="end" (click)="copy()"></ion-icon>
+            </ion-item>
+            <ion-item>
+              <label slot="start">收款类型:{{pts.payType}} </label>
+            </ion-item>
+            <ion-item>
+              <label slot="start">收款时间:{{pts.payTime|datepipe}} </label>
+            </ion-item>
+          </div>
+          <div *ngIf="type==0&&!pts">
+            <ion-item>
+              <label slot="start">商家收款信息:无 </label>
+            </ion-item>
+          </div>
+        </div>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="dismiss()" expand="block" fill="clear" shape="round">
+      确定
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

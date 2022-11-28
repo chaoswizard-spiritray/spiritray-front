@@ -9,16 +9,23 @@ import { LocationService } from '../service/location.service';
 })
 export class LocationPipe implements PipeTransform {
   result: string = "";
+  trimer;
   constructor(
     private hr: HttpClient,
-    private locationService:LocationService
+    private locationService: LocationService
   ) { }
 
   transform(location: string): any {
     if (GlobalFinal.IS_EXIST.includes(location) || location.length <= 0) {
       return "";
     }
-    let array: Array<number> = JSON.parse(location);
+    let array: Array<number>;
+    try {
+      array = JSON.parse(location);
+    } catch {
+      location = location.slice(0, location.indexOf(" "));
+      array = JSON.parse(location);
+    }
     //创建一个可观察对象数组
     const arr = [
       this.hr.get(GlobalFinal.PLANT_DOMAIN + "/location/province/simple/" + array[0], GlobalFinal.HEADER),

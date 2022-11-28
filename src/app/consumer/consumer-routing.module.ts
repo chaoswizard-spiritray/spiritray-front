@@ -31,8 +31,8 @@ const routes: Routes = [
           loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
         },
         {
-          path: 'attention',
-          loadChildren: () => import('./attention/attention.module').then(m => m.AttentionModule)
+          path: 'msg',
+          loadChildren: () => import('./msg-home/msg-home.module').then(m => m.MsgHomeModule)
         },
         {
           path: 'cart',

@@ -2,10 +2,26 @@
     font-family: cursive;
 }
 
-.outerMenuLog {
-    font-size: 30px;
-    margin-left: 89%;
-    opacity: .5;
+ion-header {
+    background: rgb(255, 255, 255);
+}
+
+.box1,
+.box2 {
+    margin-top: 10px;
+    display: inline-block;
+    color: rgb(0, 0, 0);
+}
+
+.box1 {
+    font-size: 23px;
+    margin-left: 13px;
+    color: rgb(107, 10, 10);
+}
+
+.box2 {
+    font-size: 27px;
+    margin-left: 343px;
 }
 
 .storeName {
@@ -39,4 +55,22 @@ ion-avatar {
 
 ion-card {
     border-radius: 20px;
+}
+
+ion-fab {
+    margin-top: -10px;
+}
+
+ion-fab-button::part(native) {
+    background-color: #fee8e8;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, .3), 0px 1px 3px 1px rgba(0, 0, 0, .15);
+    color: rgb(89, 84, 84);
+}
+
+ion-fab-button::part(native):hover::after {
+    background-color: #a3e681;
+}
+
+ion-fab-button::part(native):active::after {
+    background-color: #87d361;
 }

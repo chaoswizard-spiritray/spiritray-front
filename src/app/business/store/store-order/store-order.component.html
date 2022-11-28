@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon (click)="back()" slot="start" name="chevron-back" style="font-size: 23px;margin-left:10px;"
+      [hidden]="backHidden">
+    </ion-icon>
+    <!-- 搜索框 -->
+    <SearchBar (onFocus)="hiddenBack()" [(ngModel)]="keyWord" (onCancel)="showBack()" placeholder="输入订单号/关键字"
+      (onBlur)="showBack()" (onSubmit)="searchSub()">
+    </SearchBar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content scroll-events="true" (ionScroll)="scroll($event)" (ionScrollEnd)="scrollEnd()">
+  <!-- 内容区头部 -->
+  <div class=" type" [style]="typeStyle" [hidden]="typeHidden">
+    <ul>
+      <li>
+        <span class="orderType" (click)="toogleType(0)">未付款</span>
+      </li>
+      <li>
+        <span class="orderType" (click)="toogleType(1)">未发货</span>
+      </li>
+      <li>
+        <span class="orderType" (click)="toogleType(2)">已发货</span>
+      </li>
+      <li>
+        <span class="orderType" (click)="toogleType(3)">已完成</span>
+      </li>
+    </ul>
+  </div>
+  <!-- 额外操作条件 -->
+  <div class="condition" [style]="conditionStyle">
+    <ul>
+      <li>
+        <span class="orderType" (click)="openModal('condition')">筛选</span>
+        <ion-icon name="chevron-down"></ion-icon>
+      </li>
+      <li>
+        <span class="orderType" (click)="openModal('reorder')">排序</span>
+        <ion-icon name="chevron-down"></ion-icon>
+      </li>
+    </ul>
+  </div>
+  <!-- 订单内容区域 -->
+  <div *ngIf="orders;else noData" class="context">
+    <div *ngFor="let order of orders;index as i">
+      <div class="order">
+        <div class="img" (click)="showOrderInfo(0)">
+          <img [src]="order.skuMap|trustUrl">
+        </div>
+        <div class="info" (click)="showOrderInfo(0)">
+          <div>
+            <label *ngIf="commodityNames">{{getCommodityName(order.commodityId)}}</label>
+          </div>
+          <div>
+            <label>{{order.skuValue}}</label>
+          </div>
+          <div>
+            <label>{{order.totalAmount}}￥</label>
+            <label>×{{order.commodityNum}}</label>
+          </div>
+        </div>
+        <div class="option">
+          <!-- 所有订单皆可查看详情 -->
+          <ion-button (click)="orderDetailInfo(i)" expand="block" fill="clear" shape="round">
+            订单详情
+          </ion-button>
+          <!-- 未发货订单 -->
+          <ion-button *ngIf="flag==1" (click)="orderTrans($event,i)" expand="block" fill="clear" shape="round">
+            订单发货
+          </ion-button>
+          <!-- 未收货订单 -->
+          <ion-button *ngIf="flag==2" (click)="chanelOrder(order.orderNumber,order.odId)" expand="block" fill="clear"
+            shape="round">
+            物流信息
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 回到顶部按钮 -->
+  <div slot="fixed" style="top: 650px;right:20px;" [hidden]="topHidden">
+    <ion-icon name="chevron-up-circle" style="font-size: 40px;" (click)="toTop()"></ion-icon>
+  </div>
+  <!-- 无限滚动组件 -->
+  <ion-infinite-scroll threshold="80px" *ngIf="!isDataOver;else dataover" (ionInfinite)="loadData($event)"
+    #IonInfiniteScroll>
+    <ion-infinite-scroll-content loadingSpinner="circular" loadingText="加载中...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+<ng-template #noData>
+  <!-- 没有数据时 -->
+  <div class="nodata">没有相关数据</div>
+</ng-template>
+<ng-template #dataover>
+  <div class="dataover">
+    <label>已经到底了....</label>
+  </div>
+</ng-template>

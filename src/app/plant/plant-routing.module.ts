@@ -18,6 +18,10 @@ const routes: Routes = [
           loadChildren: () => import('./platform/platform.module').then(m => m.PlatformModule)
         },
         {
+          path: 'msg',
+          loadChildren: () => import('./msg-home/msg-home.module').then(m => m.MsgHomeModule)
+        },
+        {
           path: "shop",
           loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule)
         },
@@ -31,7 +35,7 @@ const routes: Routes = [
           pathMatch: "full"
         }
       ],
-    canActivate: [LogonGuard]
+    //   canActivate: [LogonGuard]
   }
 ];
 
