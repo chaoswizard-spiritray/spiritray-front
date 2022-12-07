@@ -1,0 +1,71 @@
+* {
+    font-family: cursive;
+}
+
+.title {
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    width: 100%;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    font-size: 24px;
+    background: rgb(0, 174, 255);
+}
+
+.title span {
+    margin-left: 160.5px;
+    color: rgb(13, 53, 3);
+}
+
+.state {
+    border-top-right-radius: 20px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 18px;
+}
+
+.state span {
+    margin-left: 168.5px;
+}
+
+.config {
+    margin-top: 50px;
+    font-size: 16px;
+}
+
+.config ion-item {
+    margin-top: 30px;
+}
+
+.config div:last-child {
+    margin-top: 80px;
+}
+
+.config div:last-child ion-button {
+    font-size: 18px;
+    color: blue;
+}
+
+.product {
+    margin-top: 30px;
+}
+
+.product div:first-child img {
+    border-radius: 15px;
+}
+
+.product div:last-child {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.product div:last-child div:first-child {
+    font-size: 16px;
+    margin-left: 146.5px;
+}
+
+.product div:last-child div:last-child {
+    font-size: 16px;
+    margin-left: 130px;
+}

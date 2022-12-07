@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class DefalutComponent implements OnInit {
   //历史记录
-  private historyWord = new Array<string>();
+  private historyWord = [];
   //热词
   private hotWord = new Array<string>();
   constructor(private router: Router) { }
@@ -41,21 +41,23 @@ export class DefalutComponent implements OnInit {
   //将点击的词传入搜索
   tobar(event) {
     var word = event.target.innerText;
-    console.log(word);
     //先将这个词从历史记录中更新，将这个元素放在首位
     this.historyWord.splice(this.historyWord.indexOf(word), 1);
     this.historyWord.unshift(word);
     //更新历史记录
-    console.log(JSON.stringify(this.historyWord));
     localStorage.setItem("historyWord", JSON.stringify(this.historyWord));
     //跳转查询
-    this.router.navigateByUrl("search/result" + "/" + word);
+    this.router.navigate(["/consumer/search/result"], {
+      queryParams: {
+        "word": word
+      }
+    });
   }
 
   // 删除当前记录
   delete(event) {
     // 获取要删除的内容
-    let word = event.target.parentNode.firstChild.innerText;
+    let word: any = event.target.parentNode.firstChild.innerText;
     //因为ng会自动绑定数据，所以只需要将数据删除即可
     this.historyWord.splice(this.historyWord.indexOf(word), 1);
     //然后更新缓存内容
@@ -65,7 +67,7 @@ export class DefalutComponent implements OnInit {
   //清空所有历史记录
   deleteAll() {
     //不用js遍历删除，绑定数据后ng自动更新节点
-    this.historyWord = null;
+    this.historyWord = [];
     localStorage.removeItem("historyWord");
   }
 
@@ -80,7 +82,10 @@ export class DefalutComponent implements OnInit {
   //读取历史记录
   getHistory(): void {
     // 从缓存中加载历史记录
-    this.historyWord = JSON.parse(localStorage.getItem("historyWord"));
+    const hisWord = localStorage.getItem("historyWord");
+    if (hisWord != null || hisWord) {
+      this.historyWord = JSON.parse(hisWord);
+    }
   }
   //请求热词
   getHot(): void {

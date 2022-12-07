@@ -1,0 +1,30 @@
+* {
+    font-family: cursive;
+}
+
+.stars {
+    margin-top: 50px;
+    margin-left: 20px;
+    float: left;
+    width: 100%;
+}
+
+.stars .li {
+    float: left;
+    font-size: 30px;
+    margin-left: 15px;
+    color: rgb(255, 111, 0);
+}
+
+.text {
+    float: left;
+    margin-top: 20px;
+    width: 100%;
+    border-top: 1px solid #000;
+}
+
+.attach {
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+}

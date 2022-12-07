@@ -17,10 +17,13 @@ export class RegisterComponent implements OnInit {
 
   dpassword: string = null;
 
+  email: string = null;
+
   nickname: string = null;
   sex = 0;
   code: string = null;
   is_createImg = true;
+  isShow = false;
 
   constructor(private http: HttpClient, public alterM: AlertController, private router: Router) {
   }
@@ -37,15 +40,17 @@ export class RegisterComponent implements OnInit {
   getCode(event) {
     this.http
       .get(GlobalFinal.DOMAIN + "/consumer/code", GlobalFinal.HEADER)
-      .subscribe(
-        (response: any) => {
-          if (this.is_createImg) {
-            event.target.innerText = "";
-            event.target.appendChild(document.createElement("img"));
-            this.is_createImg = false;
-          }
-          document.getElementsByTagName("img")[0].setAttribute("src", response.data);
-        });
+      .subscribe((data: any) => {
+        //   if (this.is_createImg) {
+        //     event.target.innerText = "";
+        //     event.target.appendChild(document.createElement("img").setAttribute("class", "registerImg"));
+        //     this.is_createImg = false;
+        //   }
+        //   document.getElementsByClassName("registerImg")[0].setAttribute("src", response.data);
+        // });
+        this.isShow = true;
+        document.getElementsByClassName("registerImg")[0].setAttribute("src", data.data);
+      });
   }
 
   /** ---------注册------------------------------------------------*/
@@ -60,7 +65,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
     // 封装对象
-    let consumer = new Consumer(null, this.nickname, Number.parseInt(this.phone), this.password, this.sex);
+    let consumer = new Consumer(null, this.nickname, Number.parseInt(this.phone), this.password, this.email, this.sex);
     let registerDTO = new RegisterDTO(consumer, this.code);
     // 发送请求
     this.http

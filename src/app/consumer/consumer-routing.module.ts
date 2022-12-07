@@ -1,13 +1,36 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ConsumerWebsocketGuard } from '../guard/consumer-websockt.guard';
 import { LoginGuard } from '../guard/login.guard';
 import { IndexComponent } from './index.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { DefalutComponent } from './search/defalut/defalut.component';
+import { SearchResultComponent } from './search/search-result/search-result.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  {
+    path: 'search', component: SearchComponent,
+    children:
+      [
+        {
+          path: '',
+          redirectTo: '/consumer/search/default',
+          pathMatch: 'full'
+        },
+        {
+          path: 'default',
+          component: DefalutComponent
+        },
+        {
+          path: 'result',
+          component: SearchResultComponent
+        }
+      ]
+  },
   {
     path: 'shop',
     loadChildren: () => import('./commodity-shop/commodity-shop.module').then(m => m.CommodityShopModule)
@@ -43,7 +66,8 @@ const routes: Routes = [
           loadChildren: () => import('./myspirit/myspirit.module').then(m => m.MyspiritModule)
         },
         { path: '', redirectTo: "/consumer/home", pathMatch: "full" }
-      ]
+      ],
+    canActivate: [ConsumerWebsocketGuard]
   }
 ];
 

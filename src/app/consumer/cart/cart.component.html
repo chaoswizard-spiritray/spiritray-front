@@ -1,50 +1,63 @@
-<ion-header *ngIf="commoditys">
+<ion-header [hidden]="hiddenData">
     <div class="header">
-        <div class="box1" (click)="clearCart()">
-            <span>清空</span>
-        </div>
-        <div class="box2">
-            <ion-searchbar placeholder="search" (ionBlur)="searchcommodity()" (ionClear)="queryCart()"></ion-searchbar>
+        <div style="border-bottom: 1px solid #ddd;color:bisque;">
+            <SearchBar placeholder="关键字" (onCancel)="reLoad()" (onBlur)="reLoad()" (onSubmit)="searchcommodity($event)">
+            </SearchBar>
         </div>
     </div>
 </ion-header>
-<ion-content>
+<!-- <div class="box1" (click)="clearCart()">
+    <span>清空</span>
+</div> -->
+<ion-content [hidden]="hiddenData">
     <ion-refresher slot="fixed" (ionRefresh)="refreshing($event)" pullFactor="1" pullMin="30" pullMax="50">
         <ion-refresher-content pullingIcon="add" refreshingText="刷新中">
         </ion-refresher-content>
     </ion-refresher>
     <div class="content" *ngIf="commoditys">
-        <ion-card *ngFor="let commodity of commoditys;index as i" (press)="deleteCart(i)">
-            <div class="check">
-                <ion-checkbox (ionChange)="check($event,0,i)"></ion-checkbox>
-            </div>
-            <div>
-                <div class="img" (click)="toCommodityShop(commodity.commodityId)">
-                    <img [src]="commodity.skuMap|trustUrl">
+        <div>
+            <ion-card *ngFor="let commodity of commoditys;index as i">
+                <div class="check">
+                    <ion-checkbox mode="ios" slot="start" (ionChange)="check($event,0,i)"></ion-checkbox>
                 </div>
-                <div class="info">
-                    <div>
-                        <label>{{commodity.commodityName}}</label>
-                        <label>{{commodity.skuValue}}</label>
+                <div>
+                    <div class="img" (click)="toCommodityShop(commodity.commodityId)">
+                        <img [src]="commodity.skuMap|trustUrl">
                     </div>
-                    <div>
-                        <label>{{commodity.totalFee}}￥</label>
-                        <label>×{{commodity.commodityNum}}</label>
+                    <div class="info">
+                        <div>
+                            {{commodity.commodityName}}
+                        </div>
+                        <div>
+                            {{commodity.skuValue}}
+                        </div>
+                        <div>
+                            {{commodity.totalFee}}￥
+                        </div>
+                        <div>
+                            ×{{commodity.commodityNum}}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </ion-card>
+            </ion-card>
+        </div>
     </div>
 </ion-content>
-<ion-footer *ngIf="commoditys">
+<ion-footer *ngIf="commoditys" [hidden]="hiddenData">
+    <div class="total">
+        合计:{{totalMoney}}￥
+    </div>
     <div class="footer">
-        <div class="box3">
-            <ion-checkbox (ionChange)="check($event,1,-1)"></ion-checkbox>
-            <span>全选</span>
+        <div>
+            <ion-checkbox slot="start" mode="ios" (ionChange)="check($event,1,-1)"></ion-checkbox>
+            <ion-label>全选</ion-label>
         </div>
         <div class="box4">
-            <span>合计:{{totalMoney}}￥</span>
-            <ion-button>结账</ion-button>
+            <ion-button (click)="deleteCart()">删除</ion-button>
+            <ion-button (click)="toOrder()">结账</ion-button>
         </div>
     </div>
 </ion-footer>
+<div class="nodata" [hidden]="!hiddenData">
+    空的购物车
+</div>

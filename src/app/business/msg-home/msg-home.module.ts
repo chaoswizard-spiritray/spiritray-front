@@ -6,12 +6,21 @@ import { HammerModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
 import { MsgHomeRoutingModule } from './msg-home-routing.module';
 import { MsgHomeComponent } from './msg-home.component';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
+import { MsgDetailComponent } from '../../msg-detail/msg-detail.component';
+import { DatePipe } from '../../trustUrlPipe/date.pipe';
+import { TrustUrlPipe } from '../../trustUrlPipe/trust-url.pipe';
+import { ImgShowComponent } from '../../img-show/img-show.component';
 
 
 
 @NgModule({
   declarations: [
-    MsgHomeComponent
+    TrustUrlPipe,
+    DatePipe,
+    MsgHomeComponent,
+    MsgDetailComponent,
+    ImgShowComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +28,8 @@ import { MsgHomeComponent } from './msg-home.component';
     HammerModule,
     IonicModule,
     HttpClientModule,
-    MsgHomeRoutingModule
+    MsgHomeRoutingModule,
+    NgZorroAntdMobileModule
   ]
 })
 export class MsgHomeModule { }

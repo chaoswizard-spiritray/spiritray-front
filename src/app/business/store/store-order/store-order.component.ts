@@ -333,7 +333,7 @@ export class StoreOrderComponent implements OnInit {
 
   //返回上一个路由
   back() {
-    this.navController.pop();
+    this.navController.back();
   }
 
   //搜索框得到焦点时隐藏回退

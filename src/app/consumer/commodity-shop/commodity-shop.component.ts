@@ -49,6 +49,7 @@ export class CommodityShopComponent implements OnInit, OnDestroy {
       //增加点击数量
       this.addChick();
     });
+    this.queryCOmmodityCommentCounts();
   }
 
   //查询该商品的所有评论数目
@@ -58,7 +59,7 @@ export class CommodityShopComponent implements OnInit, OnDestroy {
       "commodityId": this.commodityId,
       "type": 0
     };
-    this.hr.get(GlobalFinal.SELLER_DOMAIN + "/comment/counts", headers).subscribe((data: any) => {
+    this.hr.get(GlobalFinal.SELLER_DOMAIN + "/comment/counts/" + this.commodityId + "/0", headers).subscribe((data: any) => {
       //获取数据
       if (data.stausCode == 200) {
         this.commentNum = data.data;
@@ -153,18 +154,16 @@ export class CommodityShopComponent implements OnInit, OnDestroy {
   // 打开评论查看模态框
   async showComment() {
     // 先判断数目
-    if (this.commentNum > 0) {
-      const modal = await this.modalController.create({
-        component: CommodityCommentComponent,//模态框中展示的组件
-        handle: false,
-        componentProps: {
-          'commodityId': this.commodityId
-        },
-        swipeToClose: true,
-        presentingElement: await this.modalController.getTop()
-      });
-      await modal.present();
-    }
+    const modal = await this.modalController.create({
+      component: CommodityCommentComponent,//模态框中展示的组件
+      handle: false,
+      componentProps: {
+        'commodityId': this.commodityId
+      },
+      swipeToClose: true,
+      presentingElement: await this.modalController.getTop()
+    });
+    await modal.present();
   }
 
   //打开消息模态框
@@ -213,13 +212,15 @@ export class CommodityShopComponent implements OnInit, OnDestroy {
 
   //更新浏览历史
   modifyHistory() {
-    if (localStorage.getItem("jwt")) {
-      //封装信息
-      const lookTime = new Date().valueOf() - this.startTime.valueOf();
-      const formdata = new FormData();
-      formdata.append("commodityId", this.commodityId);
-      formdata.append("lookTime", lookTime + "");
-      this.hr.post(GlobalFinal.DOMAIN + "/history/add", formdata, GlobalFinal.JWTHEADER).subscribe((data: any) => { });
+    if (this.commodityId) {
+      if (localStorage.getItem("jwt")) {
+        //封装信息
+        const lookTime = new Date().valueOf() - this.startTime.valueOf();
+        const formdata = new FormData();
+        formdata.append("commodityId", this.commodityId);
+        formdata.append("lookTime", lookTime + "");
+        this.hr.post(GlobalFinal.DOMAIN + "/history/add", formdata, GlobalFinal.JWTHEADER).subscribe((data: any) => { });
+      }
     }
   }
 

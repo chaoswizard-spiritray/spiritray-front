@@ -1,21 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalALert, GlobalFinal } from '../dto-model/dto-model.component';
 
+// https://blog.csdn.net/wzh66888/article/details/92431171
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss'],
 })
-export class IndexComponent implements OnInit {
+export class IndexComponent implements OnInit, OnDestroy {
 
   checkIndex = 0;
 
   barStyle = "";
-
+  session: WebSocket;
   constructor(
     private router: Router
   ) { }
+
+  ngOnDestroy(): void {
+    if (this.session) {
+      this.session.close();
+    }
+  }
+
 
   ngOnInit() {
     //获取当前路由
@@ -55,52 +63,19 @@ export class IndexComponent implements OnInit {
   //建立websocket连接
   buildSocketLink() {
     //如果已经连接了，就不用
-    if (localStorage.getItem("consumerWeb") == null) {
-      localStorage.setItem("consumerWeb", 0 + "");
+    let webS = "consumerWeb";
+    let url = GlobalFinal.WEBSOCKET_DOMAIN;
+    if (localStorage.getItem(webS) == null) {
+      localStorage.setItem(webS, 0 + "");
     }
-    if (parseInt(localStorage.getItem("consumerWeb") + "") == 0 && localStorage.getItem("consumer") !== null) {
-      let websocket;
-      //判断当前浏览器是否支持WebSocket
-      if ('WebSocket' in window) {
-        //获取买家的电话
-        websocket = new WebSocket(GlobalFinal.WEBSOCKET_DOMAIN + "/websocket/consumer/" + JSON.parse(localStorage.getItem("consumer") + "").phone);
-      }
-      else {
-        GlobalALert.getToast("无法连接");
-      }
-
-      //连接发生错误的回调方法
-      websocket.onerror = function () {
-        GlobalALert.getToast("连接错误");
-        localStorage.setItem("consumerWeb", 0 + "");
-      };
-
-      //连接成功建立的回调方法
-      websocket.onopen = function () {
-        console.log("index连接成功");
-        localStorage.setItem("consumerWeb", 1 + "");
-      }
-
-      //接收到消息的回调方法
-      websocket.onmessage = function (event) {
-        //setMessageInnerHTML(event.data);
-        GlobalALert.getToast("您收到一条消息");
-      }
-
-      //连接关闭的回调方法
-      websocket.onclose = function () {
-        console.log("index连接已关闭");
-        localStorage.setItem("consumerWeb", 0 + "");
-      }
-
-      //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-      window.onbeforeunload = function () {
-        closeWebSocket();
-      }
-
-      //关闭WebSocket连接
-      function closeWebSocket() {
-        websocket.close();
+    if (parseInt(localStorage.getItem(webS) + "") == 0) {
+      //获取websocket观察对象
+      if (localStorage.getItem("consumer") != null) {
+        const temp = GlobalFinal.createWebSocket(url + "/websocket/consumer/" + JSON.parse(localStorage.getItem("consumer") + "").phone, webS);
+        this.session = temp.session;
+        temp.sessionOb.subscribe((data: any) => {
+          GlobalALert.getToast("你有新的消息");
+        });
       }
     }
   }

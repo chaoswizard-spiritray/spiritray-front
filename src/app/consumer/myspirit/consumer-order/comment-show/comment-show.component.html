@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon class="back" name="chevron-back-outline" slot="start" (click)="back()" style="font-size: 20px;">
+    </ion-icon>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-segment value="all">
+    <ion-segment-button value="all">
+      <ion-label>全部</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <div *ngIf="comments;else nodata" class="comments">
+    <div class="comment" *ngFor="let comment of comments;index as i">
+      <div class="info">
+        <div class="date">
+          <span>{{comment.comment.startDate|datepipe}}</span>
+          <span *ngIf="comment.comment.isAnonymous==1">已匿名</span>
+          <span *ngIf="comment.comment.isAnonymous==0">已公开</span>
+        </div>
+        <div class="text">
+          <div>
+            {{comment.comment.commentContent}}
+          </div>
+          <div *ngIf="comment.comment.attchedMap!=''">
+            <img [src]="comment.comment.attchedMap|trustUrl" style="width:90px;height:90px;border-radius: 5px;" />
+          </div>
+        </div>
+      </div>
+      <div class="sku">
+        <div>
+          <img [src]="comment.orderDetailInfo.skuMap|trustUrl" style="width:40px;height: 40px;" />
+        </div>
+        <div>
+          <div>{{comment.commodityName}}</div>
+          <div>{{comment.orderDetailInfo.skuValue}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ng-template #nodata>
+  <div class="nodata">
+    无评价
+  </div>
+</ng-template>

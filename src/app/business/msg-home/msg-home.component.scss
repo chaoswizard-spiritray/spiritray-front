@@ -1,0 +1,72 @@
+* {
+    font-family: cursive;
+}
+
+ion-content {
+    --background: #f1f1f1;
+}
+
+.msg {
+    float: left;
+    margin-top: 8px;
+    width: 97%;
+    margin-left: 1.5%;
+    margin-right: 1.5%;
+    padding: 10px;
+    border-radius: 10px;
+    border-bottom: 1px solid rgb(124, 123, 121);
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px rgb(223, 215, 207);
+}
+
+.noread {
+    border: 1px solid rgb(75, 21, 68);
+    box-shadow: 0px 0px 5px rgb(41, 0, 30);
+}
+
+.name,
+.info,
+.date {
+    float: left;
+}
+
+ion-avatar {
+    float: left;
+    width: 50px;
+    height: 50px;
+}
+
+.name {
+    margin-left: 10px;
+    width: 280px;
+    font-weight: 600;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+}
+
+.info {
+    max-width: 140px;
+    font-size: 15px;
+    height: 20px;
+    margin-left: 20px;
+    margin-top: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: .8;
+}
+
+.date {
+    float: right;
+    margin-top: 20px;
+    font-size: 12px;
+    opacity: .7;
+}
+
+.nodata {
+    font-size: 20px;
+    opacity: .7;
+    color: black;
+    margin-left: 156.5px;
+    margin-top: 200px;
+}

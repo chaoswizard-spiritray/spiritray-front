@@ -1,0 +1,40 @@
+<ion-content>
+  <div class="title"><span>轮播图</span></div>
+  <div *ngIf="slideFactory">
+    <div class="state" *ngIf="slideFactory.state==-1">
+      <span>已关闭</span>
+    </div>
+    <div class="state" *ngIf="slideFactory.state==0">
+      <span>生产中</span>
+    </div>
+    <div class="state" *ngIf="slideFactory.state==1">
+      <span>发放中</span>
+    </div>
+    <div *ngIf="slideFactory.state==0||slideFactory.state==1" class="product">
+      <div>
+        <img src="../../../../assets/风车.gif">
+      </div>
+      <div class="list">
+        <ion-button *ngIf="slideFactory.state==1" [hidden]="!hiddenUp" (click)="getSlide()" expand="block" fill="clear"
+          shape="round">
+          获取
+        </ion-button>
+        <ion-button expand="block" fill="clear" shape="round" [hidden]="hiddenUp" [disabled]="disabledUp">
+          <label for="head" *ngIf="!disabledUp">上传图片</label>
+          <label for="head" *ngIf="disabledUp">已上传</label>
+        </ion-button>
+      </div>
+      <div *ngIf="slideFactory.state==0" class="date" style="width: 100%;">
+        <div style="color: green;">下次发放时间</div>
+        <div style="color: green;">{{slideFactory.nextPublishDate|datepipe}}</div>
+      </div>
+    </div>
+    <div *ngIf="slideFactory.state==-1">
+      <ion-button expand="block" fill="clear" shape="round" [hidden]="hiddenUp" [disabled]="disabledUp">
+        <label for="head" *ngIf="!disabledUp">上传图片</label>
+        <label for="head" *ngIf="disabledUp">已上传</label>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+<input accept="image/*" type="file" id="head" (change)="upload($event)" hidden />

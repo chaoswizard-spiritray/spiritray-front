@@ -8,20 +8,21 @@
   </ion-card>
   <div class="real">
     <ion-label>SpiritRay</ion-label>
-    <ion-icon id="realSea" name="search" slot="end" routerLink="/search"></ion-icon>
+    <ion-icon id="realSea" name="search" slot="end" routerLink="/consumer/search"></ion-icon>
   </div>
 </div>
 <ion-content>
   <!-- 轮播图 -->
-  <ion-slides #homeSlides class="slides" *ngIf="slideShows.length>0">
-    <ion-slide *ngFor="let slideShow of slideShows">
-      <ion-card>
-        <img [src]="slideShow.mapUrl|trustUrl" (click)="enterStore(slideShow.storeId)" />
-      </ion-card>
-    </ion-slide>
-  </ion-slides>
+  <div *ngIf="slideShows.length>0"
+    style="width: 98%;height:200px;overflow: hidden; margin-left: 1%;margin-right: 1%;margin-top: 5px;border-radius: 5px;box-shadow: 0px 0px 10px rgb(255, 137, 137);">
+    <ion-slides pager="true" [options]="slideOpts" #slide1 (ionSlideTouchEnd)="slideDidChange()">
+      <ion-slide *ngFor="let slideShow of slideShows;index as i">
+        <img style="width: 2000px;" [src]="slideShow.mapUrl|trustUrl" (click)="enterStore(slideShow.storeId)">
+      </ion-slide>
+    </ion-slides>
+  </div>
   <!-- 首页商品 -->
-  <div fixed *ngIf="commoditys">
+  <div *ngIf="commoditys">
     <div class="lbox">
       <div *ngFor="let commodity of commoditys;let i=index;let odd=odd;let even = even;">
         <div class="commodity1" *ngIf="commoditys[i]&& odd" (click)="toCommodity(commoditys[i].commodityId)">
@@ -66,3 +67,6 @@
     <label>已经到底了....</label>
   </div>
 </ion-content>
+<ng-template #noslide>
+  <div hidden></div>
+</ng-template>

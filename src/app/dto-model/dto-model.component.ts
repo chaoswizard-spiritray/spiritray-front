@@ -1,6 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
+import { Observable, observable } from 'rxjs';
 
 @Component({
   selector: 'app-dto-model',
@@ -43,7 +44,7 @@ export class GlobalFinal {
     withCredentials: true
   }
   //用户电话
-  public PHONE = (localStorage.getItem("userInf") != null) ? (JSON.parse(localStorage.getItem("userInf") + "")).consumerPhone : null;
+  //public PHONE = (localStorage.getItem("userInf") != null) ? (JSON.parse(localStorage.getItem("userInf") + "")).consumerPhone : null;
   //ip
   public static DEVIP = "http://localhost";
   //consumer测试地址
@@ -71,6 +72,43 @@ export class GlobalFinal {
       params: data,
       withCredentials: true
     };
+  }
+  //获取websocket对象
+  public static createWebSocket(url, webS) {
+    const ws = new WebSocket(url);
+    let ob = new Observable<any>(observable => {
+      ws.onmessage = (event) => observable.next(event.data);
+      ws.onerror = (event) => {
+        console.log(webS + "连接错误");
+        localStorage.setItem(webS, 0 + "");
+      };
+      ws.onclose = (event) => {
+        console.log(webS + "关闭");
+        localStorage.setItem(webS, 0 + "");
+      };
+      ws.onopen = (event) => {
+        console.log(webS + "连接");
+        localStorage.setItem(webS, 1 + "");
+      };
+      window.onbeforeunload = (event) => {
+        if (localStorage.getItem(webS) == '1')
+          ws.close();
+      }
+      window.onclose = (event) => {
+        if (localStorage.getItem(webS) == '1')
+          ws.close();
+      }
+    });
+    return { "session": ws, "sessionOb": ob };
+  }
+  //获取当前页面按键监听器
+  public static createKeyDown() {
+    return new Observable<any>(observable => {
+      window.onkeydown = (event) => {
+        if (event.keyCode == 13)
+          observable.next(true);
+      }
+    });
   }
 }
 
@@ -214,6 +252,7 @@ export class Consumer {
     public consumerNickname: string,
     public consumerPhone: number,
     public consumerPassword: string,
+    public consumerEmail: string,
     public consumerSex = 0,
     public isEnter = 0
   ) {
@@ -351,12 +390,21 @@ export class Category {
   ) { }
 }
 
+//平台种类管理映射类
+export class CateArrayMap {
+  constructor(
+    public category: Category,
+    public array: Array<CateArrayMap>
+  ) { }
+}
+
 //商品类别对应的属性
 export class Attribute {
   constructor(
     public attributeId: number,
     public attributeName: string,
     public isMul: number,
+    public isKey: number
   ) { }
 }
 

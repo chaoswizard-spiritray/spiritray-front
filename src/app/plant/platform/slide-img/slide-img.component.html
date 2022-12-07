@@ -1,0 +1,82 @@
+<ion-content>
+  <div class="title"><span>轮播图</span></div>
+  <div *ngIf="slideFactory">
+    <div class="state" *ngIf="slideFactory.state==-1">
+      <span>已关闭</span>
+    </div>
+    <div class="state" *ngIf="slideFactory.state==0">
+      <span>生产中</span>
+    </div>
+    <div class="state" *ngIf="slideFactory.state==1">
+      <span>发放中</span>
+    </div>
+    <div *ngIf="slideFactory.state==-1&&publishNos.length==0" class="config">
+      <div>
+        <ion-item>
+          <label>生产次数:</label>
+          <ion-input type="number" [(ngModel)]="workNumber" placeholder="只能是整数"></ion-input>
+        </ion-item>
+        <ion-item>
+          <label>每次生产数目:</label>
+          <ion-input type="number" [(ngModel)]="productSlideNum" placeholder="只能是整数"></ion-input>
+        </ion-item>
+        <ion-item>
+          <label>每次生产时长:</label>
+          <ion-input type="number" [(ngModel)]="idleNum" placeholder="只能是整数"></ion-input>
+        </ion-item>
+        <ion-item>
+          <label>生产时长单位:</label>
+          <ion-select [(ngModel)]="idleTimeUnit" placeholder="选取时间单位" slot="end">
+            <ion-select-option value="0">秒</ion-select-option>
+            <ion-select-option value="1">分</ion-select-option>
+            <ion-select-option value="2">时</ion-select-option>
+            <ion-select-option value="3">天</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+      <div>
+        <ion-button (click)="startFactory()" expand="block" fill="clear" shape="round">
+          启动
+        </ion-button>
+      </div>
+    </div>
+    <div *ngIf="slideFactory.state==0" class="product">
+      <div>
+        <img src="../../../../assets/风车.gif">
+      </div>
+      <div class="date">
+        <div>下次发放时间</div>
+        <div>{{slideFactory.nextPublishDate|datepipe}}</div>
+      </div>
+    </div>
+    <div *ngIf="slideFactory.state==1||(slideFactory.state==-1&&publishNos.length>0)" class="list">
+      <div *ngIf="publishNos.length>0">
+        <div style="width: 100%;margin-top: 10px;">
+          <span style="margin-left:156.5px;font-size: 20px;margin-top: 10px;color: blue;">中奖名单</span>
+        </div>
+        <div *ngFor="let no of publishNos;index as i">
+          <ion-list>
+            <ion-list-header>
+              <ion-label style="font-size: 16px;font-weight:400;color: red;">发放编号:{{no}}</ion-label>
+            </ion-list-header>
+            <div *ngIf="storeInfos[i].length==0" style="width: 100%;margin-top: 20px;">
+              <span style="margin-left:156.5px;font-size: 16px;color: rgb(10, 145, 5);">结果产生中</span>
+            </div>
+            <div *ngIf="storeInfos[i].length>0">
+              <ion-item slot="start" *ngFor="let info of storeInfos[i];index as j ">
+                <ion-avatar style="box-shadow: 0px -1px 2px rgb(0, 52, 25);">
+                  <img [src]="storeInfos[i][j].attributeName|trustUrl" />
+                </ion-avatar>
+                <label
+                  style="margin-left: 20px;color: blue;font-size: 18px;">{{storeInfos[i][j].attributeValue}}</label>
+              </ion-item>
+            </div>
+          </ion-list>
+        </div>
+      </div>
+      <div>
+
+      </div>
+    </div>
+  </div>
+</ion-content>

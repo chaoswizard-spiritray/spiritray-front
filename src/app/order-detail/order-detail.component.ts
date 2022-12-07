@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, NavController, PopoverController } from '@ionic/angular';
+import { forkJoin } from 'rxjs';
 import { GlobalALert, GlobalFinal } from '../dto-model/dto-model.component';
 
 @Component({
@@ -25,6 +26,10 @@ export class OrderDetailComponent implements OnInit {
   consumerInfo;//买家信息
 
   storeInfo;//店铺信息
+
+  address;//收货地址
+
+  addressLocation;//地址信息
 
 
 
@@ -72,6 +77,9 @@ export class OrderDetailComponent implements OnInit {
         }
         if (data.stausCode == 200) {
           this.orderInfo = data.data;
+          //解析收货地址信息
+          this.address = JSON.parse(data.data.addressMsg);
+          this.transform(this.address.address);
           if (this.type === 0) {
             this.queryConsumerInfo();
           }
@@ -80,6 +88,35 @@ export class OrderDetailComponent implements OnInit {
           }
         }
       });
+  }
+
+  //解析收货地址
+  transform(location: string): any {
+    this.addressLocation = " " + location.split(" ")[1];
+    if (GlobalFinal.IS_EXIST.includes(location) || location.length <= 0) {
+      return "";
+    }
+    let array: Array<number>;
+    try {
+      array = JSON.parse(location);
+    } catch {
+      location = location.slice(0, location.indexOf(" "));
+      array = JSON.parse(location);
+    }
+    //创建一个可观察对象数组
+    const arr = [
+      this.hr.get(GlobalFinal.PLANT_DOMAIN + "/location/province/simple/" + array[0], GlobalFinal.HEADER),
+      this.hr.get(GlobalFinal.PLANT_DOMAIN + "/location/city/simple/" + array[1], GlobalFinal.HEADER),
+      this.hr.get(GlobalFinal.PLANT_DOMAIN + "/location/district/simple/" + array[2], GlobalFinal.HEADER)
+    ];
+    forkJoin(arr).subscribe(([data1, data2, data3]: Array<any>) => {
+      //拼接字符串
+      if (data1.data.value === data2.data.value) {
+        this.addressLocation = data1.data.value + " " + data3.data.value + this.addressLocation;
+      } else {
+        this.addressLocation = data1.data.value + " " + data2.data.value + " " + data3.data.value + this.addressLocation;
+      }
+    });
   }
 
   //查询买家信息
@@ -95,8 +132,6 @@ export class OrderDetailComponent implements OnInit {
     this.hr.get(GlobalFinal.SELLER_DOMAIN + "/store/storeInf/" + this.orderInfo.storeId, GlobalFinal.JWTHEADER)
       .subscribe((data: any) => {
         this.storeInfo = data.data;
-        console.log(data);
-
       });
   }
 

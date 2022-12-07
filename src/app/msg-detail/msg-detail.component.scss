@@ -1,6 +1,5 @@
 * {
     font-family: cursive;
-    font-size: 18px;
 }
 
 .backIcon {
@@ -14,6 +13,16 @@ ion-content {
     --background: #f5f5f5;
 }
 
+.load {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 164.5px;
+    font-size: 16px;
+    float: left;
+    opacity: .8;
+
+}
+
 ion-avatar {
     width: 50px;
     height: 50px;
@@ -25,9 +34,43 @@ ion-avatar {
     float: left;
 }
 
-.across .head,
-.info {
+.across ion-avatar {
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.across .info {
     float: left;
+}
+
+.across .name span {
+    font-size: 16px;
+    width: 343px;
+}
+
+.across .info {
+    margin-top: 27px;
+    margin-left: 55px;
+    padding: 15px;
+    font-size: 16px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+}
+
+.across .info div:first-child {
+    max-width: 270px;
+}
+
+.across .info img {
+    width: 120px;
+}
+
+.ap {
+    position: relative;
+    top: 0px;
+    left: 0px;
 }
 
 .my .head,
@@ -37,19 +80,20 @@ ion-avatar {
 }
 
 
-.info {
+.my .info {
     margin-top: 27px;
     margin-left: 5px;
     padding: 15px;
+    font-size: 16px;
     background-color: rgb(255, 255, 255);
     border-radius: 15px;
 }
 
-.info div:first-child {
-    max-width: 200px;
+.my .info div:first-child {
+    max-width: 270px;
 }
 
-.info img {
+.my .info img {
     width: 120px;
 }
 

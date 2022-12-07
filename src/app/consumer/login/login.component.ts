@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   private code: string;
   is_createImg = true;
   backRegister = 0;
+  isShow = false;
 
   constructor(
     private http: HttpClient,
@@ -40,12 +41,13 @@ export class LoginComponent implements OnInit {
     this.http.get(GlobalFinal.DOMAIN + "/consumer/code", GlobalFinal.HEADER)
       .subscribe(
         (response: any) => {
-          if (this.is_createImg) {
-            event.target.innerText = "";
-            event.target.appendChild(document.createElement("img"));
-            this.is_createImg = false;
-          }
-          document.getElementsByTagName("img")[0].setAttribute("src", response.data);
+          // if (this.is_createImg) {
+          //   event.target.innerText = "";
+          //   event.target.appendChild(document.createElement("img").setAttribute("class", "loginImg"));
+          //   this.is_createImg = false;
+          // }
+          this.isShow = true;
+          document.getElementsByClassName("loginImg")[0].setAttribute("src", response.data);
         });
   }
 

@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>商品种类</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-item class="addRow">
+    <ion-button class="addTopClass" slot="end" (click)="addCate(0)">
+      新增
+    </ion-button>
+  </ion-item>
+  <ion-accordion-group *ngIf="categorys.length>0">
+    <ion-accordion *ngFor="let cate of categorys;index as i" [value]="cate.categoryId">
+      <div class="header" (click)="loadChildrenCate(cate.categoryId)" slot="header">
+        <span slot="start">{{cate.categoryName}}</span>
+        <span style="float: right;" (click)="showAttributeModal(cate.categoryId, cate.categoryName)">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </span>
+      </div>
+      <ng-container *ngIf="noAppend;else default">
+      </ng-container>
+    </ion-accordion>
+  </ion-accordion-group>
+</ion-content>
+<ng-template #nodata>
+  <div style="font-size: 25px;margin-left: 111.5px;margin-right: 111.5px;margin-top: 200px;color: white;">
+    还没有种类哦
+  </div>
+</ng-template>
+<ng-template #default>
+  <app-cate-accordion slot="content" [fatherId]="checkedId" cateStyleClass="type1"></app-cate-accordion>
+</ng-template>

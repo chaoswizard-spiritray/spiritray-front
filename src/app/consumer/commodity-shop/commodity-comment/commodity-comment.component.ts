@@ -19,6 +19,8 @@ export class CommodityCommentComponent implements OnInit {
 
   checkIndex = 0;//加载评论类别
 
+  lastIndex = -1;//上次加载的类别
+
   comments: Array<CommodityComment>;//评论信息
 
   pageNo = 0;
@@ -37,6 +39,10 @@ export class CommodityCommentComponent implements OnInit {
     this.queryAllTypeCounts();
     //获取具体类别评论
     this.queryTypeComments();
+  }
+
+  ionViewDidEnter() {
+    document.getElementsByTagName("ion-chip")[this.checkIndex].setAttribute("color", "danger");
   }
 
   //关闭模态框
@@ -83,11 +89,16 @@ export class CommodityCommentComponent implements OnInit {
     //请求数据
     this.hr.get(GlobalFinal.SELLER_DOMAIN + "/comment/" + this.commodityId + "/" + this.checkIndex + "/" + this.pageNo + "/" + this.pageNum, GlobalFinal.JWTHEADER)
       .subscribe((data: any) => {
+        console.log(data.data);
+
         if (data.stausCode == 200) {
           if (this.comments === undefined) {
             this.comments = data.data;
           } else {
             this.comments.concat(data.data);
+            console.log(this.comments);
+
+            this.pageNo++;
           }
           return data.data;
         }
@@ -97,10 +108,14 @@ export class CommodityCommentComponent implements OnInit {
   // 切换评论类型
   changeType(index) {
     //修改选中索引
+    this.lastIndex = this.checkIndex;
     this.checkIndex = index;
     //清空数据
     this.comments = undefined;
     this.pageNo = 0;
+    //设置
+    document.getElementsByTagName("ion-chip")[this.checkIndex].setAttribute("color", "danger");
+    document.getElementsByTagName("ion-chip")[this.lastIndex].setAttribute("color", "primary");
     //加载数据
     this.queryTypeComments();
   }

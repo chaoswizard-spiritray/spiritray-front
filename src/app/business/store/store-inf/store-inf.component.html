@@ -1,8 +1,7 @@
 <ion-card>
   <ion-item>
     <ion-avatar slot="start">
-      <img *ngIf="srd.storeInf!=null" [src]="srd.storeInf.storeHead|trustUrl"
-        (click)="showAll(srd.storeInf.storeHead)" />
+      <img *ngIf="storeHead" [src]="storeHead|trustUrl" (click)="showAll(storeHead)" />
     </ion-avatar>
     <ion-label slot="end">
       <input id="head" type="file" accept="image/*" hidden />
@@ -11,7 +10,7 @@
   </ion-item>
   <ion-item>
     <label slot="start">店铺名</label>
-    <ion-input *ngIf="srd.storeInf!=null" placeholder="{{srd.storeInf.storeName}}"></ion-input>
+    <ion-input *ngIf="storeName" placeholder="{{storeName}}" [(ngModel)]="modityName"></ion-input>
     <ion-icon name="chevron-forward-outline" slot="end" (click)="modifyStoreName()"></ion-icon>
   </ion-item>
   <ion-item>

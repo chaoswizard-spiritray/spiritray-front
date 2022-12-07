@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-icon class="back" name="chevron-back-outline" slot="start" (click)="back()"></ion-icon>
+    <div slot="end" (click)="toShowAlreadyCommentOrder()">
+      <ion-label style="font-size: 18px;">我的评价</ion-label>
+      <ion-badge color="primary" mode="ios">{{commentNum}}</ion-badge>
+    </div>
   </ion-toolbar>
 </ion-header>
 <div class="change">
@@ -99,11 +103,8 @@
           </div>
         </div>
         <div>
-          <ion-button *ngIf="" (click)="topay()" expand="block" fill="clear" shape="round">
-            评价
-          </ion-button>
-          <ion-button (click)="topay()" expand="block" fill="clear" shape="round">
-            查看评价
+          <ion-button (click)="toShowCommentPublish(i)" expand="block" fill="clear" shape="round">
+            发布评价
           </ion-button>
         </div>
       </div>

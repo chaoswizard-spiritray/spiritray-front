@@ -86,6 +86,12 @@ export class StoreComponent implements OnInit {
         //因为data本身就被转换为了一个Object，你通过．获取到的就是他的属性，这个就是一个对象，不用手动解析。就是说我们前端接收时完全不用转换
         this.srd.storeInf = data.data;
         localStorage.setItem("storeId", this.srd.storeInf.storeId);
+        const temp = {
+          "phone": JSON.parse(localStorage.getItem("consumer") + "").phone,
+          "name": data.data.storeName,
+          "head": data.data.storeHead
+        }
+        localStorage.setItem("store", JSON.stringify(temp));
         //判断当前店铺状态，如果是关闭就跳转封闭页面
         if (this.srd.storeInf.status == 0) {
           //将页面禁用，然后出口到子路由
@@ -93,6 +99,7 @@ export class StoreComponent implements OnInit {
           this.router.navigateByUrl("/business/store/closed");
         }
       });
+
   }
 
   //刷新头部信息

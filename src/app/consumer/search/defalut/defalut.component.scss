@@ -9,7 +9,7 @@
 }
 
 .words {
-    color: rgb(253, 173, 173);
+    color: rgb(46, 31, 31);
     margin-left: 10px;
     margin-top: 5px;
     text-shadow: 1px 1px 15px rgb(247, 28, 196);
@@ -36,13 +36,12 @@
 }
 
 .historyWord ion-chip {
-    --background: rgb(241, 211, 211);
+    --background: rgb(255, 194, 194);
     --color: rgb(240, 185, 126);
     box-shadow: 0px 1px 1px rgb(240, 198, 147);
-    font-size: 16px;
+    font-size: 18px;
     font-family: cursive;
-    color: rgb(0, 0, 0);
-    opacity: 40%;
+    color: rgb(114, 114, 114);
 }
 
 .historyWord ion-icon {

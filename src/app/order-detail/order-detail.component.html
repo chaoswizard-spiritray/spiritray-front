@@ -34,6 +34,15 @@
           <label slot="start">购买数量:{{orderInfo.commodityNum}} </label>
         </ion-item>
         <ion-item>
+          <label slot="start">收货人:{{address.takeName}} </label>
+        </ion-item>
+        <ion-item>
+          <label slot="start">收货电话: {{address.takePhone}}</label>
+        </ion-item>
+        <ion-item>
+          <label slot="start">收货地址:{{addressLocation}} </label>
+        </ion-item>
+        <ion-item>
           <div>
             <label style="display: block;font-size: 16px;margin-bottom: 10px;">订单编号: </label>
             <label>{{orderInfo.orderNumber}}{{orderInfo.odId}}</label>

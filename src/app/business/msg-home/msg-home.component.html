@@ -1,10 +1,59 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Header</ion-title>
+    <ion-title>消息</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <div>
+  <div *ngIf="msgHomeInfos;else nodata">
+    <div *ngFor="let msg of msgHomeInfos;index as i">
+      <!-- 消息 -->
+      <div class="msg" *ngIf="msg.lastestMsgIsRead==1 " (click)="openMsgDetail(i)">
+        <ion-avatar>
+          <!-- 系统 -->
+          <img *ngIf="msg.senderRole==0" src="../../../assets/icon/favicon.png" />
+          <!-- 买家与商家 -->
+          <img *ngIf="msg.senderRole!=0" [src]="msg.sendHead|trustUrl" />
+        </ion-avatar>
+        <div class="name">
+          <span *ngIf="msg.senderRole==0">系统通知</span>
+          <span *ngIf="msg.senderRole!=0">{{msg.sendName}}</span>
+        </div>
+        <div class="info">
+          <!-- 文字消息 -->
+          <span *ngIf="msg.lastestMsgType=='text'">{{msg.lastestMsg}}</span>
+          <!-- 图片消息 -->
+          <span *ngIf="msg.lastestMsgType=='img'">图文消息</span>
+        </div>
+        <div class="date">
+          <span>{{msg.lastestMsgDate|datepipe}}</span>
+        </div>
+      </div>
+      <div class="msg noread" *ngIf="msg.lastestMsgIsRead==0 " (click)="openMsgDetail(i)">
+        <ion-avatar>
+          <!-- 系统 -->
+          <img *ngIf="msg.senderRole==0" src="../../../assets/icon/favicon.png" />
+          <!-- 买家与商家 -->
+          <img *ngIf="msg.senderRole!=0" [src]="msg.sendHead|trustUrl" />
+        </ion-avatar>
+        <div class="name">
+          <span *ngIf="msg.senderRole==0">系统通知</span>
+          <span *ngIf="msg.senderRole!=0">{{msg.sendName}}</span>
+        </div>
+        <div class="info">
+          <!-- 文字消息 -->
+          <span *ngIf="msg.lastestMsgType=='text'">{{msg.lastestMsg}}</span>
+          <!-- 图片消息 -->
+          <span *ngIf="msg.lastestMsgType=='img'">图文消息</span>
+        </div>
+        <div class="date">
+          <span>{{msg.lastestMsgDate|datepipe}}</span>
+        </div>
+      </div>
+    </div>
   </div>
-
 </ion-content>
+<ng-template #nodata>
+  <div class="nodata">
+    <span>空空如也</span>
+  </div>
+</ng-template>

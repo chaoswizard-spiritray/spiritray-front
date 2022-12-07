@@ -15,14 +15,22 @@
         <label for="masterMap">上传</label>
         <ion-icon name="add"></ion-icon>
         <ion-avatar slot="end">
-          <ion-img src="" (click)="showImg($event)"></ion-img>
+          <ion-img src="../../../../assets/img/retrieve.jpeg" (click)="showImg($event)"></ion-img>
         </ion-avatar>
       </ion-item>
-      <ion-item>
+      <ion-item (press)="showCommodityName($event)">
         <label slot="start">商品名:</label>
         <ion-input type="text" placeholder="填写商品名" ngDefaultControl [(ngModel)]="commodityName">
         </ion-input>
+        <ion-toggle #geneToggle (ionChange)="toggleGenerateName($event)">
+        </ion-toggle>
+        <label>自动拼接</label>
       </ion-item>
+      <ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
+        <ng-template>
+          <ion-content class="ion-padding">{{commodityName}}</ion-content>
+        </ng-template>
+      </ion-popover>
       <ion-item>
         <label slot="start">商品简述:</label>
         <ion-input type="text" placeholder="30字符内描述商品" ngDefaultControl [(ngModel)]="commodityDescribe">
@@ -53,7 +61,7 @@
       </ion-item>
       <div *ngFor="let category of categorys;index as i" class="cate">
         <div *ngFor="let item of category" class="chip">
-          <ion-chip (click)="categoryToggle($event,item.father,item.categoryId,i)" [class]="cateColor[i]">
+          <ion-chip (click)="categoryToggle($event,item.father,item.categoryId,i)" [color]="everyColors[i]">
             {{item.categoryName}}
           </ion-chip>
         </div>
@@ -65,14 +73,18 @@
     <ion-card-title>
       <ion-item>
         商品标准单元属性
+        <label slot="end">自动生成名字段</label>
       </ion-item>
     </ion-card-title>
     <ion-card-content>
-      <div *ngFor="let attribute of attributes">
+      <div *ngFor="let attribute of attributes;">
         <div *ngFor="let item of attribute">
           <ion-item *ngIf="isZero(item.isMul);">
             <label>{{item.attributeName}}:</label>
             <ion-input type="text" placeholder="" [class]="item.attributeName"></ion-input>
+            <ion-checkbox style="--border-radius: 20px;"
+              (ionChange)="addGenerateNameCol($event.detail.checked,item.attributeName)">
+            </ion-checkbox>
           </ion-item>
         </div>
       </div>

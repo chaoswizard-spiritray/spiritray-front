@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { SetAccountComponent } from './set-account.component';
+import { StoreConsumerViewComponent } from './store-consumer-view.component';
 
-describe('SetAccountComponent', () => {
-  let component: SetAccountComponent;
-  let fixture: ComponentFixture<SetAccountComponent>;
+describe('StoreConsumerViewComponent', () => {
+  let component: StoreConsumerViewComponent;
+  let fixture: ComponentFixture<StoreConsumerViewComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SetAccountComponent ],
+      declarations: [ StoreConsumerViewComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SetAccountComponent);
+    fixture = TestBed.createComponent(StoreConsumerViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

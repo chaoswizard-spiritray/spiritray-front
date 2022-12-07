@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonSearchbar } from '@ionic/angular';
+import { IonSearchbar, ModalController, NavController } from '@ionic/angular';
+import { Observable, Subscription } from 'rxjs';
+import { GlobalFinal } from '../../dto-model/dto-model.component';
 
 @Component({
   selector: 'app-search',
@@ -13,47 +16,65 @@ export class SearchComponent implements OnInit {
   //搜索框子视图对象注入
   @ViewChild("searchbar", { static: true })
   private searchbar: IonSearchbar;
-  //搜索数据 
-  constructor(private router: Router) { }
+  //监听回车
+  enterKeyOb = GlobalFinal.createKeyDown();
+  inputOb: Subscription;
+  //输入框内容
+  word: string;
+  constructor(
+    private router: Router,
+    private hr: HttpClient,
+    private modalController: ModalController,
+    private navController: NavController) { }
 
   // 组件数据初始化后调用
   ngOnInit() {
-    // 搜索框聚焦弹出输入键盘,组件只会初始化一次，其他页面进入时才会触发，刷新不会
-    this.searchbar.setFocus();
+    this.initInputEvent();
+  }
+
+  //初始化监听输入框，确定什么时候提交查询请求
+  initInputEvent() {
+    //当输入框聚焦时，我们注册接收键盘输入值
+    this.searchbar.ionFocus.subscribe((data: any) => {
+      this.inputOb = this.enterKeyOb.subscribe((data: any) => {
+        //按下回车跳转
+        this.queryCommodity();
+      });
+    });
+    //当输入框失去焦点时，取消观察
+    this.searchbar.ionBlur.subscribe((data: any) => {
+      this.inputOb.unsubscribe();
+    });
   }
 
   // 跳转商品查询子组件
   queryCommodity() {
-    let word = this.searchbar.value;
-    if (this.isAccess(word)) {
-      //先更新历史记录
-      this.updateHistory(word);
+    //去除空格
+    const temp = this.word.replace(" ", "");
+    if (this.word != "") {
+      //添加信息到历史搜索
+      this.updateHistory(this.word);
       // 跳转路径
-      this.router.navigateByUrl("search/result" + "/" + word);
+      this.router.navigate(['/consumer/search/result'],
+        {
+          queryParams: {
+            'word': this.word
+          }
+        });
     }
     // 将搜索框的值置为空
     this.searchbar.value = "";
   }
 
-  //判断输入内容是否有效
-  isAccess(word: string): boolean {
-    //是否为空、空字符、或者去掉连续空格后长度为0
-    if (word == null || word.length == 0 || word.replace("(^[ ]+)|([ ]+$)", "").length == 0) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   //更新历史记录
   updateHistory(word: string) {
     // 获取缓存中的记录
-    let words: any;
-    words = JSON.parse(localStorage.getItem("historyWord"));
+    let words: any = localStorage.getItem("historyWord");
     //检测当前词是否在缓存中，在就删除，并将当前词加入缓存
-    if (words == null) {
-      words = new Array();
+    if (words == null || !words) {
+      words = JSON.stringify(new Array());
     }
+    words = JSON.parse(words);
     let index = words.indexOf(word);
     if (index > -1) {
       words.splice(index, 1);
@@ -62,5 +83,9 @@ export class SearchComponent implements OnInit {
     localStorage.setItem("historyWord", JSON.stringify(words));
   }
 
+  //返回上一页
+  back() {
+    this.navController.pop();
+  }
 
 }

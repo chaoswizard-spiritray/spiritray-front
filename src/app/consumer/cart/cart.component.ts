@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonInfiniteScroll, ModalController, NavController } from '@ionic/angular'
-import { Cart, GlobalALert, GlobalFinal, GlobalFlagShow, OrderBeforeCommodity, SSMap } from '../../dto-model/dto-model.component';
-import { OrderShowComponent } from '../commodity-shop/commodity-choose/order-show/order-show.component';
+import { ModalController, NavController } from '@ionic/angular';
+import { Cart, GlobalALert, GlobalFinal, OrderBeforeCommodity, SSMap } from '../../dto-model/dto-model.component';
 
 @Component({
   selector: 'app-cart',
@@ -13,6 +12,8 @@ import { OrderShowComponent } from '../commodity-shop/commodity-choose/order-sho
 export class CartComponent implements OnInit {
 
   totalMoney = 0;
+
+  hiddenData = true;
 
   indexs: Array<number> = [];//选中的下标
   // 购物车中的数据
@@ -36,13 +37,17 @@ export class CartComponent implements OnInit {
     this.queryCart();
   }
 
+  ionViewWillLeave() {
+    this.indexs = [];
+    this.totalMoney = 0;
+
+  }
+
   //查询购物车商品信息
   searchcommodity(word) {
     const data = new Array<Cart>();
     this.commoditys.forEach((cart) => {
-      console.log("-----------");
-
-      if (cart.commodityName.includes(word)) {
+      if (cart.commodityName.includes(word) || cart.cartId.toString().includes(word) || cart.skuValue.includes(word) || cart.commodityNum.toString().includes(word) || cart.totalFee.toString().includes(word)) {
         data.push(cart);
       }
     });
@@ -57,6 +62,11 @@ export class CartComponent implements OnInit {
     setTimeout(() => { event.target.complete(); }, 1500);
   }
 
+  //重新加载
+  reLoad() {
+    this.queryCart();
+  }
+
 
   //查询是否选取
   check(event, isAll, index) {
@@ -65,16 +75,24 @@ export class CartComponent implements OnInit {
       const els = document.getElementsByTagName("ion-checkbox");
       for (let i = 0; i < els.length - 1; i++) {
         if (tr.checked) {
+          this.indexs[i] = i;
           els[i].checked = true;
         } else {
+          this.indexs = [];
           els[i].checked = false;
         }
       }
     } else {
       //因为每次改变就会让其发生变化，所以全选不用再进行计算
       if (tr.checked) {
+        this.indexs.push(index);
         this.totalMoney += this.commoditys[index].totalFee;
       } else {
+        for (let i = 0; i < this.indexs.length; i++) {
+          if (this.indexs[i] == index) {
+            this.indexs.splice(i, 1);
+          }
+        }
         this.totalMoney -= this.commoditys[index].totalFee;
       }
     }
@@ -85,37 +103,65 @@ export class CartComponent implements OnInit {
     this.hr.get(GlobalFinal.DOMAIN + "/consumer/cart/commoditys", GlobalFinal.JWTHEADER).subscribe((data: any) => {
       if (data.data != null) {
         this.commoditys = data.data;
+        if (this.commoditys && this.commoditys.length > 0) {
+          this.hiddenData = false;
+        }
       }
     });
   }
 
   //清空购物车
-  clearCart() {
-    this.hr.put(GlobalFinal.DOMAIN + "/consumer/cart/clear", GlobalFinal.JWTHEADER).subscribe((data: any) => {
-      // GlobalALert.getToast(data.msg);
-      if (data.stausCode == 200) {
-        this.commoditys = undefined;
-      }
-    });
-    GlobalALert.getToast("购物车已清空");
-    this.commoditys = undefined;
+  async clearCart() {
+    if (await GlobalALert.getSureAlert("确认清空购物车吗？") == 'confirm') {
+      this.hr.put(GlobalFinal.DOMAIN + "/consumer/cart/clear", null, GlobalFinal.JWTHEADER).subscribe((data: any) => {
+        if (data.stausCode == 200) {
+          GlobalALert.getToast("购物车已清空");
+          this.commoditys = new Array();
+          this.hiddenData = true;
+        } else {
+          GlobalALert.getToast("清空失败");
+        }
+      });
+    }
   }
 
   //跳转商品展示界面
   toCommodityShop(commodityId) {
-    this.router.navigateByUrl("/consumer/shop/" + commodityId);
+    this.router.navigate(['/consumer/shop'], {
+      queryParams: {
+        'commodityId': commodityId
+      }
+    });
   }
 
   //删除指定的购物车记录
-  deleteCart(index) {
-    const formdata = new FormData();
-    formdata.append("cartId", this.commoditys[index].cartId + "");
-    this.hr.put(GlobalFinal.DOMAIN + "/consumer/cart/commoditys", formdata, GlobalFinal.JWTHEADER).subscribe((data: any) => {
-      GlobalALert.getToast(data.msg);
-      if (data.stausCode == 200) {
-        this.commoditys.splice(index, 1);
+  async deleteCart() {
+    if (this.indexs.length == 0) {
+      GlobalALert.getAlert({ 'message': "没有选取商品" });
+      return;
+    }
+    if (this.indexs.length == this.commoditys.length) {
+      this.clearCart();
+    } else {
+      if (await GlobalALert.getSureAlert("确定删除吗？") == 'confirm') {
+        for (let i = 0; i < this.indexs.length; i++) {
+          const formdata = new FormData();
+          formdata.append("cartId", this.commoditys[this.indexs[i]].cartId + "");
+          this.hr.put(GlobalFinal.DOMAIN + "/consumer/cart/commoditys", formdata, GlobalFinal.JWTHEADER).subscribe((data: any) => {
+            if (data.stausCode == 200) {
+              this.commoditys.splice(this.indexs[i], 1);
+              if (!this.commoditys || this.commoditys.length == 0) {
+                this.hiddenData = true;
+              }
+              if (i == this.indexs.length - 1) {
+                this.indexs = [];
+                GlobalALert.getAlert({ "message": "删除成功" });
+              }
+            }
+          });
+        }
       }
-    });
+    }
   }
 
   //选择购物车信息
@@ -139,7 +185,7 @@ export class CartComponent implements OnInit {
     });
     const da = new FormData();
     da.append("commodities", JSON.stringify(pa));
-    this.hr.put(GlobalFinal.SELLER_DOMAIN + "/sku/checkorder", da, GlobalFinal.STORE_HEADER)
+    this.hr.put(GlobalFinal.SELLER_DOMAIN + "/sku/checkorder", da, GlobalFinal.JWTHEADER)
       .subscribe((data: any) => {
         if (data.data != null) {
           this.generateOrder(data.data);
@@ -162,27 +208,29 @@ export class CartComponent implements OnInit {
         }
         //封装订单商品列表
         let orderCommoditys: Array<OrderBeforeCommodity> = new Array();
+        //获取商品的cartId
+        const cartIds: any = [];
         for (let i = 0; i < this.indexs.length; i++) {
-          let orderCommodity = new OrderBeforeCommodity(orderId, this.commoditys[i].commodityId, this.commoditys[i].commodityName, skus[i], this.commoditys[i].commodityNum, 0);
+          let orderCommodity = new OrderBeforeCommodity(orderId, this.commoditys[this.indexs[i]].commodityId, this.commoditys[this.indexs[i]].commodityName, skus[this.indexs[i]], this.commoditys[this.indexs[i]].commodityNum, 0);
           orderCommoditys.push(orderCommodity);
+          cartIds.push(this.commoditys[this.indexs[i]].cartId);
         }
         //打开订单提交模态框页面
-        this.openOrderModal(orderCommoditys);
+        this.openOrderModal(orderCommoditys, cartIds);
       });
   }
 
-  //打开订单模态框
-  async openOrderModal(orderCommoditys: Array<OrderBeforeCommodity>) {
-    const modal = await this.modalController.create({
-      component: OrderShowComponent,//模态框中展示的组件
-      handle: false,
-      componentProps: {
-        "orderCommoditys": JSON.stringify(orderCommoditys)
-      },
-      swipeToClose: true,
-      presentingElement: await this.modalController.getTop()
-    });
-    await modal.present();
+  //打开订单
+  openOrderModal(orderCommoditys: Array<OrderBeforeCommodity>, cartIds: any) {
+    this.router.navigate(['/consumer/shop/choose/order'],
+      {
+        queryParams: {
+          "orderCommoditys": JSON.stringify(orderCommoditys),
+          "subButtonType": 0,
+          "comeCart": true,
+          "cartIds": JSON.stringify(cartIds)
+        }
+      });
   }
 
 

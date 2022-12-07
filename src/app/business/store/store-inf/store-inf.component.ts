@@ -15,6 +15,10 @@ export class StoreInfComponent implements OnInit {
 
   licenses: Array<String>;
 
+  storeHead;
+  storeName;
+  modityName;
+
   state: string = "";
 
   constructor(
@@ -26,11 +30,23 @@ export class StoreInfComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.queryStore();
     //监听文件上传
     let input = document.getElementById("head");
     //调用upload
     input.addEventListener("change", () => { this.modifyStoreHead(input) });
+  }
+
+  ionViewWillEnter() {
+    if (this.srd.storeInf != null) {
+      this.storeName = this.srd.storeInf.storeName;
+      this.storeHead = this.srd.storeInf.storeHead;
+      if (this.srd.storeInf.status == 1) {
+        this.state = "营业中";
+      } else {
+        this.state = "封闭中";
+      }
+    }
+    this.queryStore();
   }
 
   queryStore() {
@@ -38,7 +54,8 @@ export class StoreInfComponent implements OnInit {
       .subscribe((data: any) => {
         //因为data本身就被转换为了一个Object，你通过．获取到的就是他的属性，这个就是一个对象，不用手动解析。就是说我们前端接收时完全不用转换
         this.srd.storeInf = data.data;
-        //判断当前店铺状态
+        this.storeName = this.srd.storeInf.storeName;
+        this.storeHead = this.srd.storeInf.storeHead;
         if (this.srd.storeInf.status == 1) {
           this.state = "营业中";
         } else {
@@ -49,17 +66,18 @@ export class StoreInfComponent implements OnInit {
 
   //修改店铺名称
   modifyStoreName() {
-    let el = document.getElementsByTagName("ion-input")[0];
+    // let el = document.getElementsByTagName("ion-input")[0];
     let data = new FormData();
-    let value = el.value;
-    data.append("storeName", "" + value);
-    data.append("storeId", localStorage.getItem("storeId"));
+    //   let value = el.value;
+    data.append("storeName", "" + this.modityName);
+    data.append("storeId", localStorage.getItem("storeId") + "");
     this.hr.put(GlobalFinal.SELLER_DOMAIN + "/store/storeInf", data, GlobalFinal.STORE_HEADER)
       .subscribe((data: any) => {
         GlobalALert.getAlert({ message: data.msg });
         if (data.stausCode == 200) {
-          el.value = "";
-          this.srd.storeInf.storeName = value + "";
+          this.srd.storeInf.storeName = this.modityName;
+          this.storeName = this.modityName;
+          this.modityName = '';
         }
       });
   }
@@ -118,7 +136,7 @@ export class StoreInfComponent implements OnInit {
     this.hr.post(GlobalFinal.SELLER_DOMAIN + "/store/license", formdata, GlobalFinal.STORE_HEADER)
       .subscribe((data: any) => {
         GlobalALert.getAlert({ message: data.msg });
-        this.licenses = data.data;
+        this.licenses.push(data.data);
       });
   }
 

@@ -68,7 +68,9 @@ export class SetComponent implements OnInit {
   //退出登录
   openLogOut() {
     //清除缓存
-    localStorage.clear();
+    localStorage.removeItem("consumer");
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("storeId");
     GlobalALert.getToast("已退出");
     this.navController.navigateForward('');
   }

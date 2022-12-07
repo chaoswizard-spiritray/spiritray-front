@@ -4,14 +4,22 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HammerModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
+import { ImgShowComponent } from '../../img-show/img-show.component';
+import { MsgDetailComponent } from '../../msg-detail/msg-detail.component';
 import { MsgHomeRoutingModule } from './msg-home-routing.module';
 import { MsgHomeComponent } from './msg-home.component';
-
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
+import { TrustUrlPipe } from '../../trustUrlPipe/trust-url.pipe';
+import { DatePipe } from '../../trustUrlPipe/date.pipe';
 
 
 @NgModule({
   declarations: [
-    MsgHomeComponent
+    TrustUrlPipe,
+    DatePipe,
+    MsgHomeComponent,
+    ImgShowComponent,
+    MsgDetailComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +27,8 @@ import { MsgHomeComponent } from './msg-home.component';
     HammerModule,
     IonicModule,
     HttpClientModule,
-    MsgHomeRoutingModule
+    MsgHomeRoutingModule,
+    NgZorroAntdMobileModule
   ]
 })
 export class MsgHomeModule { }

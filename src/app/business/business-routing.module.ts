@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SellerWebsocketGuard } from '../guard/seller-websockt.guard';
 import { BusinessComponent } from './business.component';
 import { EnterComponent } from './enter/enter.component';
 
@@ -38,7 +39,8 @@ const routes: Routes = [
           redirectTo: "store",
           pathMatch: "full"
         }
-      ]
+      ],
+    canActivate: [SellerWebsocketGuard]
   }
 ];
 

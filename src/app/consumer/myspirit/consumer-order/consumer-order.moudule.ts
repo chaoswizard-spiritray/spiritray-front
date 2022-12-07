@@ -8,9 +8,12 @@ import { OrderDetailComponent } from '../../../order-detail/order-detail.compone
 import { DatePipe } from '../../../trustUrlPipe/date.pipe';
 import { TimePipe } from '../../../trustUrlPipe/time.pipe';
 import { TrustUrlPipe } from '../../../trustUrlPipe/trust-url.pipe';
+import { CommentPublishComponent } from './comment-publish/comment-publish.component';
+import { CommentShowComponent } from './comment-show/comment-show.component';
 import { ConsumerOrderRoutingModule } from './consumer-order-routing.module';
 import { ConsumerOrderComponent } from './consumer-order.component';
-
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
+import { ImgShowComponent } from '../../../img-show/img-show.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { ConsumerOrderComponent } from './consumer-order.component';
     TrustUrlPipe,
     TimePipe,
     DatePipe,
+    ImgShowComponent,
     OrderDetailComponent,
+    CommentShowComponent,
+    CommentPublishComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +32,7 @@ import { ConsumerOrderComponent } from './consumer-order.component';
     HammerModule,
     IonicModule,
     HttpClientModule,
+    NgZorroAntdMobileModule,
     ConsumerOrderRoutingModule
   ]
 })

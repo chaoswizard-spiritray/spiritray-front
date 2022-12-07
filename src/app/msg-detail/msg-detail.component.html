@@ -1,30 +1,28 @@
 <ion-header>
   <ion-toolbar>
     <ion-icon class="backIcon" name="chevron-back-outline" slot="start" (click)="dismiss()"></ion-icon>
-    <span>{{receiverName}}</span>
+    <span style="font-size: 18px;">{{receiverName}}</span>
   </ion-toolbar>
 </ion-header>
-<ion-content scroll-events="true">
+<ion-content ngController scroll-events="true" (ionScroll)="scroll($event)" (ionScrollEnd)="scrollEnd()">
+  <div class="load" (tab)="loadMore()" [hidden]="topHidden">
+    {{loadText}}
+  </div>
   <div *ngIf="msgs">
     <div class="msg" *ngFor="let msg of msgs;index as i">
       <!-- 如果是对方的消息 -->
       <div *ngIf="msg.senderRole==receiverRole" class="across">
-        <div class="head">
-          <ion-avatar>
-            <!-- 系统 -->
-            <img *ngIf="senderRole==0" src="../../../assets/icon/favicon.png" />
-            <!-- 买家与商家 -->
-            <img *ngIf="senderRole!=0" [src]="receiverHead|trustUrl" />
-          </ion-avatar>
-          <div>
-            <span>{{receiverName}}</span>
-          </div>
-        </div>
+        <ion-avatar>
+          <!-- 系统 -->
+          <img *ngIf="receiverRole==0" src="../../assets/icon/favicon.png" />
+          <!-- 买家与商家 -->
+          <img *ngIf="receiverRole!=0" [src]="receiverHead|trustUrl" />
+        </ion-avatar>
         <div class="info">
           <!-- 文字消息 -->
           <div *ngIf="msg.msgType=='text'">{{msg.msg}}</div>
           <!-- 图片消息 -->
-          <img *ngIf="msg.msgType=='img'" [src]="msg.msg|trustUrl" />
+          <img *ngIf="msg.msgType=='img'" (click)="showAll(msg.msg)" [src]="msg.msg|trustUrl" />
         </div>
       </div>
       <!-- 如果是本方的消息 -->
@@ -32,9 +30,9 @@
         <div class="head">
           <ion-avatar>
             <!-- 系统 -->
-            <img *ngIf="senderRole==0" src="../../../assets/icon/favicon.png" />
+            <img *ngIf="receiverRole==0" src="../../../assets/icon/favicon.png" />
             <!-- 买家与商家 -->
-            <img *ngIf="senderRole!=0" [src]="senderHead|trustUrl" />
+            <img *ngIf="receiverRole!=0" [src]="senderHead|trustUrl" />
           </ion-avatar>
         </div>
         <div class="info">
@@ -44,7 +42,7 @@
           </div>
           <!-- 图片消息 -->
           <div *ngIf="msg.msgType=='img'">
-            <img [src]="msg.msg|trustUrl" />
+            <img [src]="msg.msg|trustUrl" (click)="showAll(msg.msg)" />
           </div>
         </div>
         <div class="isRead">
@@ -56,10 +54,10 @@
   </div>
   <input accept="image/*" type="file" id="upImg" (change)="upload($event)" hidden />
 </ion-content>
-<ion-footer *ngIf="senderRole!=0">
+<ion-footer *ngIf="receiverRole!=0">
   <ion-toolbar>
     <div class="input">
-      <TextareaItem [autoFocus]="true" [rows]="2" [placeholder]="'说点什么吧'" [(ngModel)]="msgText"> </TextareaItem>
+      <TextareaItem autoFocus="true" rows="2" placeholder="'说点什么吧'" [(ngModel)]="msgText"> </TextareaItem>
     </div>
   </ion-toolbar>
   <ion-toolbar>

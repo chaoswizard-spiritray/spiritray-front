@@ -11,7 +11,7 @@ import { PlantComponent } from './plant.component';
 
 @NgModule({
   declarations: [
-    PlantComponent,
+    PlantComponent
   ],
   imports: [
     CommonModule,

@@ -1,42 +1,47 @@
 <ion-header>
   <ion-toolbar>
-    <ion-icon class="backIcon" name="chevron-back-outline" slot="start" (click)="back()"></ion-icon>
+    <ion-icon style="font-size: 18px;margin-left: 20px;" class="backIcon" name="chevron-back-outline" slot="start"
+      (click)="back()">
+    </ion-icon>
+    <span style="color: rgb(4, 39, 28);font-size: 20px;margin-left: 125px;">商品评论</span>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <div class="types">
+  <div class="types" style="float: left; margin-top: 10px;margin-left: 10px;">
     <ul>
-      <li *ngFor="let type of types;index as i" (click)="changeType(i)">
-        <label>{{type}}</label>
+      <li *ngFor="let type of types;index as i" (click)="changeType(i)" style="float: left;margin-left: 10px;">
+        <ion-chip color="primary" style="font-size: 16px;">{{type}}</ion-chip>
       </li>
     </ul>
   </div>
   <div *ngIf="comments;else noData" class="comments">
-    <ion-card *ngFor="let comment of comments;index as i">
-      <ion-avatar>
-        <img [src]="comment.consumerHead|trustUrl" />
-      </ion-avatar>
-      <div>
-        <ul>
-          <li> <label>{{comment.consumerNickname}}</label></li>
-          <li>
-            <ion-icon name="star"></ion-icon>
-            <label>{{comment.starLevel}}</label>
-          </li>
-        </ul>
-      </div>
-      <ion-card-content>
+    <div class="comment" *ngFor="let comment of comments;index as i">
+      <div class="head">
         <div>
+          <ion-avatar>
+            <img [src]="comment.consumerHead|trustUrl" />
+          </ion-avatar>
+        </div>
+        <span style="font-size: 18px;margin-bottom: 18px;color: rgb(149, 149, 149);">{{comment.consumerNickname}}</span>
+        <span style="color: rgb(149, 149, 149);">
+          <ion-icon name="star"
+            style="font-size: 40px;margin-left: 190px;color: rgb(255, 162, 0);text-shadow: 1px 1px black;"></ion-icon>
+          {{comment.starLevel}}
+        </span>
+      </div>
+      <div class="info" style="margin-top: 10px;margin-left: 20px;">
+        <div style="margin-top: 10px;margin-left: 20px;font-size: 16px;">
           {{comment.commentContent}}
         </div>
         <div>
-          <img [src]="comment.attchedMap|trustUrl">
+          <img style="margin-top: 10px;width: 120px;border-radius: 10px;" *ngIf="comment.attchedMap!=''"
+            [src]="comment.attchedMap|trustUrl">
         </div>
-      </ion-card-content>
-      <div>
-        <label>{{comment.startDate|commentDate}}</label>
       </div>
-    </ion-card>
+      <div class="date" style="margin-top: 20px;margin-left: 240px;">
+        {{comment.startDate|commentDate}}
+      </div>
+    </div>
   </div>
   <!-- 无限滚动组件 -->
   <ion-infinite-scroll threshold="80px" (ionInfinite)="loadMoreData($event)" #IonInfiniteScroll>
@@ -49,5 +54,7 @@
 </ion-content>
 
 <ng-template class="noData" #noData>
-  暂无评论
+  <div style="margin-top: 150px;float: left;font-size: 20px;color: blue;margin-left: 156.5px;">
+    暂无评论
+  </div>
 </ng-template>

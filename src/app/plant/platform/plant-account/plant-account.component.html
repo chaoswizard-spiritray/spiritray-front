@@ -31,6 +31,12 @@
       <!-- 遍历账户信息 -->
       <ion-card *ngFor="let account of accounts;index as i;">
         <div *ngIf="cates[nowAccountCategory].accaId==1">
+          <ion-item *ngIf="account.isUseable>0">
+            <label slot="end" style="color: blue;">已开启</label>
+          </ion-item>
+          <ion-item *ngIf="account.isUseable==0">
+            <label slot="end" style="color: red;">已禁用</label>
+          </ion-item>
           <ion-item>
             <label slot="start">商户号:</label>
             <label slot="end">{{account.accountNo}}</label>
@@ -45,6 +51,12 @@
           </ion-item>
         </div>
         <div *ngIf="cates[nowAccountCategory].accaId==2">
+          <ion-item *ngIf="account.isUseable>0">
+            <label slot="end" style="color: green;">已开启</label>
+          </ion-item>
+          <ion-item *ngIf="account.isUseable==0">
+            <label slot="end" style="color: red;">已禁用</label>
+          </ion-item>
           <ion-item>
             <label slot="start">appID:</label>
             <label slot="end">{{account.appId}}</label>

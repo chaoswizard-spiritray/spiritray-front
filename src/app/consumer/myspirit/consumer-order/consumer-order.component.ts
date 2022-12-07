@@ -6,6 +6,8 @@ import { Address, Commodity, GlobalALert, GlobalFinal, OrderBeforeCommodity, Ord
 import { OrderDetailComponent } from '../../../order-detail/order-detail.component';
 import { LocationService } from '../../../service/location.service';
 import { AddressComponent } from '../set/address/address.component';
+import { CommentPublishComponent } from './comment-publish/comment-publish.component';
+import { CommentShowComponent } from './comment-show/comment-show.component';
 
 @Component({
   selector: 'app-consumer-order',
@@ -13,6 +15,8 @@ import { AddressComponent } from '../set/address/address.component';
   styleUrls: ['./consumer-order.component.scss'],
 })
 export class ConsumerOrderComponent implements OnInit {
+
+  commentNum = 0;
 
   flag: number = 0;
 
@@ -64,13 +68,58 @@ export class ConsumerOrderComponent implements OnInit {
           break;
       }
     });
+    this.queryCommentCount();
   }
 
   back() {
     //回退上一页，开启通知
-    this.navController.pop();
+    this.navController.back();
     //location.replace("/consumer/myspirit");
   }
+
+  // 打开评价发布模态框
+  async toShowCommentPublish(index) {
+    const modal = await this.modalController.create({
+      component: CommentPublishComponent,
+      componentProps: {
+        'orderNumber': this.orders[index].orderNumber,
+        'odId': this.orders[index].odId,
+        'commodityId': this.orders[index].commodityId
+      },
+      handle: false,
+      swipeToClose: true,
+      presentingElement: await this.modalController.getTop()
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    if (data) {
+      //如果发布成功,移除数据
+      this.orders.splice(index, 1);
+      this.commentNum++;
+    }
+  }
+
+  // 显示评价模态框
+  async toShowAlreadyCommentOrder() {
+    const modal = await this.modalController.create({
+      component: CommentShowComponent,
+      componentProps: { 'isEnabled': true },
+      handle: false,
+      swipeToClose: true,
+      presentingElement: await this.modalController.getTop()
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+  }
+
+  // 获取评价数目
+  queryCommentCount() {
+    this.hr.get(GlobalFinal.SELLER_DOMAIN + "/comment/count/consumer/phone", GlobalFinal.JWTHEADER)
+      .subscribe((data: any) => {
+        this.commentNum = data.data;
+      });
+  }
+
 
   //获取商品名字
   getCommodityName(id) {
@@ -250,7 +299,8 @@ export class ConsumerOrderComponent implements OnInit {
         queryParams: {
           "orderCommoditys": JSON.stringify(orderCommoditys),
           "subButtonType": 1,
-          "odId": odId
+          "odId": odId,
+          "comeCart": false
         }
       });
   }
@@ -324,10 +374,16 @@ export class ConsumerOrderComponent implements OnInit {
   async sureOrderOver(orderNumber, odId) {
     //确认操作
     const data = await GlobalALert.getSureAlert("确认收货");
-    // const websocket=new WebSocket();
-    // if (data == 'confirm') {
-    //   //执行确认收货请求
-    //   this.hr.put(GlobalFinal.ORDER_DOMAIN + "/",);
-    // }
+    if (data == 'confirm') {
+      //执行确认收货请求
+      const formdata = new FormData();
+      formdata.append("orderNumber", orderNumber);
+      formdata.append("odId", odId);
+      this.hr.put(GlobalFinal.ORDER_DOMAIN + "/order/suerOver", formdata, GlobalFinal.JWTHEADER)
+        .subscribe((data: any) => {
+          GlobalALert.getToast(data.msg);
+          this.queryNoTake();
+        });
+    }
   }
 }

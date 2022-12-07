@@ -1,3 +1,35 @@
-<p>
-  plat-service works!
-</p>
+<!-- 侧边菜单 -->
+<ion-menu side="start" class="masetrMenu" menu-id="pmaster" content-id="main-content">
+  <ion-header>
+    <ion-toolbar translucent>
+      <ion-title>平台服务</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <div>
+        <div>
+          <ion-item>
+            <ion-icon name="paper-plane" slot="start"></ion-icon>
+            <label (click)="openProductAndCloseOther('service')">普通服务</label>
+          </ion-item>
+        </div>
+        <div class="salveMenu service" hidden>
+          <ion-list>
+            <ion-item>
+              <label (click)="skip('service','/business/platService/slide')">轮播图</label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<!-- 主页面 -->
+<ion-icon name="list-outline" (click)="openMenu('pmaster')" class="outerMenuLog"></ion-icon>
+<ion-content>
+  <div class="flag">
+    平台服务
+  </div>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-content>

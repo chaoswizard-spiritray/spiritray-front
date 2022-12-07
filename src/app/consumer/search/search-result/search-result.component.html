@@ -1,15 +1,23 @@
-<ion-content>
-  <div class="box">
-    <div class="conditions">
-      <div class="price">
-        <div>
-          <ion-icon name="chevron-up-outline"></ion-icon>
-          <ion-icon name="chevron-down-outline"></ion-icon>
-        </div>
-        <div>
-          <ion-label>价格</ion-label>
-        </div>
+<ion-content scroll-events="true" (ionScroll)="scroll($event)" (ionScrollEnd)="scrollEnd()">
+  <div *ngIf="(checkCommodity&&commoditys.length>0)||(checkStore&&stores.length>0);else no" class="box">
+    <div class="commoditys" *ngIf="(checkCommodity&&commoditys.length>0)">
+      <div class="commodity">
+
       </div>
+    </div>
+    <div class="stores" *ngIf="(checkStore&&stores.length>0)">
+      <div class="store">
+
+      </div>
+    </div>
+    <!-- 回到顶部按钮 -->
+    <div slot="fixed" style="top: 650px;right:20px;" [hidden]="topHidden">
+      <ion-icon name="chevron-up-circle" style="font-size: 40px;" (click)="toTop()"></ion-icon>
     </div>
   </div>
 </ion-content>
+<ng-template #no>
+  <div class="no">
+    <span> 抱歉,没有相关数据</span>
+  </div>
+</ng-template>

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonInfiniteScroll, IonSlides, ModalController } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { GlobalFinal, HomeCommoditySimple, SlideShow } from '../../dto-model/dto-model.component';
 
 @Component({
@@ -13,10 +13,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
   //无限滚动组件
   @ViewChild(IonInfiniteScroll, { static: true }) infiniteScroll: IonInfiniteScroll;
   // 轮播图片对象
-  @ViewChild('homeSlides', { static: true })
-  private homeSlides: IonSlides;
+  @ViewChild('slide1') slide1;
+  slideOpts = {
+    effect: 'flip',
+    speed: 400,
+    loop: true,
+    autoplay: {
+      delay: 2000
+    }
+  };
   // 轮播图片路径，从后台进行请求
-  private slideShows = new Array<SlideShow>();
+  slideShows = new Array<SlideShow>();
   // 首页商品展示数据,将其注入到子组件中
   commoditys: Array<HomeCommoditySimple>;
   //分页的起始页
@@ -24,6 +31,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   //查询的条数
   recordNum: number = 12;
 
+  //下次请求定时器
+  trimer;
+  //循环定时器
+  circleTrimer;
   constructor(
     private httpRequest: HttpClient,
     private modalController: ModalController,
@@ -34,9 +45,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.queryHomeCommodity();
   }
 
+  slideDidChange() {
+    this.slide1.startAutoplay();
+  }
+
   //每次进入页面时都会触发这个函数，不论是否初始化
   ionViewWillEnter() {
     this.querySlide();
+    //循环定时加载轮播图
+    this.circleTrimer = setInterval(() => { this.querySlide() }, 20000);
+  }
+
+  ionViewWillLeave() {
+    clearTimeout(this.trimer);
+    clearInterval(this.circleTrimer);
   }
 
   ngAfterViewInit() {
@@ -46,8 +68,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.play(document.getElementById("realSea"));
       this.play(document.getElementById("sea"));
     });
-    //开启刷新
-    // this.refreshHome();
   }
 
   // https://www.cnblogs.com/shiweida/p/7785185.html
@@ -67,15 +87,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }, 1000);
   }
 
-  //额外定时器定时刷新数据
-  refreshHome() {
-    this.commoditys = [];
-    this.queryHomeCommodity();
-    setTimeout(() => {
-      this.refreshHome();
-    }, 30000);
-  }
-
   //数据无限加载
   loadData(event) {
     const data = this.queryHomeCommodity();
@@ -92,24 +103,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   // 加载轮播图
   querySlide() {
-    this.httpRequest.get(GlobalFinal.PLANT_DOMAIN + "/plant/slideshow", GlobalFinal.JWTHEADER)
+    clearTimeout(this.trimer);
+    this.httpRequest.get(GlobalFinal.PLANT_DOMAIN + "/plant/slide/consumer/get", GlobalFinal.JWTHEADER)
       .subscribe((data: any) => {
-        if (data.data != null) {
-          this.slideShows = data.data.slideshows;
-          // 开始自动播放
-          this.homeSlides.startAutoplay();
-          //设置定时器，定时再请求一次
-          setTimeout(() => { this.querySlide(); }, data.data.time * 1000);
+        if (data.data == null) {
+          this.slideShows = new Array();
         } else {
-          //否则说明网络或者redis故障，我们等一下再请求
-          setTimeout(() => { this.querySlide(); }, 50000);
+          this.slideShows = data.data.slideShows;
+          setTimeout(() => { this.querySlide() }, data.data.seconds);
         }
       });
   }
 
   //请求首页商品数据
   queryHomeCommodity() {
-    this.httpRequest.get(GlobalFinal.SELLER_DOMAIN + "/commodity/consumer/home/" + this.pageNum + "/" + this.recordNum, GlobalFinal.JWTHEADER)
+    let head = GlobalFinal.HEADER;
+    if (localStorage.getItem("jwt") != null) {
+      head = GlobalFinal.JWTHEADER;
+    }
+    this.httpRequest.get(GlobalFinal.SELLER_DOMAIN + "/commodity/consumer/home/" + this.pageNum + "/" + this.recordNum, head)
       .subscribe((data: any) => {
         if (data.data != null) {
           if (this.commoditys === undefined) {
@@ -117,6 +129,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
           }
           this.commoditys.push(...data.data);
           this.pageNum++;
+          if (data.data.length == 0) {
+            this.pageNum = 0;
+            this.queryHomeCommodity();
+          }
         }
         return data.data;
       });

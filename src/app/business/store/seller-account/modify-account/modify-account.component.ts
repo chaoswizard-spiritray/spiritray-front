@@ -43,7 +43,6 @@ export class ModifyAccountComponent implements OnInit {
       this.accountObj.isCollections = 0;
     }
     formdata.append('account', JSON.stringify(this.accountObj));
-    console.log(JSON.stringify(this.accountObj));
     this.hr.put(GlobalFinal.SELLER_DOMAIN + "/store/account", formdata, GlobalFinal.STORE_HEADER)
       .subscribe((data: any) => {
         GlobalALert.getAlert({ message: data.msg });

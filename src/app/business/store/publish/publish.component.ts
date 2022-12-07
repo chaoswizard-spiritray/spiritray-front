@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { Observable } from 'rxjs';
@@ -14,6 +14,13 @@ import { PutDataComponent } from './put-data/put-data.component';
   styleUrls: ['./publish.component.scss'],
 })
 export class PublishComponent implements OnInit {
+
+  //商品名信息提示框
+  @ViewChild('popover') popover;
+  isOpen = false;//是否展示提示框
+  @ViewChild('geneToggle') geneToggle;
+  generateNameCols: Array<string> = new Array();//生成名数组顺序
+
   //商品基础信息
   commodityName: string = "";
   commodityDescribe: string = "";
@@ -39,6 +46,8 @@ export class PublishComponent implements OnInit {
   masterMapFile: File;
   //初始各级种类颜色对应class
   cateColor: Array<string> = new Array(...["cate1", "cate2", "cate3", "cate4", "cate5"]);
+  //各级标签颜色
+  everyColors: Array<string> = new Array(...["primary", "secondary", "tertiary", "success", "warning", "danger", "light", "medium", "dark"]);
   //每一级上次选中的元素引用
   cateRefer: Array<any> = new Array();
   constructor(
@@ -126,6 +135,45 @@ export class PublishComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  //切换自动生成商品名
+  toggleGenerateName() {
+    //检测生成字段列是否存在
+    if (this.generateNameCols.length == 0 || this.skus.length == 0) {
+      GlobalALert.getToast("生成字段为空");
+      this.geneToggle.checked = false;
+    } else {
+      //拼接商品名
+      let tempName = "";
+      this.generateNameCols.forEach((col) => {
+        const el: any = document.getElementsByClassName(col)[0];
+        tempName += el.value;
+      });
+      this.commodityName = tempName + this.skus[0].replace("+", " ");
+      GlobalALert.getAlert({ message: "生成名:" + this.commodityName });
+    }
+  }
+
+  //添加商品生成名字段
+  addGenerateNameCol(check, colsName) {
+    //每次切换将生成选择置为取消，当确定字段后才进行生成
+    this.geneToggle.checked = false;
+    if (check) {
+      if (this.generateNameCols.includes(colsName)) {
+        this.generateNameCols.splice(this.generateNameCols.indexOf(colsName), 1);
+      }
+      this.generateNameCols.push(colsName);
+    } else {
+      if (this.generateNameCols.includes(colsName)) {
+        this.generateNameCols.splice(this.generateNameCols.indexOf(colsName), 1);
+      }
+    }
+  }
+  //展示商品民提示
+  showCommodityName(event) {
+    this.popover.event = event;
+    this.isOpen = true;
   }
 
   //图片展示

@@ -4,16 +4,21 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HammerModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
+import { DatePipe } from '../../trustUrlPipe/date.pipe';
 import { TrustUrlPipe } from '../../trustUrlPipe/trust-url.pipe';
 import { PlatServiceRoutingModule } from './plat-service-routing.module';
 import { PlatServiceComponent } from './plat-service.component';
+import { SlideImgComponent } from './slide-img/slide-img.component';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 
 
 
 @NgModule({
   declarations: [
     PlatServiceComponent,
-    TrustUrlPipe
+    TrustUrlPipe,
+    DatePipe,
+    SlideImgComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +26,8 @@ import { PlatServiceComponent } from './plat-service.component';
     HammerModule,
     IonicModule,
     HttpClientModule,
-    PlatServiceRoutingModule
+    PlatServiceRoutingModule,
+    NgZorroAntdMobileModule
   ]
 })
 export class PlatServiceModule { }

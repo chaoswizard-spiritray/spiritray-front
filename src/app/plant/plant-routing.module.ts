@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LogonGuard } from '../guard/logon.guard';
+import { PlantWebsocketGuard } from '../guard/plant-websockt.guard copy';
 import { PlantComponent } from './plant.component';
 
 const routes: Routes = [
@@ -35,7 +36,7 @@ const routes: Routes = [
           pathMatch: "full"
         }
       ],
-    //   canActivate: [LogonGuard]
+    canActivate: [LogonGuard, PlantWebsocketGuard]
   }
 ];
 

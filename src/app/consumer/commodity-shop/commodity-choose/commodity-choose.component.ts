@@ -115,7 +115,8 @@ export class CommodityChooseComponent implements OnInit {
       {
         queryParams: {
           "orderCommoditys": JSON.stringify(orderCommoditys),
-          "subButtonType": 0
+          "subButtonType": 0,
+          "comeCart": false
         }
       });
   }

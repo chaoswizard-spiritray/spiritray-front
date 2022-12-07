@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PayMethodComponent } from './pay-method/pay-method.component';
 import { PlantAccountComponent } from './plant-account/plant-account.component';
 import { PlatformComponent } from './platform.component';
+import { SlideImgComponent } from './slide-img/slide-img.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
     children:
       [
         { path: 'pay', component: PayMethodComponent },
-        { path: 'account', component: PlantAccountComponent }
+        { path: 'account', component: PlantAccountComponent },
+        { path: 'slide', component: SlideImgComponent }
       ]
   }
 ];

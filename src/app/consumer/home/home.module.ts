@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TrustUrlPipe } from '../../trustUrlPipe/trust-url.pipe';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 
 
 
@@ -16,6 +17,7 @@ import { HomeComponent } from './home.component';
     TrustUrlPipe
   ],
   imports: [
+    NgZorroAntdMobileModule,
     CommonModule,
     FormsModule,
     HammerModule,

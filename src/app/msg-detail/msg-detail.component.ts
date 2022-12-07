@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent, ModalController, NavController } from '@ionic/angular';
 import { GlobalALert, GlobalFinal } from '../dto-model/dto-model.component';
+import { ImgShowComponent } from '../img-show/img-show.component';
 /**
  * 
  * ionViewWillEnter	当组件路由到即将以动画形式显示在视图中时触发。
@@ -15,7 +16,7 @@ ionViewDidLeave	当组件路由到完成动画处理时触发。
   templateUrl: './msg-detail.component.html',
   styleUrls: ['./msg-detail.component.scss'],
 })
-export class MsgDetailComponent implements OnInit {
+export class MsgDetailComponent implements OnInit, OnDestroy {
   @Input() receiverName = "";
 
   @Input() receiverHead = "";
@@ -26,13 +27,15 @@ export class MsgDetailComponent implements OnInit {
 
   @Input() senderRole = 0;
 
+  systemHead = "../../assets/icon/favicon.png";
+
   senderName = "";
   senderHead = "";
   senderId = 0;
 
   pageNo = 0;
 
-  pageNum = 5;
+  pageNum = 8;
 
   msgText = "";//输入的消息
 
@@ -40,10 +43,17 @@ export class MsgDetailComponent implements OnInit {
 
   msgs;
 
-  websocket;//消息套接字
+  head;
+
+  session;//消息套接字
+
+  loadText: string = "加载更多";
 
   //内容组件视图引用
   @ViewChild(IonContent) content: IonContent;//滚动条
+
+  topHidden: boolean = false;
+  scrollTop: any;
 
 
   constructor(
@@ -67,23 +77,97 @@ export class MsgDetailComponent implements OnInit {
       this.senderHead = store.head;
       this.senderId = store.phone;
     }
+    this.head = GlobalFinal.JWTHEADER;
+    switch (this.senderRole) {
+      case 0: {
+        this.head = GlobalFinal.PLAT_HEADER;
+      }; break;
+      case 2: {
+        this.head = GlobalFinal.STORE_HEADER;
+      }; break;
+    }
+  }
+
+  ionViewDidEnter() {
     //组件初始化时建立
     this.buildSocketLink();
     //加载消息
     this.queryDetail();
   }
 
+  ngOnDestroy() {
+    if (this.session) {
+      this.session.close();
+    }
+  }
+
+  //加载更多消息
+  loadMore() {
+    //隐藏
+    this.topHidden = true
+    this.pageNo++;
+    this.queryDetail();
+  }
+
+  // 监听内容滚动
+  scroll(event: CustomEvent) {
+    this.scrollTop = event.detail.scrollTop;
+    if (event.detail.currentY <= 5) {
+      this.loadMore();
+    }
+  }
+
+  scrollEnd() {
+    // if (this.scrollTop < 1) {
+    //   this.topHidden == true;
+    // } else {
+    //   if (!this.topHidden)
+    //     this.topHidden = false;
+    // }
+  }
+
+  //显示图片全屏
+  async showAll(license) {
+    const modal = await this.modalController.create({
+      component: ImgShowComponent,//模态框中展示的组件
+      componentProps: {
+        "url": license
+      }
+    });
+    return await modal.present();
+  }
+
+
   //加载消息
   queryDetail() {
     let s: Array<any>;
     this.hr.get(GlobalFinal.PLANT_DOMAIN + "/msg/" + this.receiverId + "/" + this.pageNo + "/" + this.pageNum, GlobalFinal.JWTHEADER)
       .subscribe((data: any) => {
-        console.log(data);
+        this.topHidden = true;
         if (this.msgs === undefined) {
           this.msgs = new Array();
         }
         const temp = data.data;
-        this.msgs = temp.concat(...this.msgs);
+        //修改订单阅读状态
+        if (data.data != null && data.data.length > 0) {
+          temp.forEach((s) => {
+            if (s.isRead == 0 && s.senderRole == this.receiverRole) {
+              this.hr.put(GlobalFinal.PLANT_DOMAIN + "/msg/readed/" + s.msgId + "/" + this.pageNo + "/" + this.pageNum, this.head).subscribe((data: any) => {
+                s.isRead = 1;
+              });
+            }
+          });
+          this.msgs = temp.concat(...this.msgs);
+          //滚动到底部
+          if (this.pageNo == 0) {
+            this.content.scrollToBottom(500);
+          }
+          this.topHidden = false;
+          this.loadText = "更多消息"
+        } else {
+          this.topHidden = false;
+          this.loadText = "没有更多"
+        }
       });
   }
 
@@ -94,8 +178,8 @@ export class MsgDetailComponent implements OnInit {
       'msgId': '',
       'sender': this.senderId,
       'receiver': this.receiverId,
-      'senderRole': 1,
-      'receiverRole': 2,
+      'senderRole': this.senderRole,
+      'receiverRole': this.receiverRole,
       'msg': '',
       'msgType': 'img',
       'isRead': 0,
@@ -123,8 +207,8 @@ export class MsgDetailComponent implements OnInit {
       'msgId': '',
       'sender': this.senderId,
       'receiver': this.receiverId,
-      'senderRole': 1,
-      'receiverRole': 2,
+      'senderRole': this.senderRole,
+      'receiverRole': this.receiverRole,
       'msg': this.msgText,
       'msgType': 'text',
       'isRead': 0,
@@ -136,7 +220,6 @@ export class MsgDetailComponent implements OnInit {
     formdata.append("msg", JSON.stringify(msg));
     this.hr.post(GlobalFinal.PLANT_DOMAIN + "/msg/send", formdata, GlobalFinal.JWTHEADER)
       .subscribe((data: any) => {
-        GlobalALert.getToast(data.msg);
         //将消息追加到msgs中
         if (this.msgs === undefined) {
           this.msgs = new Array();
@@ -150,57 +233,58 @@ export class MsgDetailComponent implements OnInit {
   dismiss() {
     this.modalController.dismiss();
     //关闭websoclet连接
-    this.websocket.close();
+    if (this.session) {
+      this.session.close();
+    }
   }
 
   //建立消息细节websocket连接
   buildSocketLink() {
     //如果已经连接了，就不用
-    if (localStorage.getItem("consumerDetailWeb") == null) {
-      localStorage.setItem("consumerDetailWeb", 0 + "");
+    let webS = "";
+    let url = GlobalFinal.WEBSOCKET_DOMAIN;
+    switch (this.senderRole) {
+      case 0: {
+        webS = "plantDetailWeb";
+        url = url + "/websocket/plant/detail/" + this.senderId;
+      }; break;
+      case 1: {
+        webS = "consumerDetailWeb";
+        url = url + "/websocket/consumer/detail/" + this.senderId;
+      }; break;
+      case 2: {
+        webS = "sellerDetailWeb";
+        url = url + "/websocket/seller/detail/" + this.senderId;
+      }; break;
     }
-    if (parseInt(localStorage.getItem("consumerDetailWeb") + "") == 0)
-      //判断当前浏览器是否支持WebSocket
-      if ('WebSocket' in window) {
-        //获取买家的电话
-        this.websocket = new WebSocket(GlobalFinal.WEBSOCKET_DOMAIN + "/websocket/consumer/detail/" + this.senderId);
-      }
-      else {
-        GlobalALert.getToast("无法连接");
-      }
-
-    //连接发生错误的回调方法
-    this.websocket.onerror = function () {
-      GlobalALert.getToast("连接错误");
-      localStorage.setItem("consumerDetailWeb", 0 + "");
-    };
-
-    //连接成功建立的回调方法
-    this.websocket.onopen = function () {
-      console.log("index连接成功");
-      localStorage.setItem("consumerDetailWeb", 1 + "");
+    if (localStorage.getItem(webS) == null) {
+      localStorage.setItem(webS, 0 + "");
     }
-
-    //接收到消息的回调方法
-    this.websocket.onmessage = function (event) {
-      //setMessageInnerHTML(event.data);
-      GlobalALert.getToast("您收到一条消息");
-    }
-
-    //连接关闭的回调方法
-    this.websocket.onclose = function () {
-      console.log("index连接已关闭");
-      localStorage.setItem("consumerDetailWeb", 0 + "");
-    }
-
-    //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-    window.onbeforeunload = function () {
-      closeWebSocket();
-    }
-
-    //关闭WebSocket连接
-    function closeWebSocket() {
-      this.websocket.close();
+    if (parseInt(localStorage.getItem(webS) + "") == 0) {
+      //获取websocket观察对象
+      const temp = GlobalFinal.createWebSocket(url, webS);
+      this.session = temp.session;
+      temp.sessionOb.subscribe((data: any) => {
+        let sId: string = data;
+        if (sId.indexOf("is-readed") > 0) {
+          sId = sId.replace("is-readed", "");
+          setTimeout(() => {
+            for (let i = 0; i < this.msgs.length; i++) {
+              if (sId == this.msgs[i].msgId) {
+                this.msgs[i].isRead = 1;
+                return;
+              }
+            }
+          }, 700);
+        } else {
+          const ms = JSON.parse(data);
+          //修改信息读取状态
+          this.hr.put(GlobalFinal.PLANT_DOMAIN + "/msg/readed/" + ms.msgId, this.head)
+            .subscribe((data: any) => { ms.isRead = 1; });
+          this.msgs.push(ms);
+          this.content.scrollToBottom(500);
+        }
+      });
     }
   }
 }

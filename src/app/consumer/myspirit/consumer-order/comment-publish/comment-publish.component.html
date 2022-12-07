@@ -1,42 +1,63 @@
-<ion-header>
+<ion-header [hidden]="!imgHidden">
   <ion-toolbar>
-    <ion-title>Header</ion-title>
+    <ion-icon class="back" name="chevron-back-outline" slot="start" (click)="back()" style="font-size: 20px;">
+    </ion-icon>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content [hidden]="!imgHidden">
   <div class="stars">
-    <ul>
-      <li>
-        <ion-icon name="star" class="star" (click)="lightStar(1)"></ion-icon>
-      </li>
-      <li>
-        <ion-icon name="star" class="star" (click)="lightStar(2)"></ion-icon>
-      </li>
-      <li>
-        <ion-icon name="star" class="star" (click)="lightStar(3)"></ion-icon>
-      </li>
-      <li>
-        <ion-icon name="star" class="star" (click)="lightStar(4)"></ion-icon>
-      </li>
-      <li>
-        <ion-icon name="star" class="star" (click)="lightStar(5)"></ion-icon>
-      </li>
-    </ul>
+    <div (click)="lightStar(1)" class="li">
+      <ion-icon *ngIf="starLevel<1" name="star-outline" class="star" (click)="lightStar(1)"></ion-icon>
+      <ion-icon *ngIf="starLevel>=1" name="star" class="star" (click)="lightStar(1)"></ion-icon>
+    </div>
+    <div (click)="lightStar(2)" class="li">
+      <ion-icon *ngIf="starLevel<2" name="star-outline" class="star" (click)="lightStar(2)"></ion-icon>
+      <ion-icon *ngIf="starLevel>=2" name="star" class="star" (click)="lightStar(2)"></ion-icon>
+    </div>
+    <div (click)="lightStar(3)" class="li">
+      <ion-icon *ngIf="starLevel<3" name="star-outline" class="star" (click)="lightStar(3)"></ion-icon>
+      <ion-icon *ngIf="starLevel>=3" name="star" class="star" (click)="lightStar(3)"></ion-icon>
+    </div>
+    <div (click)="lightStar(4)" class="li">
+      <ion-icon *ngIf="starLevel<4" name="star-outline" class="star" (click)="lightStar(4)"></ion-icon>
+      <ion-icon *ngIf="starLevel>=4" name="star" class="star" (click)="lightStar(4)"></ion-icon>
+    </div>
+    <div (click)="lightStar(5)" class="li">
+      <ion-icon *ngIf="starLevel<5" name="star-outline" class="star" (click)="lightStar(5)"></ion-icon>
+      <ion-icon *ngIf="starLevel>=5" name="star" class="star" (click)="lightStar(5)"></ion-icon>
+    </div>
   </div>
   <div class="text">
-    <ion-textarea placeholder="请填写你的评价"></ion-textarea>
+    <TextareaItem [(ngModel)]="comment" [rows]="5" [count]="50" [autoHeight]="true" placeholder="请填写你的评价">
+    </TextareaItem>
   </div>
   <div class="attach">
-
-  </div>
-  <div class="check">
-
+    <div style="margin-left: 10px;margin-right: 20px;margin-top: 20px;">
+      <ion-thumbnail style="width: 90px;height: 90px;" (click)="showAll()">
+        <img [src]="" class="showImg" />
+      </ion-thumbnail>
+    </div>
+    <div style="display:inline-block; float:right;">
+      <ion-item>
+        <ion-toggle color="primary" [(ngModel)]="isAnonymous"></ion-toggle>
+        <ion-label>匿名</ion-label>
+      </ion-item>
+    </div>
+    <div style="border:3px solid blue; display: inline-block;opacity: .6;margin-top: 5px;margin-left: 40px;">
+      <label for="head">
+        <ion-icon name="add" style="font-size: 30px;color: blue;"></ion-icon>
+      </label>
+    </div>
   </div>
 </ion-content>
-<ion-footer>
+<ion-footer [hidden]="!imgHidden">
   <ion-toolbar>
-    <ion-button (click)="onClick()" expand="block" fill="clear" shape="round">
+    <ion-button (click)="publishComment()" expand="block" fill="clear" shape="round">
       发布
     </ion-button>
   </ion-toolbar>
 </ion-footer>
+<div [hidden]="imgHidden" (click)="clearShow()">
+  <img [src]="" style="width: 100%;margin-top: 20%;" class="showImg">
+</div>
+<input accept="image/*" type="file" id="head" (change)="upload($event)" hidden />

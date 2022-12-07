@@ -13,6 +13,8 @@ import { FailDetailComponent } from './plat-check-commodity/fail-detail/fail-det
 import { PassDetailComponent } from './plat-check-commodity/pass-detail/pass-detail.component';
 import { PlatCheckCommodityComponent } from './plat-check-commodity/plat-check-commodity.component';
 import { PlatHotCommodityComponent } from './plat-hot-commodity/plat-hot-commodity.component';
+import { CategoryAttributeComponent } from './wares-category/category-attribute/category-attribute.component';
+import { CateAccordionComponent, WaresCategoryComponent } from './wares-category/wares-category.component';
 import { WaresRoutingModule } from './wares-routing.module';
 import { WaresComponent } from './wares.component';
 
@@ -28,7 +30,10 @@ import { WaresComponent } from './wares.component';
     FailDetailComponent,
     PassDetailComponent,
     ImgShowComponent,
-    DatePipe
+    DatePipe,
+    WaresCategoryComponent,
+    CateAccordionComponent,
+    CategoryAttributeComponent
   ],
   imports: [
     CommonModule,

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonRouterOutlet, ModalController, NavController } from '@ionic/angular';
 import { GlobalALert, GlobalFinal } from '../../dto-model/dto-model.component';
+import { MsgDetailComponent } from '../../msg-detail/msg-detail.component';
 
 @Component({
   selector: 'app-msg-home',
@@ -14,7 +15,7 @@ export class MsgHomeComponent implements OnInit {
 
   msgHomeInfos;//消息页信息
 
-  websocket;//连接套接字
+  session: WebSocket;
 
   constructor(
     private router: Router,
@@ -40,70 +41,57 @@ export class MsgHomeComponent implements OnInit {
 
   ionViewWillLeave() {
     //将要离开视图时，关闭连接
-    this.websocket.close();
+    if (this.session) {
+      this.session.close();
+    }
   }
 
   //获取消息页消息
   queryMsgHomeInfos() {
     this.hr.get(GlobalFinal.PLANT_DOMAIN + "/msg/home/" + this.senderId + "/1").subscribe((data: any) => {
-      console.log(data);
       if (data.data.length > 0) {
-
-
         this.msgHomeInfos = data.data;
       }
     });
   }
 
+  //打开指定消息细节
+  //打开消息模态框
+  async openMsgDetail(index) {
+    //打开消息细节模态框
+    const modal = await this.modalController.create({
+      component: MsgDetailComponent,//模态框中展示的组件
+      handle: false,
+      componentProps: {
+        'receiverName': this.msgHomeInfos[index].sendName,
+        'receiverHead': this.msgHomeInfos[index].sendHead,
+        'receiverRole': this.msgHomeInfos[index].senderRole,
+        'receiverId': this.msgHomeInfos[index].sender,
+        'senderRole': 1
+      },
+      swipeToClose: true,
+      presentingElement: await this.modalController.getTop()
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    this.queryMsgHomeInfos();
+  }
+
+
   // 建立细节的webjsocket连接
   buildSocketLink() {
-    //如果已经连接了，就不用
-    if (localStorage.getItem("consumerHomeWeb") == null) {
-      localStorage.setItem("consumerHomeWeb", 0 + "");
+    let webS = "consumerHomeWeb";
+    let url = GlobalFinal.WEBSOCKET_DOMAIN;
+    if (localStorage.getItem(webS) == null) {
+      localStorage.setItem(webS, 0 + "");
     }
-    if (parseInt(localStorage.getItem("consumerHomeWeb") + "") == 0)
-      //判断当前浏览器是否支持WebSocket
-      if ('WebSocket' in window) {
-        //获取买家的电话
-        this.websocket = new WebSocket(GlobalFinal.WEBSOCKET_DOMAIN + "/websocket/consumer/home/" + this.senderId);
-      }
-      else {
-        GlobalALert.getToast("无法连接");
-      }
-
-    //连接发生错误的回调方法
-    this.websocket.onerror = function () {
-      GlobalALert.getToast("连接错误");
-      localStorage.setItem("consumerHomeWeb", 0 + "");
-    };
-
-    //连接成功建立的回调方法
-    this.websocket.onopen = function () {
-      console.log("index连接成功");
-      localStorage.setItem("consumerHomeWeb", 1 + "");
-    }
-
-    //接收到消息的回调方法
-    this.websocket.onmessage = function (event) {
-      //setMessageInnerHTML(event.data);
-      //当有消息推送过来,重新请求一遍
-      this.queryMsgHomeInfos();
-    }
-
-    //连接关闭的回调方法
-    this.websocket.onclose = function () {
-      console.log("index连接已关闭");
-      localStorage.setItem("consumerHomeWeb", 0 + "");
-    }
-
-    //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-    window.onbeforeunload = function () {
-      closeWebSocket();
-    }
-
-    //关闭WebSocket连接
-    function closeWebSocket() {
-      this.websocket.close();
+    if (parseInt(localStorage.getItem(webS) + "") == 0) {
+      //获取websocket观察对象
+      const temp = GlobalFinal.createWebSocket(url + "/websocket/consumer/home/" + this.senderId, webS);
+      this.session = temp.session;
+      temp.sessionOb.subscribe((data: any) => {
+        this.queryMsgHomeInfos();
+      });
     }
   }
 }

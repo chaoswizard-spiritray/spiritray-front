@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon style="font-size: 20px;" name="chevron-back-outline" slot="start"
+      (click)="this.modalController.dismiss()">
+    </ion-icon>
+    <ion-title>{{categoryName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-fab horizontal="end" vertical="center">
+  <ion-fab-button (click)="appendCate()">
+    <span>追加</span>
+  </ion-fab-button>
+</ion-fab>
+<ion-content scroll-events="true">
+  <ion-item color="primary">
+    <span slot="start">属性名</span>
+    <span slot="end">多个值</span>
+    <span slot="end">删除</span>
+  </ion-item>
+  <div *ngIf="attributes.length>0">
+    <ion-item color="light" *ngFor="let att of attributes;index as i">
+      <span>{{att.attributeName}}</span>
+      <ion-checkbox mode="ios" disabled="true" style="margin-right: 30px;" [checked]="att.isMul" slot="end">
+      </ion-checkbox>
+      <ion-icon mode="ios" slot="end" name="remove-circle-outline" style="font-size: 30px;color:rgb(251, 146, 146)">
+      </ion-icon>
+    </ion-item>
+  </div>
+  <ng-container *ngIf="appendAttributes.length==0;else appendData">
+  </ng-container>
+</ion-content>
+<ion-footer *ngIf="appendAttributes.length>0">
+  <ion-toolbar>
+    <ion-button (click)="submitData()" expand="block" fill="clear" shape="round">
+      提交
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+<ng-template #appendData>
+  <ion-item color="light" *ngFor="let att of appendAttributes;index as i">
+    <ion-input type="text" placeholder="属性名" [(ngModel)]="att.attributeName"></ion-input>
+    <ion-checkbox mode="ios" style="margin-right: 30px;" [(ngModel)]="att.isMul" [checked]="att.isMul" slot="end">
+    </ion-checkbox>
+    <ion-icon (click)="deleteAttribute(i)" mode="ios" slot="end" name="remove-circle-outline"
+      style="font-size: 30px;color:rgb(251, 146, 146)">
+    </ion-icon>
+  </ion-item>
+</ng-template>
