@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
-import { GlobalALert, GlobalFinal } from '../../dto-model/dto-model.component';
+import { GlobalFinal } from '../../dto-model/dto-model.component';
 import { StoreRouterDataService } from '../../service/store-router-data.service';
-import { ConsumerOrderComponent } from './consumer-order/consumer-order.component';
+import { AttentionComponent } from './attention/attention.component';
+import { CommodityCollectionComponent } from './commodity-collection/commodity-collection.component';
+import { HistoryComponent } from './history/history.component';
 
 @Component({
   selector: 'app-myspirit',
@@ -125,7 +127,7 @@ export class MyspiritComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl("/consumer/set");
   }
 
-  // //开启订单信息
+  //开启订单信息
   toOrder(index) {
     //先获取订单页面观测对象并启动观测
     this.router.navigate(['/consumer/order'], {
@@ -135,4 +137,36 @@ export class MyspiritComponent implements OnInit, AfterViewInit {
     });
   }
 
+  //打开商品收藏模态框
+  async openCollectionModal() {
+    const modal = await this.modalController.create({
+      component: CommodityCollectionComponent,//模态框中展示的组件
+      handle: false,
+      swipeToClose: true,
+      presentingElement: await this.modalController.getTop()
+    });
+    await modal.present();
+  }
+
+  //打开店铺关注模态框
+  async openAttentionModal() {
+    const modal = await this.modalController.create({
+      component: AttentionComponent,//模态框中展示的组件
+      handle: false,
+      swipeToClose: true,
+      presentingElement: await this.modalController.getTop()
+    });
+    await modal.present();
+  }
+
+  //打开浏览历史模态框
+  async openHistoryModal() {
+    const modal = await this.modalController.create({
+      component: HistoryComponent,//模态框中展示的组件
+      handle: false,
+      swipeToClose: true,
+      presentingElement: await this.modalController.getTop()
+    });
+    await modal.present();
+  }
 }

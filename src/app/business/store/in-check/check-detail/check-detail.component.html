@@ -1,4 +1,8 @@
 <ion-content>
+  <div (click)="dismiss()"
+    style="padding: 10px;background: rgb(253, 147, 7); float: left;margin-top: 15px;margin-left: 15px;border-radius: 20px;">
+    <span style="font-size: 16px;color: rgb(255, 255, 255);">×</span>
+  </div>
   <div class="max" *ngIf="inCheckDetail">
     <div class="img">
       <div>
@@ -52,8 +56,15 @@
         <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
       </ion-item>
     </div>
-    <ion-button (click)="dismiss()" expand="block" fill="clear" shape="round">
-      确定
+    <ion-button (click)="deleteNoPassCheckCommodity()" expand="block" fill="clear" shape="round">
+      移除
+    </ion-button>
+    <ion-button *ngIf="inCheckDetail.checkState==0" disabled="true" (click)="reapplyCeck()" expand="block" fill="clear"
+      shape="round">
+      审核中
+    </ion-button>
+    <ion-button *ngIf="inCheckDetail.checkState==2" (click)="reapplyCeck()" expand="block" fill="clear" shape="round">
+      重新申请
     </ion-button>
   </div>
 </ion-content>

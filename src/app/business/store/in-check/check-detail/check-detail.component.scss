@@ -48,10 +48,19 @@
     color: rgb(219, 5, 5);
 }
 
-ion-button {
+ion-button:nth-last-child(2) {
     margin-top: 10%;
+    display: inline-block;
+    width: 30%;
+    --color: rgb(255, 255, 255);
+    --background: rgb(171, 171, 171);
+}
+
+ion-button:last-child {
+    margin-top: 10%;
+    margin-left: 17%;
+    display: inline-block;
     width: 50%;
-    margin-left: 25%;
     --color: rgb(255, 255, 255);
     --background: rgb(253, 147, 7);
 }

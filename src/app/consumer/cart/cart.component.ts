@@ -37,10 +37,13 @@ export class CartComponent implements OnInit {
     this.queryCart();
   }
 
+  ionViewDidEnter() {
+    this.queryCart();
+  }
+
   ionViewWillLeave() {
     this.indexs = [];
     this.totalMoney = 0;
-
   }
 
   //查询购物车商品信息
@@ -56,6 +59,7 @@ export class CartComponent implements OnInit {
 
   //刷新数据
   refreshing(event) {
+    this.clearCheckData();
     let time = 1000;
     //只显示加载图标
     this.queryCart();
@@ -64,7 +68,14 @@ export class CartComponent implements OnInit {
 
   //重新加载
   reLoad() {
+    this.clearCheckData();
     this.queryCart();
+  }
+
+  //清除选中的数据
+  clearCheckData() {
+    this.indexs = [];
+    this.totalMoney = 0;
   }
 
 
@@ -198,7 +209,18 @@ export class CartComponent implements OnInit {
   //获取订单令牌,防止订单重复提交
   generateOrder(skus): any {
     let orderId: string;
-    this.hr.get(GlobalFinal.ORDER_DOMAIN + "/order/token", GlobalFinal.JWTHEADER)
+    const ids = new Array();
+    this.commoditys.forEach(el => {
+      ids.push(el.commodityId);
+    });
+    const head = {
+      headers: GlobalFinal.JWTHEADER.headers,
+      params: {
+        "commodityIds": JSON.stringify(ids)
+      },
+      withCredentials: GlobalFinal.JWTHEADER.withCredentials
+    }
+    this.hr.get(GlobalFinal.ORDER_DOMAIN + "/order/token", head)
       .subscribe((data: any) => {
         if (data.stausCode != 200) {
           GlobalALert.getToast("服务异常，请稍后再试", 1000);

@@ -1,1 +1,253 @@
-
+<ion-header>
+    <!-- 买家视图 -->
+    <ion-toolbar *ngIf="type==0">
+        <ion-icon (click)="back()" style="font-size: 24px;margin-left: 15px;" slot="start"
+            name="chevron-back-outline"></ion-icon>
+        <span style="font-size: 15px;margin-left: 5px;" *ngIf="storeInfo">{{storeInfo.storeName}}</span>
+        <ion-button [hidden]="isAttention" style="--background: rgb(242, 242, 242);--color:red;" slot="end"
+            (click)="attention()" expand="block" fill="clear" shape="round">
+            <ion-icon slot="start" name="add"></ion-icon>
+            关注
+        </ion-button>
+        <ion-button [hidden]="!isAttention" style="--background: rgb(54, 124, 255);--color:rgb(226, 226, 226);"
+            slot="end" (click)="cancelAttention()" expand="block" fill="clear" shape="round">
+            已关注
+        </ion-button>
+    </ion-toolbar>
+    <!-- 平台视图 -->
+    <ion-toolbar *ngIf="type==1">
+        <ion-icon (click)="back()" style="font-size: 24px;margin-left: 15px;" slot="start"
+            name="chevron-back-outline"></ion-icon>
+        <span style="font-size: 15px;margin-left: 5px;" *ngIf="storeInfo">{{storeInfo.storeName}}</span>
+        <ion-button [hidden]="isClose" style="--background: rgb(242, 242, 242);--color:red;" slot="end"
+            (click)="plantCloseStore()" expand="block" fill="clear" shape="round">
+            <ion-icon slot="start" name="close-outline"></ion-icon>
+            查封
+        </ion-button>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <TabBar [hidden]="false" [barTintColor]="'white'" [tintColor]="tintColor" [ngStyle]="tabbarStyle"
+        [activeTab]="selectedIndex" [unselectedTintColor]="unselectedTintColor" [tabBarPosition]="'bottom'"
+        (onPress)="tabBarTabOnPress($event)">
+        <TabBarItem [title]="'所有商品'" [key]="1" [icon]="icon1" [selectedIcon]="icon11">
+            <ng-template #icon1>
+                <div
+                    style="width:22px;height: 22px;background: url('../../assets/tableIcon/snow-outline.svg') center center / 21px 21px no-repeat;">
+                </div>
+            </ng-template>
+            <ng-template #icon11>
+                <div
+                    style="width:22px;height: 22px;background: url('../../assets/tableIcon/snow.svg') center center / 21px 21px no-repeat;">
+                </div>
+            </ng-template>
+            <div style="background-color: white; height: 100%; text-align: center">
+                <ng-container>
+                    <ng-template [ngTemplateOutlet]="content1"></ng-template>
+                </ng-container>
+            </div>
+        </TabBarItem>
+        <TabBarItem [title]="'新品'" [key]="2" [icon]="icon2" [selectedIcon]="icon22">
+            <ng-template #icon2>
+                <div
+                    style="width:22px;height: 22px;background: url('../../assets/tableIcon/square-outline.svg') center center / 21px 21px no-repeat;">
+                </div>
+            </ng-template>
+            <ng-template #icon22>
+                <div
+                    style="width:22px;height: 22px;background: url('../../assets/tableIcon/square.svg') center center / 21px 21px no-repeat;">
+                </div>
+            </ng-template>
+            <div style="background-color: white; height: 100%; text-align: center">
+                <ng-container>
+                    <ng-template [ngTemplateOutlet]="content2"></ng-template>
+                </ng-container>
+            </div>
+        </TabBarItem>
+        <TabBarItem [title]="'分类'" [key]="3" [icon]="icon3" [selectedIcon]="icon33">
+            <ng-template #icon3>
+                <div
+                    style="width:22px;height: 22px;background: url('../../assets/tableIcon/grid-outline.svg') center center / 21px 21px no-repeat;">
+                </div>
+            </ng-template>
+            <ng-template #icon33>
+                <div
+                    style="width:22px;height: 22px;background: url('../../assets/tableIcon/grid.svg') center center / 21px 21px no-repeat;">
+                </div>
+            </ng-template>
+            <div style="background-color: white; height: 100%; text-align: center">
+                <ng-container>
+                    <ng-template [ngTemplateOutlet]="content3"></ng-template>
+                </ng-container>
+            </div>
+        </TabBarItem>
+        <TabBarItem *ngIf="type==0" [title]="'消息'" [key]="4" [icon]="icon4" [selectedIcon]="icon44">
+            <ng-template #icon4>
+                <div
+                    style="width:22px;height: 22px;background: url('../../assets/tableIcon/chatbubble-outline.svg') center center / 21px 21px no-repeat;">
+                </div>
+            </ng-template>
+            <ng-template #icon44>
+                <div
+                    style="width:22px;height: 22px;background: url('../../assets/tableIcon/chatbubble.svg') center center / 21px 21px no-repeat;">
+                </div>
+            </ng-template>
+            <div style="background-color: white; height: 100%; text-align: center">
+                <ng-container>
+                </ng-container>
+            </div>
+        </TabBarItem>
+        <TabBarItem *ngIf="type==1" [title]="'执照'" [key]="5" [icon]="icon5" [selectedIcon]="icon55">
+            <ng-template #icon5>
+                <div
+                    style="width:22px;height: 22px;background: url('../../assets/tableIcon/cube-outline.svg') center center / 21px 21px no-repeat;">
+                </div>
+            </ng-template>
+            <ng-template #icon55>
+                <div
+                    style="width:22px;height: 22px;background: url('../../assets/tableIcon/cube.svg') center center / 21px 21px no-repeat;">
+                </div>
+            </ng-template>
+            <div style="background-color: white; height: 100%; text-align: center">
+                <ng-container>
+                    <ng-template [ngTemplateOutlet]="content4"></ng-template>
+                </ng-container>
+            </div>
+        </TabBarItem>
+    </TabBar>
+</ion-content>
+<!-- 全部商品 -->
+<ng-template #content1>
+    <div *ngIf="allCommoditys.length>0">
+        <div class="lbox">
+            <div *ngFor="let commodity of allCommoditys;let i=index;let odd=odd;let even = even;">
+                <div class="commodity1" *ngIf="allCommoditys[i]&& even"
+                    (click)="toCommodity(allCommoditys[i].commodityId)">
+                    <div class="head">
+                        <img [src]="allCommoditys[i].masterMap|trustUrl" />
+                    </div>
+                    <div class="body">
+                        <label class="commodityName">{{allCommoditys[i].commodityName}}</label>
+                        <label *ngIf="allCommoditys[i].priceMin==allCommoditys[i].priceMax"
+                            class="price">{{allCommoditys[i].priceMin}}￥</label>
+                        <label *ngIf="allCommoditys[i].priceMin!=allCommoditys[i].priceMax"
+                            class="price">{{allCommoditys[i].priceMin}}-{{allCommoditys[i].priceMax}}￥</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rbox">
+            <div *ngFor="let commodity of allCommoditys;let i=index;let odd=odd;let even = even;">
+                <div class="commodity2" *ngIf="allCommoditys[i]&& odd"
+                    (click)="toCommodity(allCommoditys[i].commodityId)">
+                    <div class="head">
+                        <img [src]="allCommoditys[i].masterMap|trustUrl" />
+                    </div>
+                    <div class="body">
+                        <label class="commodityName">{{allCommoditys[i].commodityName}}</label>
+                        <label *ngIf="allCommoditys[i].priceMin==allCommoditys[i].priceMax"
+                            class="price">{{allCommoditys[i].priceMin}}￥</label>
+                        <label *ngIf="allCommoditys[i].priceMin!=allCommoditys[i].priceMax"
+                            class="price">{{allCommoditys[i].priceMin}}-{{allCommoditys[i].priceMax}}￥</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="allCommoditys.length==0">
+        <span style="font-size: 20px;margin-left: 156.5px;color: blue;margin-top: 280px;float: left;">没有商品</span>
+    </div>
+</ng-template>
+<!-- 最近商品 -->
+<ng-template #content2>
+    <div *ngIf="recentCommoditys.length>0">
+        <div class="lbox">
+            <div *ngFor="let commodity of recentCommoditys;let i=index;let odd=odd;let even = even;">
+                <div class="commodity1" *ngIf="recentCommoditys[i]&& even"
+                    (click)="toCommodity(recentCommoditys[i].commodityId)">
+                    <div class="head">
+                        <img [src]="recentCommoditys[i].masterMap|trustUrl" />
+                    </div>
+                    <div class="body">
+                        <label class="commodityName">{{recentCommoditys[i].commodityName}}</label>
+                        <label *ngIf="recentCommoditys[i].priceMin==recentCommoditys[i].priceMax"
+                            class="price">{{recentCommoditys[i].priceMin}}￥</label>
+                        <label *ngIf="recentCommoditys[i].priceMin!=recentCommoditys[i].priceMax"
+                            class="price">{{recentCommoditys[i].priceMin}}-{{recentCommoditys[i].priceMax}}￥</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rbox">
+            <div *ngFor="let commodity of recentCommoditys;let i=index;let odd=odd;let even = even;">
+                <div class="commodity2" *ngIf="recentCommoditys[i]&& odd"
+                    (click)="toCommodity(recentCommoditys[i].commodityId)">
+                    <div class="head">
+                        <img [src]="recentCommoditys[i].masterMap|trustUrl" />
+                    </div>
+                    <div class="body">
+                        <label class="commodityName">{{recentCommoditys[i].commodityName}}</label>
+                        <label *ngIf="recentCommoditys[i].priceMin==recentCommoditys[i].priceMax"
+                            class="price">{{recentCommoditys[i].priceMin}}￥</label>
+                        <label *ngIf="recentCommoditys[i].priceMin!=recentCommoditys[i].priceMax"
+                            class="price">{{recentCommoditys[i].priceMin}}-{{recentCommoditys[i].priceMax}}￥</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="recentCommoditys.length==0">
+        <span style="font-size: 20px;margin-left: 135.5px;color: blue;margin-top: 280px;float: left;">最近没有上架</span>
+    </div>
+</ng-template>
+<!-- 种类商品 -->
+<ng-template #content3>
+    <div class="types" style="float: left; margin-top: 10px;margin-left: 10px;width: 100%;">
+        <ul>
+            <li *ngFor="let cate of categorys;index as i" (click)="changeType(i)"
+                style="float: left;margin-left: 10px;">
+                <ion-chip color="primary" style="font-size: 16px;">{{cate.categoryName}}</ion-chip>
+            </li>
+        </ul>
+    </div>
+    <div class="lbox">
+        <div *ngFor="let commodity of cateCommoditys;let i=index;let odd=odd;let even = even;">
+            <div class="commodity1" *ngIf="cateCommoditys[i]&& even"
+                (click)="toCommodity(cateCommoditys[i].commodityId)">
+                <div class="head">
+                    <img [src]="cateCommoditys[i].masterMap|trustUrl" />
+                </div>
+                <div class="body">
+                    <label class="commodityName">{{cateCommoditys[i].commodityName}}</label>
+                    <label *ngIf="cateCommoditys[i].priceMin==cateCommoditys[i].priceMax"
+                        class="price">{{cateCommoditys[i].priceMin}}￥</label>
+                    <label *ngIf="cateCommoditys[i].priceMin!=cateCommoditys[i].priceMax"
+                        class="price">{{cateCommoditys[i].priceMin}}-{{cateCommoditys[i].priceMax}}￥</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rbox">
+        <div *ngFor="let commodity of cateCommoditys;let i=index;let odd=odd;let even = even;">
+            <div class="commodity2" *ngIf="cateCommoditys[i]&& odd"
+                (click)="toCommodity(cateCommoditys[i].commodityId)">
+                <div class="head">
+                    <img [src]="cateCommoditys[i].masterMap|trustUrl" />
+                </div>
+                <div class="body">
+                    <label class="commodityName">{{cateCommoditys[i].commodityName}}</label>
+                    <label *ngIf="cateCommoditys[i].priceMin==cateCommoditys[i].priceMax"
+                        class="price">{{cateCommoditys[i].priceMin}}￥</label>
+                    <label *ngIf="cateCommoditys[i].priceMin!=cateCommoditys[i].priceMax"
+                        class="price">{{cateCommoditys[i].priceMin}}-{{cateCommoditys[i].priceMax}}￥</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<!-- 店铺执照 -->
+<ng-template #content4>
+    <div (click)="showAll(lic)" *ngFor="let lic of license;index as i;">
+        <img [src]="lic|trustUrl" />
+    </div>
+</ng-template>

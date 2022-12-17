@@ -277,7 +277,7 @@ export class PublishComponent implements OnInit {
   //提交数据
   submit(event) {
     try {
-      event.target.setAttribute("disabled", 'true');
+      // event.target.setAttribute("disabled", 'true');
       //创建表单
       let formdata: FormData = new FormData();
       //添加主图
@@ -319,6 +319,14 @@ export class PublishComponent implements OnInit {
       let nums: any = document.getElementsByClassName("num");
       let i = 0;
       this.skus.forEach((sku) => {
+        if (prices[i].value < 0) {
+          GlobalALert.getToast("sku存在价格小于0");
+          return;
+        }
+        if (nums[i].value <= 0) {
+          GlobalALert.getToast("sku数量至少为1");
+          return;
+        }
         let tempSku = new Sku("", sku, "", prices[i].value, nums[i].value);
         i++;
         tempSkus.push(tempSku);

@@ -17,7 +17,7 @@
     style="width: 98%;height:200px;overflow: hidden; margin-left: 1%;margin-right: 1%;margin-top: 5px;border-radius: 5px;box-shadow: 0px 0px 10px rgb(255, 137, 137);">
     <ion-slides pager="true" [options]="slideOpts" #slide1 (ionSlideTouchEnd)="slideDidChange()">
       <ion-slide *ngFor="let slideShow of slideShows;index as i">
-        <img style="width: 2000px;" [src]="slideShow.mapUrl|trustUrl" (click)="enterStore(slideShow.storeId)">
+        <img style="width: 2000px;" [src]="slideShow.mapUrl|trustUrl" (click)="toBeforeStore(slideShow.storeId)">
       </ion-slide>
     </ion-slides>
   </div>

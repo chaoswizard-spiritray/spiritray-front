@@ -23,15 +23,15 @@
         <!-- 商品收藏、店铺关注、足迹 -->
         <div class="extra">
             <ion-tab-bar>
-                <ion-tab-button>
+                <ion-tab-button (click)="openCollectionModal()">
                     <ion-label>商品收藏</ion-label>
                     <ion-icon name="egg-outline"></ion-icon>
                 </ion-tab-button>
-                <ion-tab-button>
+                <ion-tab-button (click)="openAttentionModal()">
                     <ion-label>关注店铺</ion-label>
                     <ion-icon name="leaf-outline"></ion-icon>
                 </ion-tab-button>
-                <ion-tab-button>
+                <ion-tab-button (click)="openHistoryModal()">
                     <ion-label>浏览足迹</ion-label>
                     <ion-icon name="finger-print-outline"></ion-icon>
                 </ion-tab-button>

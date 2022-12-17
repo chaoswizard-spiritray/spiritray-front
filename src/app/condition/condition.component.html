@@ -2,6 +2,81 @@
   <span>取消</span>
 </div>
 <ion-content>
+  <!-- 买家搜索商品筛选条件 -->
+  <div class="consumer" *ngIf="type==1">
+    <div>
+      <div class="condition">
+        <div class="sub-title">上架时间</div>
+        <ion-segment [(ngModel)]="checkDate">
+          <ion-segment-button [value]="0">
+            <ion-label>不限</ion-label>
+          </ion-segment-button>
+          <ion-segment-button [value]="7">
+            <ion-label>近一周</ion-label>
+          </ion-segment-button>
+          <ion-segment-button [value]="14">
+            <ion-label>近两周</ion-label>
+          </ion-segment-button>
+          <ion-segment-button [value]="30">
+            <ion-label>近一月</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+    </div>
+    <div class="condition">
+      <div class="sub-title">价格范围</div>
+      <ion-segment [(ngModel)]="checkPriceIndex">
+        <ion-segment-button [value]="-1">
+          <ion-label>不限</ion-label>
+        </ion-segment-button>
+        <ion-segment-button *ngIf="commodityPrice" [value]="0">
+          <ion-label>小于{{commodityPrice[0]}}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button *ngIf="commodityPrice" [value]="1">
+          <ion-label>{{commodityPrice[0]}}-{{commodityPrice[1]}}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button *ngIf="commodityPrice" [value]="2">
+          <ion-label>{{commodityPrice[1]}}-{{commodityPrice[2]}}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button *ngIf="!commodityPrice" [value]="" disabled="true">
+          <ion-label>没有更多</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    <div class="condition">
+      <div class="sub-title">发货地址</div>
+      <ion-select mode="ios" [(ngModel)]="checkShipAddress" interface="popover" placeholder="选取发货地址">
+        <ion-select-option value="undefined">暂不选取</ion-select-option>
+        <div *ngIf="shipAddressShow">
+          <ion-select-option *ngFor="let address of shipAddresses;index as i" [value]="address">
+            {{shipAddressShow[i]}}
+          </ion-select-option>
+        </div>
+      </ion-select>
+    </div>
+    <div class="condition">
+      <div class="sub-title">种类</div>
+      <ion-select mode="ios" [(ngModel)]="checkCateId" interface="popover" placeholder="选取种类">
+        <ion-select-option value="undefined">暂不选取</ion-select-option>
+        <div *ngIf="commodityCates">
+          <ion-select-option *ngFor="let cate of commodityCates;index as i" [value]="cate.value">
+            {{cate.key}}
+          </ion-select-option>
+        </div>
+      </ion-select>
+    </div>
+    <div class="condition">
+      <div class="sub-title">品牌</div>
+      <ion-select mode="ios" [(ngModel)]="checkBrand" interface="popover" placeholder="选取品牌">
+        <ion-select-option value="-1">暂不选取</ion-select-option>
+        <div *ngIf="commodityBrands">
+          <ion-select-option *ngFor="let brand of commodityBrands;index as i" [value]="brand">
+            {{brand}}
+          </ion-select-option>
+        </div>
+      </ion-select>
+    </div>
+  </div>
   <!-- 商家端订单管理筛选条件 -->
   <div class="store" *ngIf="type==0">
     <!-- 未付款筛选条件 -->

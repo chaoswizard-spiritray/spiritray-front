@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
-import { GlobalFinal, InCheckDetail, Sku, SSMap } from '../../../../dto-model/dto-model.component';
+import { AlertController, ModalController, NavParams } from '@ionic/angular';
+import { GlobalALert, GlobalFinal, InCheckDetail, Sku, SSMap } from '../../../../dto-model/dto-model.component';
+import { AddSkuNumComponent } from '../add-sku-num/add-sku-num.component';
+import { CommodityDetailComponent } from '../commodity-detail/commodity-detail.component';
+import { ModifySkuPriceComponent } from '../modify-sku-price/modify-sku-price.component';
 
 @Component({
   selector: 'app-in-sell-detail',
@@ -23,11 +26,56 @@ export class InSellDetailComponent implements OnInit {
   constructor(
     private navParams: NavParams,
     private hr: HttpClient,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
     this.queryCheckInf();
+  }
+
+  //补充库存
+  async addNum() {
+    const modal = await this.modalController.create({
+      component: AddSkuNumComponent,//模态框中展示的组件
+      componentProps: {
+        'skus': JSON.stringify(this.skus),
+        'commodityId': this.commodityId
+      },
+      handle: false,
+      swipeToClose: true,
+      presentingElement: await this.modalController.getTop()
+    });
+    await modal.present();
+  }
+
+  //调整价格
+  async modifyPrice() {
+    const modal = await this.modalController.create({
+      component: ModifySkuPriceComponent,//模态框中展示的组件
+      componentProps: {
+        'skus': JSON.stringify(this.skus),
+        'commodityId': this.commodityId
+      },
+      handle: false,
+      swipeToClose: true,
+      presentingElement: await this.modalController.getTop()
+    });
+    await modal.present();
+  }
+
+  //打开详情管理模态框
+  async openCommodityDetailModal() {
+    const modal = await this.modalController.create({
+      component: CommodityDetailComponent,//模态框中展示的组件
+      componentProps: {
+        'commodityId': this.commodityId
+      },
+      handle: false,
+      swipeToClose: true,
+      presentingElement: await this.modalController.getTop()
+    });
+    await modal.present();
   }
 
   //切换sku显示
@@ -116,6 +164,45 @@ export class InSellDetailComponent implements OnInit {
   //关闭模态框
   dismiss() {
     this.modalController.dismiss();
+  }
+
+  //下架商品
+  async downCommodity() {
+    if (await GlobalALert.getSureAlert("下架后将不可再恢复,确定要下架商品吗") != "confirm") {
+      return;
+    }
+    const alert = await this.alertController.create({
+      header: '请输入下架备注',
+      buttons: [
+        {
+          text: "提交",
+          role: 'submit'
+        },
+        {
+          text: "取消",
+          role: 'cancel'
+        }
+      ],
+      inputs: [
+        {
+          placeholder: '备注',
+          min: 1,
+          max: 100,
+        }
+      ]
+    });
+    await alert.present();
+    const { data } = await alert.onDidDismiss();
+    console.log(data.values[0]);
+    const formdata = new FormData();
+    formdata.append("commodityId", this.commodityId);
+    formdata.append("des", data.values[0]);
+    this.hr.post(GlobalFinal.SELLER_DOMAIN + "/commodity/seller/down", formdata, GlobalFinal.STORE_HEADER).subscribe((data: any) => {
+      GlobalALert.getAlert({ message: data.msg });
+      if (data.stausCode == 200) {
+        this.modalController.dismiss();
+      }
+    });
   }
 
 

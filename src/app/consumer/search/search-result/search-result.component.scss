@@ -1,4 +1,69 @@
+* {
+    font-family: cursive;
+}
+
+.option {
+    width: 100%;
+    background-color: rgba(241, 179, 149, 0.253);
+    border-radius: 20px;
+    box-shadow: 0px 0px 15px rgb(250, 190, 190);
+    border: 1px solid rgba(246, 223, 244, 0.386);
+    height: 48px;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.option div {
+    padding: 5px;
+    float: left;
+    margin-left: 40px;
+    border-radius: 10px;
+    margin-top: 10px;
+    background-color: azure;
+    color: rgb(97, 97, 97);
+
+}
+
+.option .check {
+    background-color: rgb(25, 79, 108);
+    color: rgb(255, 210, 190);
+}
+
+.condition {
+    width: 100%;
+    background-color: rgba(241, 179, 149, 0.253);
+    border-radius: 20px;
+    box-shadow: 0px 0px 15px rgb(250, 190, 190);
+    border: 1px solid rgba(246, 223, 244, 0.386);
+    height: 42px;
+    font-size: 17px;
+    float: left;
+}
+
+.condition li:first-child {
+    margin-top: 10px;
+    float: right;
+    margin-right: 10px;
+    color: rgb(112, 112, 112);
+}
+
+.condition li:last-child {
+    margin-top: 10px;
+    float: left;
+    margin-left: 10px;
+    color: rgb(112, 112, 112);
+}
+
 .box {
+    width: 100%;
+    background-color: rgba(241, 179, 149, 0.253);
+    border-radius: 20px;
+    box-shadow: 0px 0px 15px rgb(250, 190, 190);
+    border: 1px solid rgba(246, 223, 244, 0.386);
+}
+
+.lbox,
+.rbox {
     width: 100%;
     background-color: rgba(241, 179, 149, 0.253);
     border-radius: 20px;
@@ -21,4 +86,91 @@
     font-family: cursive;
     margin-top: 200px;
     margin-left: 116.5px;
+}
+
+.lbox,
+.rbox {
+    width: 190px;
+    display: inline-block;
+}
+
+.lbox {
+    float: left;
+    margin-left: 4px;
+}
+
+.rbox {
+    float: right;
+    margin-right: 4px;
+}
+
+.commodity1,
+.commodity2 {
+    border-radius: 10px;
+    background: white;
+    box-shadow: 1px 1px 1px rgb(217, 210, 210);
+    margin-top: 10px;
+}
+
+.commodity1 {
+    float: left;
+}
+
+.commodity2 {
+    float: right;
+}
+
+.head {
+    border-radius: 10px;
+    width: 100%;
+}
+
+.head img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.commodityName {
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    height: 35px;
+    font-size: 15px;
+    overflow: hidden;
+}
+
+.price {
+    float: left;
+    font-size: 19px;
+    color: rgb(238, 131, 25);
+    margin-top: 6px;
+    margin-left: 10px;
+}
+
+.rate {
+    float: right;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    margin-right: 4px;
+    margin-left: 95px;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+}
+
+.store {
+    background: rgb(255, 255, 255);
+}
+
+.store {
+    border-radius: 10px;
+    padding: 5px;
+    border-bottom: 1px solid #000;
+    margin-top: 10px;
+}
+
+.store ion-button {
+    font-size: 16px;
+    width: 50px;
+    height: 30px;
+    //  --background: rgb(247, 142, 56);
 }

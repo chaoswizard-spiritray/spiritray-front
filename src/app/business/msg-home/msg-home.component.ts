@@ -50,7 +50,7 @@ export class MsgHomeComponent implements OnInit {
   //获取消息页消息
   queryMsgHomeInfos() {
     this.hr.get(GlobalFinal.PLANT_DOMAIN + "/msg/home/" + this.senderId + "/2").subscribe((data: any) => {
-      if (data.data.length > 0) {
+      if (data.data != null && data.data.length > 0) {
         this.msgHomeInfos = data.data;
       }
     });

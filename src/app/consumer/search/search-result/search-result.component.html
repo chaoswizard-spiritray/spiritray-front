@@ -1,20 +1,86 @@
-<ion-content scroll-events="true" (ionScroll)="scroll($event)" (ionScrollEnd)="scrollEnd()">
-  <div *ngIf="(checkCommodity&&commoditys.length>0)||(checkStore&&stores.length>0);else no" class="box">
+<ion-content scroll-events="true" (ionScroll)="scroll($event)">
+  <div class="option" [hidden]="typeHidden" [style]="typeStyle">
+    <div [class]="checks[0]" (click)="toogleCheck(true)">商品</div>
+    <div [class]="checks[1]" (click)="toogleCheck(false)">店铺</div>
+  </div>
+  <div *ngIf="(checks[0]=='check'&&commoditys.length>0)||(checks[1]=='check'&&stores.length>0);else no" class="box">
+    <!-- 额外操作条件 -->
     <div class="commoditys" *ngIf="(checkCommodity&&commoditys.length>0)">
-      <div class="commodity">
-
+      <div class="condition" [style]="conditionStyle">
+        <ul>
+          <li>
+            <span (click)="openModal('condition')">筛选</span>
+            <ion-icon name="chevron-down"></ion-icon>
+          </li>
+          <li>
+            <span (click)="openModal('reorder')">排序</span>
+            <ion-icon name="chevron-down"></ion-icon>
+          </li>
+        </ul>
+      </div>
+      <div class="lbox">
+        <div *ngFor="let commodity of commoditys;let i=index;let odd=odd;let even = even;">
+          <div class="commodity1" *ngIf="commoditys[i]&& even" (click)="toCommodity(commoditys[i].commodityId)">
+            <div class="head">
+              <img [src]="commoditys[i].masterMap|trustUrl" />
+            </div>
+            <div class="body">
+              <label class="commodityName">{{commoditys[i].commodityName}}</label>
+              <label *ngIf="commoditys[i].priceMin==commoditys[i].priceMax"
+                class="price">{{commoditys[i].priceMin}}￥</label>
+              <label *ngIf="commoditys[i].priceMin!=commoditys[i].priceMax"
+                class="price">{{commoditys[i].priceMin}}-{{commoditys[i].priceMax}}￥</label>
+              <span class="rate">好评率:{{commoditys[i].favorableRate*100}}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rbox">
+        <div *ngFor="let commodity of commoditys;let i=index;let odd=odd;let even = even;">
+          <div class="commodity2" *ngIf="commoditys[i]&& odd" (click)="toCommodity(commoditys[i].commodityId)">
+            <div class="head">
+              <img [src]="commoditys[i].masterMap|trustUrl" />
+            </div>
+            <div class="body">
+              <label class="commodityName">{{commoditys[i].commodityName}}</label>
+              <label *ngIf="commoditys[i].priceMin==commoditys[i].priceMax"
+                class="price">{{commoditys[i].priceMin}}￥</label>
+              <label *ngIf="commoditys[i].priceMin!=commoditys[i].priceMax"
+                class="price">{{commoditys[i].priceMin}}-{{commoditys[i].priceMax}}￥</label>
+              <span class="rate">好评率:{{commoditys[i].favorableRate*100}}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="width: 100%;margin-top: 20px;float: left;padding-bottom: 10px;">
+        <span style="font-size: 20px;margin-left: 146.5px;color: rgb(138, 138, 137);">没有更多了</span>
       </div>
     </div>
-    <div class="stores" *ngIf="(checkStore&&stores.length>0)">
-      <div class="store">
-
+    <div class="stores" *ngIf="(checks[1]=='check'&&stores.length>0)">
+      <div class="store" *ngFor="let store of stores;">
+        <ion-item>
+          <ion-avatar style="width: 50px;height: 50px;box-shadow: 1px 0px 1px black;" slot="start">
+            <img [src]="store.storeHead|trustUrl" />
+          </ion-avatar>
+          <span>{{store.storeName}}</span>
+          <ion-button slot="end" (click)="toBeforeStore(store.storeId)" expand="block" fill="clear" shape="round">
+            进店
+          </ion-button>
+        </ion-item>
       </div>
-    </div>
-    <!-- 回到顶部按钮 -->
-    <div slot="fixed" style="top: 650px;right:20px;" [hidden]="topHidden">
-      <ion-icon name="chevron-up-circle" style="font-size: 40px;" (click)="toTop()"></ion-icon>
     </div>
   </div>
+  <!-- 无限滚动组件 -->
+  <!-- <ion-infinite-scroll threshold="80px" (ionInfinite)="loadData($event)" #IonInfiniteScroll>
+    <ion-infinite-scroll-content loadingSpinner="circular" loadingText="加载中...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
+  <!-- 回到顶部按钮 -->
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom" style="--background:rgb(250, 190, 190);">
+    <ion-fab-button (click)="toTop()">
+      <ion-icon name="chevron-up-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
 <ng-template #no>
   <div class="no">

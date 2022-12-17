@@ -26,12 +26,17 @@ import { StoreRoutingModule } from './store-routing.module';
 import { StoreComponent } from './store.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
-
+import { CommodityDetailComponent } from './in-sell/commodity-detail/commodity-detail.component';
+import { ChinaDatePipe } from '../../trustUrlPipe/china-date.pipe';
+import { NoSellDetailComponent } from './no-sell/no-sell-detail/no-sell-detail.component';
+import { AddSkuNumComponent } from './in-sell/add-sku-num/add-sku-num.component';
+import { ModifySkuPriceComponent } from './in-sell/modify-sku-price/modify-sku-price.component';
 
 
 @NgModule({
   declarations: [
     StoreComponent,
+    ChinaDatePipe,
     WelcomeComponent,
     StoreInfComponent,
     SellerAccountComponent,
@@ -48,7 +53,11 @@ import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
     ImgShowComponent,
     CheckDetailComponent,
     DatePipe,
-    InSellDetailComponent
+    InSellDetailComponent,
+    CommodityDetailComponent,
+    NoSellDetailComponent,
+    AddSkuNumComponent,
+    ModifySkuPriceComponent
   ],
   imports: [
     CommonModule,

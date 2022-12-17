@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { GlobalFinal } from '../../../dto-model/dto-model.component';
 
 @Component({
   selector: 'app-defalut',
@@ -11,9 +13,15 @@ export class DefalutComponent implements OnInit {
   private historyWord = [];
   //热词
   private hotWord = new Array<string>();
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private hr: HttpClient
+  ) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
     // 执行历史记录加载
     this.getHistory();
     // 执行热词加载
@@ -36,6 +44,20 @@ export class DefalutComponent implements OnInit {
       }
     }, 2000);
 
+  }
+
+  //跳转搜索
+  toSearch(word) {
+    this.historyWord.splice(this.historyWord.indexOf(word), 1);
+    this.historyWord.unshift(word);
+    //更新历史记录
+    localStorage.setItem("historyWord", JSON.stringify(this.historyWord));
+    //跳转查询
+    this.router.navigate(["/consumer/search/result"], {
+      queryParams: {
+        "word": word
+      }
+    });
   }
 
   //将点击的词传入搜索
@@ -89,7 +111,14 @@ export class DefalutComponent implements OnInit {
   }
   //请求热词
   getHot(): void {
+    this.hr.get(GlobalFinal.SELLER_DOMAIN + "/hotword/today", GlobalFinal.HEADER)
+      .subscribe((data: any) => {
+        console.log(data);
 
+        if (data.data != null && data.data.length > 0) {
+          this.hotWord = data.data;
+        }
+      });
   }
 
 }

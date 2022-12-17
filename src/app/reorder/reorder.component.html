@@ -19,4 +19,23 @@
       </ion-item>
     </ion-radio-group>
   </div>
+  <!-- 买家搜索排序条件 -->
+  <div class="reorder" *ngIf="type==1">
+    <ion-radio-group mode="ios" [allowEmptySelection]="false" (ionChange)="dismiss(0)" [(ngModel)]="checkReorderValue">
+      <ion-item>
+        <span>上架时间</span>
+        <ion-radio slot="end" value="checkDate"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <span>价格</span>
+        <ion-radio slot="end" value="price"></ion-radio>
+      </ion-item>
+      <!-- <ion-item>
+        <span>好评率</span>
+        <ion-radio slot="end" value="favorableRate"></ion-radio>
+      </ion-item> -->
+    </ion-radio-group>
+  </div>
+
 </ion-content>

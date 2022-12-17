@@ -1,0 +1,41 @@
+<ion-content *ngIf="storeName">
+  <div class="max">
+    <span (click)="dismiss(-1)"
+      style="float: left;margin-top: 20px;margin-left: 20px;font-size: 18px;color: rgb(195, 111, 8);">
+      取消
+    </span>
+    <div class="img">
+      <div>
+        <ion-avatar>
+          <img [src]="storeHead|trustUrl" />
+        </ion-avatar>
+      </div>
+      <div [style]="namestyle">
+        <span>{{storeName}}</span>
+      </div>
+    </div>
+    <div class="inf">
+      <ion-item>
+        <label>查封原因</label>
+      </ion-item>
+      <ion-item>
+        <ion-textarea placeholder="填写原因" [autoGrow]="true" [(ngModel)]="sealCause">
+        </ion-textarea>
+      </ion-item>
+    </div>
+    <div class="inf">
+      <ion-item>
+        <label>查封时长:</label>
+        <ion-input [disabled]="closeForever" type="number" [(ngModel)]="closeDay" placeholder="查封天数"></ion-input>
+        <ion-toggle [(ngModel)]="closeForever"></ion-toggle>
+        <span>永久</span>
+      </ion-item>
+    </div>
+    <div>
+      <ion-button (click)="dismiss(0)" style="font-size: 18px;color: black;margin-top: 20px;" expand="block"
+        fill="clear" shape="round">
+        提交
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

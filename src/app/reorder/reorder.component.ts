@@ -14,7 +14,6 @@ export class ReorderComponent implements OnInit {
 
   checkReorderValue = "";
 
-  //
 
   constructor(
     private hr: HttpClient,

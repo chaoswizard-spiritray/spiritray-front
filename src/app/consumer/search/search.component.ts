@@ -13,12 +13,15 @@ import { GlobalFinal } from '../../dto-model/dto-model.component';
 export class SearchComponent implements OnInit {
   //占位词
   private placeholderWord = "spiritray";
+  //历史记录
+  private historyWord = [];
   //搜索框子视图对象注入
   @ViewChild("searchbar", { static: true })
   private searchbar: IonSearchbar;
   //监听回车
   enterKeyOb = GlobalFinal.createKeyDown();
   inputOb: Subscription;
+  trimer;
   //输入框内容
   word: string;
   constructor(
@@ -30,6 +33,29 @@ export class SearchComponent implements OnInit {
   // 组件数据初始化后调用
   ngOnInit() {
     this.initInputEvent();
+  }
+
+  ionViewWillEnter() {
+    //初始化轮询历史记录
+    const hisWord = localStorage.getItem("historyWord");
+    if (hisWord != null || hisWord) {
+      this.historyWord = JSON.parse(hisWord);
+    }
+    if (this.historyWord.length > 0) {
+      let i = 0;
+      this.trimer = setInterval(() => {
+        //轮询历史记录
+        this.placeholderWord = this.historyWord[i++];
+        if (i >= this.historyWord.length) {
+          i = i % this.historyWord.length;
+        }
+      }, 3000);
+    }
+  }
+
+  ionViewWillLeave() {
+    //取消定时器
+    clearInterval(this.trimer);
   }
 
   //初始化监听输入框，确定什么时候提交查询请求
@@ -49,6 +75,9 @@ export class SearchComponent implements OnInit {
 
   // 跳转商品查询子组件
   queryCommodity() {
+    if (!this.word) {
+      this.word = this.placeholderWord;
+    }
     //去除空格
     const temp = this.word.replace(" ", "");
     if (this.word != "") {

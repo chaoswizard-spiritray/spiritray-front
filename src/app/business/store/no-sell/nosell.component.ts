@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { GlobalFinal, GlobalFlagShow, NoSellSimple } from '../../../dto-model/dto-model.component';
 import { ToastService } from 'ng-zorro-antd-mobile';
 import { StoreRouterDataService } from '../../../service/store-router-data.service';
+import { ModalController } from '@ionic/angular';
+import { NoSellDetailComponent } from './no-sell-detail/no-sell-detail.component';
 
 @Component({
   selector: 'app-nosell',
@@ -18,6 +20,7 @@ export class NoSellComponent implements OnInit {
   constructor(
     private router: Router,
     private hr: HttpClient,
+    private modalController: ModalController,
     private srd: StoreRouterDataService,
     private _toast: ToastService
   ) { }
@@ -117,5 +120,21 @@ export class NoSellComponent implements OnInit {
     GlobalFlagShow.onlyOpenLog("loadFlag", "errorFlag", "contentFlag", "nodataFlag");
     this.loadDataTime(time);
     setTimeout(() => { event.target.complete(); }, 1000);
+  }
+
+  //展示审核详细
+  async toDetail(commodityId) {
+    const modal = await this.modalController.create({
+      component: NoSellDetailComponent,//模态框中展示的组件
+      handle: false,
+      componentProps: {
+        'commodityId': commodityId
+      },
+      swipeToClose: true,
+      presentingElement: await this.modalController.getTop()
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    this.loadDataTime(1000);
   }
 }

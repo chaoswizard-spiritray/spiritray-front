@@ -87,6 +87,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }, 1000);
   }
 
+  //跳转店铺
+  toBeforeStore(storeId) {
+    //获取店铺电话
+    this.httpRequest.get(GlobalFinal.SELLER_DOMAIN + "/store/storeInf/phone/" + storeId, GlobalFinal.JWTHEADER)
+      .subscribe((data: any) => {
+        this.router.navigate(["/before-store"], {
+          queryParams: {
+            'storeId': storeId,
+            'type': 0,
+            'storePhone': data.data
+          }
+        });
+      });
+
+  }
+
   //数据无限加载
   loadData(event) {
     const data = this.queryHomeCommodity();
@@ -136,11 +152,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
         return data.data;
       });
-  }
-
-  //进入店铺
-  enterStore(storeId: number) {
-    this.router.navigateByUrl("/business/store/before?storeId=" + storeId);
   }
 
   //进入商品购买页面

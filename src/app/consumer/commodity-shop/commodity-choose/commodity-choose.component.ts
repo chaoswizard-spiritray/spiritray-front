@@ -92,12 +92,23 @@ export class CommodityChooseComponent implements OnInit {
   //获取订单令牌,防止订单重复提交
   generateOrder(): any {
     let orderId = "";
-    this.hr.get(GlobalFinal.ORDER_DOMAIN + "/order/token", GlobalFinal.JWTHEADER)
+    const ids = new Array();
+    ids.push(this.commodityId);
+    const head = {
+      headers: GlobalFinal.JWTHEADER.headers,
+      params: {
+        "commodityIds": JSON.stringify(ids)
+      },
+      withCredentials: GlobalFinal.JWTHEADER.withCredentials
+    }
+    this.hr.get(GlobalFinal.ORDER_DOMAIN + "/order/token", head)
       .subscribe((data: any) => {
-        if (data.stausCode != 200) {
-          GlobalALert.getToast("服务异常，请稍后再试", 1000);
-          return;
-        } else {
+        //如果商品已下架直接跳转首页
+        if (data.stausCode == 400) {
+          GlobalALert.getAlert({ message: data.msg });
+          this.router.navigate(["/consumer"]);
+        }
+        if (data.stausCode == 200) {
           orderId = data.data;
         }
         //封装订单商品
@@ -111,6 +122,8 @@ export class CommodityChooseComponent implements OnInit {
 
   //跳转订单界面
   openOrderModal(orderCommoditys: Array<OrderBeforeCommodity>) {
+    console.log(orderCommoditys);
+
     this.router.navigate(['/consumer/shop/choose/order'],
       {
         queryParams: {

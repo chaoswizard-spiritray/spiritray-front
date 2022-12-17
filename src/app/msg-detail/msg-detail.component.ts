@@ -141,7 +141,7 @@ export class MsgDetailComponent implements OnInit, OnDestroy {
   //加载消息
   queryDetail() {
     let s: Array<any>;
-    this.hr.get(GlobalFinal.PLANT_DOMAIN + "/msg/" + this.receiverId + "/" + this.pageNo + "/" + this.pageNum, GlobalFinal.JWTHEADER)
+    this.hr.get(GlobalFinal.PLANT_DOMAIN + "/msg/" + this.receiverId + "/" + this.pageNo + "/" + this.pageNum, this.head)
       .subscribe((data: any) => {
         this.topHidden = true;
         if (this.msgs === undefined) {
@@ -152,7 +152,7 @@ export class MsgDetailComponent implements OnInit, OnDestroy {
         if (data.data != null && data.data.length > 0) {
           temp.forEach((s) => {
             if (s.isRead == 0 && s.senderRole == this.receiverRole) {
-              this.hr.put(GlobalFinal.PLANT_DOMAIN + "/msg/readed/" + s.msgId + "/" + this.pageNo + "/" + this.pageNum, this.head).subscribe((data: any) => {
+              this.hr.put(GlobalFinal.PLANT_DOMAIN + "/msg/readed/" + s.msgId, this.head).subscribe((data: any) => {
                 s.isRead = 1;
               });
             }
@@ -189,7 +189,7 @@ export class MsgDetailComponent implements OnInit, OnDestroy {
     let formdata = new FormData();
     formdata.append("file", file, file.name);
     formdata.append("msg", JSON.stringify(msg));
-    this.hr.post(GlobalFinal.PLANT_DOMAIN + "/msg/send", formdata, GlobalFinal.JWTHEADER)
+    this.hr.post(GlobalFinal.PLANT_DOMAIN + "/msg/send", formdata, this.head)
       .subscribe((data: any) => {
         GlobalALert.getToast(data.msg);
         //将消息追加到msgs中
@@ -218,7 +218,7 @@ export class MsgDetailComponent implements OnInit, OnDestroy {
     this.msgText = "";
     let formdata = new FormData();
     formdata.append("msg", JSON.stringify(msg));
-    this.hr.post(GlobalFinal.PLANT_DOMAIN + "/msg/send", formdata, GlobalFinal.JWTHEADER)
+    this.hr.post(GlobalFinal.PLANT_DOMAIN + "/msg/send", formdata, this.head)
       .subscribe((data: any) => {
         //将消息追加到msgs中
         if (this.msgs === undefined) {

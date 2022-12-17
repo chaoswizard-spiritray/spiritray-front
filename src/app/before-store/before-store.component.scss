@@ -1,0 +1,62 @@
+* {
+    font-family: cursive;
+}
+
+.lbox,
+.rbox {
+    width: 190px;
+    display: inline-block;
+}
+
+.lbox {
+    float: left;
+    margin-left: 4px;
+}
+
+.rbox {
+    float: right;
+    margin-right: 4px;
+}
+
+.commodity1,
+.commodity2 {
+    border-radius: 10px;
+    background: white;
+    box-shadow: 1px 1px 1px rgb(217, 210, 210);
+    margin-top: 10px;
+}
+
+.commodity1 {
+    float: left;
+}
+
+.commodity2 {
+    float: right;
+}
+
+.head {
+    border-radius: 10px;
+    width: 100%;
+}
+
+.head img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.commodityName {
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    height: 35px;
+    font-size: 15px;
+    overflow: hidden;
+}
+
+.price {
+    float: left;
+    font-size: 19px;
+    color: rgb(238, 131, 25);
+    margin-top: 6px;
+    margin-left: 10px;
+}

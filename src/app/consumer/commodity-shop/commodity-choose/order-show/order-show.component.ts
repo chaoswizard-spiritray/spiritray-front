@@ -32,7 +32,7 @@ export class OrderShowComponent implements OnInit {
 
   odId;//用于未付款商品单独付款时指定的订单细节编号，只有这种情况我们需要明确指定细节编号，如果是浏览时进行下单支付，那么必然是0
 
-  comeCart = false;//来自购物车
+  comeCart: boolean = false;//来自购物车
   cartIds;//购物车商品id
 
   constructor(
@@ -49,16 +49,19 @@ export class OrderShowComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(data => {
       this.orderCommoditys = JSON.parse(data.orderCommoditys);
       this.subButtonType = parseInt(data.subButtonType);
-      this.odId = data.odId;
-      this.comeCart = data.comeCart;
+      if (data.odId) {
+        this.odId = data.odId;
+      }
+
+      this.comeCart = data.comeCart == 'false' ? false : true;
       if (this.comeCart) {
         this.cartIds = JSON.parse(data.cartIds);
       }
+      this.queryAddress();
+      this.queryAccountCategory();
+      //计算总费用
+      this.takeTotalFee();
     });
-    this.queryAddress();
-    this.queryAccountCategory();
-    //计算总费用
-    this.takeTotalFee();
   }
 
   //提交订单信息
@@ -84,16 +87,16 @@ export class OrderShowComponent implements OnInit {
             this.hr.put(GlobalFinal.DOMAIN + "/consumer/cart/commoditys", formdata, GlobalFinal.JWTHEADER).subscribe((data: any) => { })
           }
         }
+        //如果下单成功，就向服务端请求支付界面拉取所需的支付数据
+        this.hr.get(GlobalFinal.ORDER_DOMAIN + "/order/pay/detail/" + this.usePaycate + "/" + data.data.attributeName + "/0", GlobalFinal.JWTHEADER)
+          .subscribe((param: any) => {
+            GlobalALert.getToast("正在跳转支付界面", 1200);
+            //将数据拉取后通过前端支付插件拉取，这里我们模拟支付界面
+            //将字符串转化为SSMAP类
+            const temp: SSMap = JSON.parse(param.data);
+            this.openPayShow(temp.attributeName, temp.attributeValue);
+          });
       }
-      //如果下单成功，就向服务端请求支付界面拉取所需的支付数据
-      this.hr.get(GlobalFinal.ORDER_DOMAIN + "/order/pay/detail/" + this.usePaycate + "/" + data.data.attributeName + "/0", GlobalFinal.JWTHEADER)
-        .subscribe((param: any) => {
-          GlobalALert.getToast("正在跳转支付界面", 1200);
-          //将数据拉取后通过前端支付插件拉取，这里我们模拟支付界面
-          //将字符串转化为SSMAP类
-          const temp: SSMap = JSON.parse(param.data);
-          this.openPayShow(temp.attributeName, temp.attributeValue);
-        });
     });
   }
 

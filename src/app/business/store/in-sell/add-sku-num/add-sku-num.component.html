@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon style="font-size: 20px;" name="chevron-back-outline" slot="start"
+      (click)="this.modalController.dismiss()">
+    </ion-icon>
+    <ion-title>库存补充</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-item *ngFor="let sku of skuList;index as i;">
+    <ion-avatar slot="start">
+      <img [src]="sku.skuMap|trustUrl" />
+    </ion-avatar>
+    <span>{{sku.skuValue}}</span>
+    <span type="text" slot="end">{{sku.num}}</span>
+    <ion-button slot="end" (click)="add(i)" expand="block" fill="clear" shape="round">
+      补充
+    </ion-button>
+  </ion-item>
+</ion-content>

@@ -9,9 +9,6 @@ import { IndexComponent } from './index.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { RetrieveComponent } from './retrieve/retrieve.component';
-import { DefalutComponent } from './search/defalut/defalut.component';
-import { SearchResultComponent } from './search/search-result/search-result.component';
-import { SearchComponent } from './search/search.component';
 
 
 @NgModule({
@@ -19,10 +16,7 @@ import { SearchComponent } from './search/search.component';
     IndexComponent,
     LoginComponent,
     RegisterComponent,
-    RetrieveComponent,
-    SearchComponent,
-    DefalutComponent,
-    SearchResultComponent
+    RetrieveComponent
   ],
   imports: [
     CommonModule,

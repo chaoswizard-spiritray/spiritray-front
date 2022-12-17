@@ -1,0 +1,33 @@
+* {
+    font-family: cursive;
+}
+
+.history {
+    background: rgba(255, 255, 255, 0.34);
+    float: left;
+    width: 100%;
+}
+
+.history ion-item {
+    --background: rgba(255, 255, 255, 0.34);
+    float: left;
+    width: 100%;
+}
+
+.img {
+    float: left;
+    margin-top: 15px;
+}
+
+.img ion-checkbox {
+    float: left;
+    margin-left: 10px;
+    margin-right: -5px;
+}
+
+.img ion-thumbnail {
+    float: left;
+    --size: 80px;
+    margin-left: 10px;
+    --border-radius: 14px;
+}

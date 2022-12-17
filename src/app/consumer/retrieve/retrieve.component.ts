@@ -45,16 +45,25 @@ export class RetrieveComponent implements OnInit {
       if (this.newPass != this.newPassT) {
         GlobalALert.getAlert({ message: "两次密码不匹配" });
       } else {
-
-        let formdata: FormData = new FormData();
-        const obj = {
-          "password": this.newPass + "",
-          "phone": this.phone + "",
-          "email": this.email + "",
-          "code": this.code + ""
+        const head = {
+          headers: GlobalFinal.HEADER.headers,
+          withCredentials: GlobalFinal.HEADER.withCredentials,
+          params: {
+            "password": this.newPass + "",
+            "phone": this.phone + "",
+            "email": this.email + "",
+            "code": this.code + ""
+          }
         }
-        formdata.append("params", JSON.stringify(obj) + "");
-        this.hr.post(GlobalFinal.DOMAIN + "/consumer/info/backpassword", formdata, GlobalFinal.HEADER)
+        // let formdata: FormData = new FormData();
+        // const obj = {
+        //   "password": this.newPass + "",
+        //   "phone": this.phone + "",
+        //   "email": this.email + "",
+        //   "code": this.code + ""
+        // }
+        // formdata.append("params", JSON.stringify(obj) + "");
+        this.hr.post(GlobalFinal.DOMAIN + "/consumer/info/backpassword", {}, head)
           .subscribe((data: any) => {
             GlobalALert.getAlert({ message: data.msg });
           });

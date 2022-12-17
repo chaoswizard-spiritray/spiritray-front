@@ -149,6 +149,8 @@ export class InCheckComponent implements OnInit {
       presentingElement: await this.modalController.getTop()
     });
     await modal.present();
+    const { data } = await modal.onDidDismiss();
+    this.loadDataTime(1000);
   }
 }
 

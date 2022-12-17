@@ -29,7 +29,7 @@
                 <img [src]="commoditys[i].masterMap|trustUrl" (click)="toShow(commoditys[i].masterMap)" />
               </ion-avatar>
               <ion-card-subtitle>{{commoditys[i].commodityName}}</ion-card-subtitle>
-              <ion-card-title>{{commoditys[i].inSellDay}}</ion-card-title>
+              <ion-card-title style="font-size: 10px;">{{commoditys[i].downDate|chinadatepipe}}</ion-card-title>
             </ion-card-header>
             <ion-card-content (click)="toDetail(commoditys[i].commodityId)">
               <label>查看详情</label>
@@ -38,13 +38,13 @@
           </ion-card>
         </ion-col>
         <ion-col>
-          <ion-card>
+          <ion-card *ngIf="commoditys[i+1]">
             <ion-card-header>
               <ion-avatar>
                 <img [src]="commoditys[i+1].masterMap|trustUrl" (click)="toShow(commoditys[i+1].masterMap)" />
               </ion-avatar>
               <ion-card-subtitle>{{commoditys[i+1].commodityName}}</ion-card-subtitle>
-              <ion-card-title>{{commoditys[i+1].inSellDay}}</ion-card-title>
+              <ion-card-title style="font-size: 10px;">{{commoditys[i+1].downDate|chinadatepipe}}</ion-card-title>
             </ion-card-header>
             <ion-card-content (click)="toDetail(commoditys[i+1].commodityId)">
               <label>查看详情</label>

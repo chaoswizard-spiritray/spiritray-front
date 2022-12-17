@@ -1,3 +1,43 @@
-<p>
-  attention works!
-</p>
+<ion-header>
+  <ion-toolbar style="--background: url('../../assets/back/attention.jpeg')">
+    <ion-icon style="color: rgb(68, 4, 102);font-size: 20px;margin-left: 20px;text-shadow: 0px 0px 10px rgb(156, 0, 0);"
+      class="backIcon" name="chevron-back-outline" slot="start" (click)="back()">
+    </ion-icon>
+    <span
+      style="color: rgb(68, 4, 102);font-size: 20px;margin-left: 125px;text-shadow: 0px 0px 10px rgb(167, 6, 6);">我的关注</span>
+    <ion-button [hidden]="!isHiddenCheckBox" style="--color: rgb(179, 72, 0);" slot="end" (click)="openCheckBox()"
+      expand="block" fill="clear" shape="round">
+      管理
+    </ion-button>
+    <ion-button [hidden]="isHiddenCheckBox" style="--color: rgb(181, 21, 0);" slot="end" (click)="openCheckBox()"
+      expand="block" fill="clear" shape="round">
+      取消
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content style="--background: url('../../assets/back/attention.jpeg')">
+  <div *ngIf="storeInfos.length==attentions.length;else nodata">
+    <ion-item
+      style="margin-top: 20px;border-radius: 8px;margin-left: 11px;margin-right: 11px;--background: rgba(255, 255, 255, 0.944);"
+      *ngFor="let att of attentions;index as i;">
+      <ion-avatar slot="start" style="width: 60px;height: 60px;box-shadow: 1px 0px 1px black;">
+        <img [src]="storeInfos[i].storeHead|trustUrl" />
+      </ion-avatar>
+      <span slot="start">{{storeInfos[i].storeName}}</span>
+      <ion-button style="color: rgb(231, 93, 0);font-size: 15px;" slot="end" (click)="toBeforeStore(i)" expand="block"
+        fill="clear" shape="round">
+        进店
+      </ion-button>
+      <ion-button style="--background: rgb(255, 90, 25);font-size: 14px;--color:rgb(255, 255, 255);" slot="end"
+        mode="ios" [hidden]="isHiddenCheckBox" (click)="cancelAttention(i)" expand="block" fill="clear" shape="round">
+        取关
+      </ion-button>
+    </ion-item>
+  </div>
+</ion-content>
+
+<ng-template class="noData" #noData>
+  <div style="margin-top: 150px;float: left;font-size: 20px;color: blue;margin-left: 156.5px;">
+    没有关注
+  </div>
+</ng-template>

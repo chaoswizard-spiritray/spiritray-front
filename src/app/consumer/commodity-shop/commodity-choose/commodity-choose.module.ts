@@ -15,14 +15,12 @@ import { OrderShowComponent } from '.././commodity-choose/order-show/order-show.
 import { PayOverComponent } from '.././commodity-choose/pay-over/pay-over.component';
 import { PayShowComponent } from '.././commodity-choose/pay-show/pay-show.component';
 import { CommodityParamComponent } from '.././commodity-param/commodity-param.component';
-import { CommodityShopComponent } from '.././commodity-shop.component';
 import { CommodityChooseRoutingModule } from './commodity-choose-routing.module';
 
 
 
 @NgModule({
   declarations: [
-    CommodityShopComponent,
     TrustUrlPipe,
     ShippingPipe,
     CommodityParamComponent,

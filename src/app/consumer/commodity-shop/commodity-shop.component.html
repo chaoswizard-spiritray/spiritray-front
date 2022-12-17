@@ -4,7 +4,6 @@
     <ion-icon class="cartIcon" name="cart-outline" slot="end" (click)="toCart()"></ion-icon>
   </ion-toolbar>
 </ion-header>
-
 <ion-content *ngIf="commodityShop">
   <div class="img">
     <div class="head">
@@ -55,33 +54,13 @@
         <label>评论({{commentNum}})</label>
         <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
       </ion-item>
-      <ion-card *ngIf="firstComment">
-        <div class="firstComment">
-          <ion-avatar>
-            <img [src]="firstComment.consumerHead|trustUrl" />
-          </ion-avatar>
-          <div>
-            <ul>
-              <li> <label>{{firstComment.consumerNickname}}</label></li>
-              <li>
-                <ion-icon name="star"></ion-icon>
-                <label>{{firstComment.starLevel}}</label>
-              </li>
-            </ul>
-          </div>
-          <ion-card-content>
-            <div>
-              {{firstComment.commentContent}}
-            </div>
-            <div>
-              <img [src]="firstComment.attchedMap|trustUrl">
-            </div>
-          </ion-card-content>
-          <div>
-            <label>{{firstComment.startDate|commentDate}}</label>
-          </div>
-        </div>
-      </ion-card>
+    </div>
+  </div>
+  <div *ngIf="tempDetails.length>0">
+    <div *ngFor="let url of tempDetails;index as i;">
+      <div style="width: 100%;">
+        <ion-img [src]="url|trustUrl"></ion-img>
+      </div>
     </div>
   </div>
 </ion-content>
@@ -91,7 +70,7 @@
     </ion-icon>
     <ion-icon *ngIf="isCollection" (click)="modifyCollection()" name="egg" class="eggIcon" slot="start">
     </ion-icon>
-    <ion-icon name="storefront-outline" slot="start" class="icon"></ion-icon>
+    <ion-icon (click)="toBeforeStore()" name="storefront-outline" slot="start" class="icon"></ion-icon>
     <ion-icon (click)="openMsgDetail()" name="chatbubble-ellipses-outline" slot="start" class="icon"></ion-icon>
     <ion-button slot="end" (click)="skipChoose(1)" expand="block" fill="clear" shape="round">
       立即购买

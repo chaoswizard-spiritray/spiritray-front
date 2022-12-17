@@ -1,3 +1,42 @@
-<p>
-  history works!
-</p>
+<ion-header>
+  <ion-toolbar style="--background: url('../../assets/back/history.jpeg')">
+    <ion-icon style="font-size: 20px;margin-left: 20px;color: rgba(239, 216, 216, 0.832);" class="backIcon"
+      name="chevron-back-outline" slot="start" (click)="back()">
+    </ion-icon>
+    <span style="color: rgba(231, 208, 208, 0.899);font-size: 20px;margin-left: 125px;">历史记录</span>
+    <ion-button [hidden]="!isHiddenCheckBox" style="--color: rgba(250, 233, 222, 0.87);" slot="end"
+      (click)="openCheckBox()" expand="block" fill="clear" shape="round">
+      管理
+    </ion-button>
+    <ion-button [hidden]="isHiddenCheckBox" style="--color: rgba(250, 215, 210, 0.827);" slot="end"
+      (click)="openCheckBox()" expand="block" fill="clear" shape="round">
+      取消
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="commoditys.length==historys.length" style="--background: url('../../assets/back/history.jpeg')">
+  <!-- 遍历时间 -->
+  <div class="history" *ngFor="let time of times;index as i;">
+    <ion-item>
+      <span>{{time|chinadatepipe}}</span>
+      <ion-checkbox (click)="toggleTimeCheck(i)" slot="end" mode="ios" [(ngModel)]="checkTimes[i]"
+        [hidden]="isHiddenCheckBox"></ion-checkbox>
+    </ion-item>
+    <div class="img" *ngFor="let his of historys;index as j;">
+      <ion-checkbox *ngIf="his.startDate==time" (click)="toggleCommodity(j)" mode="ios" [(ngModel)]="checkCommoditys[j]"
+        [hidden]="isHiddenCheckBox"></ion-checkbox>
+      <ion-thumbnail *ngIf="his.startDate==time">
+        <img (click)="toCommodityShop(his.commodityId)" [src]="commoditys[j].masterMap|trustUrl" />
+      </ion-thumbnail>
+    </div>
+  </div>
+</ion-content>
+<ion-footer [hidden]="isHiddenCheckBox">
+  <ion-toolbar style="--background: url('../../assets/back/history.jpeg')">
+    <ion-button
+      style="--color: rgb(252, 243, 255); --background:rgba(252, 233, 207, 0.588); text-shadow: 0px 0px 10px rgb(224, 224, 224);"
+      (click)="deleteCollection()" expand="block" fill="clear" shape="round">
+      删除
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -45,10 +45,10 @@
   <div *ngIf="orders;else noData" class="context">
     <div *ngFor="let order of orders;index as i">
       <div class="order">
-        <div class="img" (click)="showOrderInfo(0)">
+        <div class="img">
           <img [src]="order.skuMap|trustUrl">
         </div>
-        <div class="info" (click)="showOrderInfo(0)">
+        <div class="info">
           <div>
             <label *ngIf="commodityNames">{{getCommodityName(order.commodityId)}}</label>
           </div>

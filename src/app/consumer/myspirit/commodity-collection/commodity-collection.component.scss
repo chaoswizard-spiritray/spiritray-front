@@ -1,0 +1,44 @@
+* {
+    font-family: cursive;
+}
+
+ion-card {
+    --background: rgba(255, 255, 255, 0.466);
+}
+
+.check,
+.img,
+.info {
+    float: left;
+    display: inline;
+    margin-left: 5%;
+}
+
+.check {
+    margin-top: 70px;
+}
+
+.img {
+    display: inline-block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0);
+}
+
+.img img {
+    width: 120px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0);
+}
+
+.info {
+    display: inline-block;
+}
+
+.info div:nth-child(1) {
+    width: 165px;
+    font-size: 16px;
+    margin-top: 30px;
+    color: rgb(123, 43, 0);
+    overflow: hidden;
+}

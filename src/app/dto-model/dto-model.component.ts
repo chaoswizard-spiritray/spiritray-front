@@ -57,6 +57,8 @@ export class GlobalFinal {
   public static PLANT_DOMAIN = GlobalFinal.DEVIP + ":8083";
   //file服务地址
   public static FILE_DOMAIN = GlobalFinal.DEVIP + ":80";
+  //本地node地址
+  public static NODE_DOMAIN = GlobalFinal.DEVIP + ":4200";
   //websocket建立地址
   public static WEBSOCKET_DOMAIN = "ws://localhost:8083"
   //给指定元素追加指定div内容
@@ -586,8 +588,19 @@ export class NoSellSimple {
     public commodityId: string,//商品id
     public masterMap: string,//商品主图
     public commodityName: string,//商品名称
+    public downDate: Date//下架的日期
+  ) { }
+}
+
+//下架商品详细信息
+export class NoSellDetail {
+  constructor(
+    public commodityId: string,//商品id
+    public masterMap: string,//商品主图
+    public commodityName: string,//商品名称
     public downDate: Date,//下架的日期
-    public downCommotion: string//下架备注
+    public downDes: string,//下架备注
+    public staff: number//下架员工
   ) { }
 }
 

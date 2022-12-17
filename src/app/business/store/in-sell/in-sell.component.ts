@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ImgShowComponent } from '../../../img-show/img-show.component';
-import { GlobalFinal, GlobalFlagShow, InSellSimple, SNMap } from '../../../dto-model/dto-model.component';
 import { ModalController } from '@ionic/angular';
-import { InSellDetailComponent } from './in-sell-detail/in-sell-detail.component';
 import { ToastService } from 'ng-zorro-antd-mobile';
+import { GlobalFinal, GlobalFlagShow, InSellSimple, SNMap } from '../../../dto-model/dto-model.component';
+import { ImgShowComponent } from '../../../img-show/img-show.component';
 import { StoreRouterDataService } from '../../../service/store-router-data.service';
+import { InSellDetailComponent } from './in-sell-detail/in-sell-detail.component';
 
 @Component({
   selector: 'app-in-sell',
@@ -160,6 +160,8 @@ export class InSellComponent implements OnInit {
       presentingElement: await this.modalController.getTop()
     });
     await modal.present();
+    const { data } = await modal.onDidDismiss();
+    this.loadDataTime(1000);
   }
 
 }

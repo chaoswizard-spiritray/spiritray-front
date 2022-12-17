@@ -1,3 +1,46 @@
-<p>
-  commodity-collection works!
-</p>
+<ion-header>
+  <ion-toolbar style="--background: url('../../assets/back/collection.jpeg')">
+    <ion-icon
+      style="color: rgb(255, 228, 171);font-size: 20px;margin-left: 20px;text-shadow: 0px 0px 10px rgb(255, 232, 173);"
+      class="backIcon" name="chevron-back-outline" slot="start" (click)="back()">
+    </ion-icon>
+    <span
+      style="color: rgb(255, 245, 223);font-size: 20px;margin-left: 125px;text-shadow: 0px 0px 10px rgb(255, 196, 46);">我的收藏</span>
+    <ion-button [hidden]="!isHiddenCheckBox" style="--color: rgb(255, 244, 237);" slot="end" (click)="openCheckBox()"
+      expand="block" fill="clear" shape="round">
+      管理
+    </ion-button>
+    <ion-button [hidden]="isHiddenCheckBox" style="--color: rgb(255, 243, 241);" slot="end" (click)="openCheckBox()"
+      expand="block" fill="clear" shape="round">
+      取消
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content style="--background: url('../../assets/back/collection.jpeg')">
+  <div *ngIf="commoditys.length==collections.length">
+    <ion-card *ngFor="let commodity of commoditys;index as i">
+      <div class="check">
+        <ion-checkbox mode="ios" slot="start" [hidden]="isHiddenCheckBox" [(ngModel)]="checkIndexs[i]"></ion-checkbox>
+      </div>
+      <div>
+        <div class="img" (click)="toCommodityShop(commodity.commodityId)">
+          <img [src]="commodity.masterMap|trustUrl">
+        </div>
+        <div class="info">
+          <div>
+            {{commodity.commodityName}}
+          </div>
+        </div>
+      </div>
+    </ion-card>
+  </div>
+</ion-content>
+<ion-footer [hidden]="isHiddenCheckBox">
+  <ion-toolbar style="--background: url('../../assets/back/collection.jpeg')">
+    <ion-button
+      style="--color: rgb(252, 243, 255); --background:rgba(255, 149, 0, 0.645); text-shadow: 0px 0px 10px rgb(224, 224, 224);"
+      (click)="deleteCollection()" expand="block" fill="clear" shape="round">
+      移除
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

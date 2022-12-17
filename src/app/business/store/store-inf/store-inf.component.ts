@@ -18,6 +18,7 @@ export class StoreInfComponent implements OnInit {
   storeHead;
   storeName;
   modityName;
+  attentionNum = 0;//粉丝数
 
   state: string = "";
 
@@ -47,6 +48,7 @@ export class StoreInfComponent implements OnInit {
       }
     }
     this.queryStore();
+    this.queryAttentionNum();
   }
 
   queryStore() {
@@ -62,6 +64,12 @@ export class StoreInfComponent implements OnInit {
           this.state = "封闭中";
         }
       });
+  }
+  //查询店铺关注数量
+  queryAttentionNum() {
+    this.hr.get(GlobalFinal.DOMAIN + "/consumer/attention/store/count/" + this.srd.storeInf.storeId).subscribe((data: any) => {
+      this.attentionNum = data.data;
+    });
   }
 
   //修改店铺名称

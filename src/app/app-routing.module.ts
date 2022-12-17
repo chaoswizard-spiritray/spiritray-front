@@ -3,6 +3,10 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './error/error.component';
 const routes: Routes = [
   {
+    path: 'before-store',
+    loadChildren: () => import('./before-store/before-store.module').then(m => m.BeforeStoreModule)
+  },
+  {
     path: 'consumer',
     loadChildren: () => import('./consumer/consumer.module').then(m => m.ConsumerModule)
   },
