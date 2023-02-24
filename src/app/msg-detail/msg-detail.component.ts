@@ -141,7 +141,7 @@ export class MsgDetailComponent implements OnInit, OnDestroy {
   //加载消息
   queryDetail() {
     let s: Array<any>;
-    this.hr.get(GlobalFinal.PLANT_DOMAIN + "/msg/" + this.receiverId + "/" + this.pageNo + "/" + this.pageNum, this.head)
+    this.hr.get(GlobalFinal.PLANT_DOMAIN + "/msg/" + this.receiverId + "/" + this.senderRole + "/" + this.pageNo + "/" + this.pageNum, this.head)
       .subscribe((data: any) => {
         this.topHidden = true;
         if (this.msgs === undefined) {

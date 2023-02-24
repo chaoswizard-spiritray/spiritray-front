@@ -36,8 +36,6 @@ export class CommentShowComponent implements OnInit {
   queryCommentByPhone() {
     this.hr.get(GlobalFinal.SELLER_DOMAIN + "/comment/consumer/phone", GlobalFinal.JWTHEADER)
       .subscribe((data: any) => {
-        console.log(data.data);
-
         if (data.data != null) {
           this.comments = data.data;
         }

@@ -12,6 +12,7 @@ import { DtoModelComponent } from './dto-model/dto-model.component';
 import { ErrorComponent } from './error/error.component';
 import { BackService } from './service/back.service';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+import { DoorComponent } from './door/door.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
       AppComponent,
       ErrorComponent,
       DtoModelComponent,
-      BeforeStoreComponent
+      BeforeStoreComponent,
+      DoorComponent
     ],
   entryComponents: [],
   imports:

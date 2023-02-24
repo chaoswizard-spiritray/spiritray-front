@@ -13,7 +13,24 @@
     float: left;
 }
 
+.head {
+    height: 66px;
+}
 
 .head div {
     display: inline-block;
+}
+
+.head .left {
+    float: left;
+    margin-bottom: 20px;
+}
+
+.head .midd {
+    float: left;
+    margin-bottom: 20px;
+}
+
+.head .rig {
+    float: right;
 }

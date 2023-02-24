@@ -34,7 +34,7 @@ export class AddSkuNumComponent implements OnInit {
   //提交单个sku价格
   async add(index) {
     const alert = await this.alertController.create({
-      header: '请输入下架备注',
+      header: '请输入补充数量',
       buttons: [
         {
           text: "提交",

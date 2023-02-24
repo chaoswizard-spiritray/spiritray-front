@@ -82,29 +82,41 @@ export class CartComponent implements OnInit {
   //查询是否选取
   check(event, isAll, index) {
     const tr = event.target;
+    const els = document.getElementsByTagName("ion-checkbox");
+    //如果是全选选择框点击
     if (isAll == 1) {
-      const els = document.getElementsByTagName("ion-checkbox");
       for (let i = 0; i < els.length - 1; i++) {
+        //如果是要全选
         if (tr.checked) {
           this.indexs[i] = i;
           els[i].checked = true;
         } else {
+          //如果取消全选就清除
           this.indexs = [];
           els[i].checked = false;
         }
       }
     } else {
       //因为每次改变就会让其发生变化，所以全选不用再进行计算
+      //如果不是全选框点击
       if (tr.checked) {
+        //如果目标框需要选取就追加，并且验证是否已经全选
         this.indexs.push(index);
         this.totalMoney += this.commoditys[index].totalFee;
+        if (this.indexs.length == this.commoditys.length) {
+          els[els.length - 1].checked = true;
+        }
       } else {
+        //如果目标框取消选取，就验证是否需要取消全选框
         for (let i = 0; i < this.indexs.length; i++) {
           if (this.indexs[i] == index) {
             this.indexs.splice(i, 1);
           }
         }
         this.totalMoney -= this.commoditys[index].totalFee;
+        if (this.indexs.length < this.commoditys.length) {
+          els[els.length - 1].checked = false;
+        }
       }
     }
   }

@@ -40,7 +40,7 @@ export class HistoryComponent implements OnInit {
     if (hisIds.length == 0) {
       GlobalALert.getToast("没有选取");
       return;
-    } if (await GlobalALert.getSureAlert("确定移除收藏吗?") != "confirm") {
+    } if (await GlobalALert.getSureAlert("确定删除吗?") != "confirm") {
       return;
     } else {
       const head = {

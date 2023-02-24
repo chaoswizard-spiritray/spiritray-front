@@ -89,15 +89,11 @@ export class CommodityCommentComponent implements OnInit {
     //请求数据
     this.hr.get(GlobalFinal.SELLER_DOMAIN + "/comment/" + this.commodityId + "/" + this.checkIndex + "/" + this.pageNo + "/" + this.pageNum, GlobalFinal.JWTHEADER)
       .subscribe((data: any) => {
-        console.log(data.data);
-
         if (data.stausCode == 200) {
           if (this.comments === undefined) {
             this.comments = data.data;
           } else {
             this.comments.concat(data.data);
-            console.log(this.comments);
-
             this.pageNo++;
           }
           return data.data;

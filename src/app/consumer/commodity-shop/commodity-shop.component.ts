@@ -116,8 +116,6 @@ export class CommodityShopComponent implements OnInit, OnDestroy {
   queryCommodityDetail() {
     this.hr.get(GlobalFinal.SELLER_DOMAIN + "/commodity/detail/all/" + this.commodityId, GlobalFinal.HEADER)
       .subscribe((data: any) => {
-        console.log(data);
-
         if (data.data != null && data.data.length > 0) {
           this.tempDetails = data.data;
         }

@@ -14,7 +14,7 @@
     <div class="comment" *ngFor="let comment of comments;index as i">
       <div class="info">
         <div class="date">
-          <span>{{comment.comment.startDate|datepipe}}</span>
+          <span>{{comment.comment.startDate|datenotimepipe}}</span>
           <span *ngIf="comment.comment.isAnonymous==1">已匿名</span>
           <span *ngIf="comment.comment.isAnonymous==0">已公开</span>
         </div>

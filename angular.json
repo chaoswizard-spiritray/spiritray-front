@@ -33,7 +33,7 @@
               }
             ],
             "styles": ["src/theme/variables.scss","src/global.scss","src/theme.less"],
-            "scripts": [],
+            "scripts": ["node_modules/echarts/dist/echarts.js"],
             "aot": false,
             "vendorChunk": true,
             "extractLicenses": false,
